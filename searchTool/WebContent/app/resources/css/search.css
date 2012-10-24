@@ -1,0 +1,8 @@
+@CHARSET "ISO-8859-1";
+.filter
+{
+	border-color:#EE0000;
+	border:1px solid;
+	margin: 2px 5px 2px 5px;
+	padding: 2px 2px 2px 2px;
+}
