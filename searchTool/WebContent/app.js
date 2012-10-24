@@ -1,6 +1,6 @@
 
 var tpl = Ext.create('Ext.Template',[
-	'Hello {first} {last}',' nice to meet you!'
+	'Hello {first} {last}',' its nice to meet you!'
 ]);
 
 /*var pnlFilter = Ext.create('Ext.form.FormPanel',{
