@@ -1,0 +1,33 @@
+{
+	dictionary:[	
+				{'27',1},
+				{'January',1},
+				{'February',1},
+				{'March',1},
+				{'April',0},
+				{'May',0},
+				{'June',1},
+				{'July',1},
+				{'August',1},
+				{'September',1},
+				{'October',1},
+				{'November',1},
+				{'December',1},
+				{'Jan',1},
+				{'Feb',1},
+				{'Mar',1},
+				{'Apr',1},
+				{'May',1},
+				{'June',1},
+				{'Jul',1},
+				{'Aug',1},
+				{'Sept',1},
+				{'Oct',1},
+				{'Nov',1},
+				{'Dec',1},
+				{'2012',1},
+				{'November 27',1},
+				{'Nov 27 2012',1},
+				{'Noveber 27 2012',1}
+				]
+}

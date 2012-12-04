@@ -1,0 +1,9 @@
+{
+	"success":true,
+	"results":[	"{\"BaseCurrency\":\"USD\",\"TermCurrency\":\"JPY\"}",
+				"{\"BaseCurrency\":\"USD\",\"TermCurrency\":\"JPY\"}",
+				"{\"BaseCurrency\":\"USD\",\"TermCurrency\":\"JPY\"}",
+				"{\"BaseCurrency\":\"USD\",\"TermCurrency\":\"JPY\"}"
+	],
+	"numRecords":4
+}

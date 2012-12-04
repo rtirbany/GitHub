@@ -1,0 +1,8 @@
+{
+	'products':[
+	{boxLabel: 'Prod1', itemId: 'cboxProd1', checked:true, tooltip:'Prod1 tooltip'},
+	{boxLabel: 'Prod2', itemId: 'cboxProd2', checked:true, tooltip:'Prod2 tooltip'},
+	{boxLabel: 'Prod3', itemId: 'cboxProd3', checked:true, tooltip:'Prod3 tooltip'},
+	{boxLabel: 'Prod4', itemId: 'cboxProd4', checked:true, tooltip:'Prod4 tooltip'},
+	{boxLabel: 'Prod5', itemId: 'cboxProd5', checked:true, tooltip:'Prod5 tooltip'}]
+}

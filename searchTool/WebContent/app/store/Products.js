@@ -1,0 +1,13 @@
+Ext.define('SearchTool.store.Products',{
+	extend:'Ext.data.Store', 
+	model:'SearchTool.model.Product',
+	autoLoad:true,
+	proxy:{
+		type:'ajax',
+		url:'data/products.json',
+		reader:{
+			type:'json',
+			root:'products'
+		}
+	}
+});
