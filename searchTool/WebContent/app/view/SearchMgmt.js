@@ -1,6 +1,20 @@
+var pnlSearchHistory = Ext.create('Ext.panel.Panel',{
+	title:'History',
+	autoScroll:true,
+	layout:'vbox',
+	items: [{ 
+        title: 'Hist panel1', 
+        flex: 2
+    },
+    { 
+        title: 'Hist panel2', 
+        flex: 4
+    }]
+	//	hidden:true
+}); 
+ 
 Ext.define('SearchTool.view.SearchMgmt',{
-	title:'Search Details', 
-	alias:'widget.searchmgmt',
+	title:'Search Management',  
 	xtype:'tabpanel',
 	tabBar:{
 		layout:{pack:'center',plain:true,align:'stretch'}
@@ -16,18 +30,19 @@ Ext.define('SearchTool.view.SearchMgmt',{
 	defaults:{
 		autoScroll:true
 	},
+	//align:'stretch',
 	//items:[pnlSearchFilters, pnlSearchHistory]
 	items:[
 	       {
 			    	   itemId:'tbFilters',
 			    	   title:'Filters',
-			    	   layout:'accordion',
+			    	   layout:'accordion'
 			       },
 			       {
 			    	   itemId:'tbHistory',
 			    	   title:'History', 
 			    	   layout:'vbox', 
-			    	   disabled:true,
+			    	   disabled:true
 			       }
 			 //]}
 	] //west panel items array
