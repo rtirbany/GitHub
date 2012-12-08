@@ -25,11 +25,11 @@ Ext.application({
 	//requires:['SearchTool.config.Config'],
 	//autoCreateViewport: true,
 	launch : function() {
-		//console.log(MyApp.config.Config.products); 
-		var body = Ext.getBody();
+		//console.log(MyApp.config.Config.products);  
+//    	Ext.tip.QuickTipManager.init();
 		//Ext.create('Ext.container.Viewport',{});//layout, items[] go in here
 		Ext.create('SearchTool.view.Main');
-		body.unmask();
+		Ext.getBody().unmask();
 		/* RT - if using full screen mask w/ logo, add this to fade out mask + logo
 		 * var task = new Ext.util.DelayedTask(function() {
             // Fade out the body mask
@@ -56,22 +56,6 @@ Ext.application({
 });
  
 
-/*var pnlFilter = Ext.create('Ext.form.FormPanel',{
-	itemId:'pnlFilter',
-	frame:true,
-	title:'Filters',
-	class:'navpanel',
-	layout:'container',
-	renderTo:'divSearchTool',
-	items:[{
-          xtype: 'textfield',
-          fieldLabel: 'Search',
-          width: 180
-        }]
-});*/
-
-
- 
  
 //TODO: filters - need to remove all, remove by click
 //TODO: requery if click for remove/removeAll children 

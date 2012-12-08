@@ -53,7 +53,7 @@ Ext.define('SearchTool.controller.SearchTool',{
 				Ext.Msg.alert('Help','some help page');
 			},
 			btnLogoutHandler : function(b,e){
-				Ext.Msg.confirm('Logout','Do you wish to log out of the system?');
+				Ext.Msg.confirm('Confirm Logout','Do you wish to log out of the system?');
 			},
 			toggleAllProducts : function(b, e) {
 				if (b.name = 'cboxAll') {
