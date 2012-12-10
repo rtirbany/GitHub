@@ -22,13 +22,12 @@ Ext.application({
 	appFolder : 'app',
 	//enableQuickTips : true,
 	controllers:['SearchTool'],
-	//requires:['SearchTool.config.Config'],
+	requires:['SearchTool.config.Config'],
 	//autoCreateViewport: true,
-	launch : function() {
-		//console.log(MyApp.config.Config.products);  
+	launch : function() {  
 //    	Ext.tip.QuickTipManager.init();
 		//Ext.create('Ext.container.Viewport',{});//layout, items[] go in here
-		Ext.create('SearchTool.view.Main');
+		Ext.create('SearchTool.view.Main',{dataUrl:SearchTool.config.Config.products});
 		Ext.getBody().unmask();
 		/* RT - if using full screen mask w/ logo, add this to fade out mask + logo
 		 * var task = new Ext.util.DelayedTask(function() {

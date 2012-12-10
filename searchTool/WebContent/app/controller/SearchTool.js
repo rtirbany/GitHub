@@ -25,10 +25,10 @@ Ext.define('SearchTool.controller.SearchTool',{
 			'button[itemId=btnSearch]' : {
 				click: this.executeSearch
 			}
-			,
-			'checkboxgroup' : {
-				check:this.toggleAllProducts
-			}
+			// ,
+			// checkboxgroup' : {
+			//	check:this.toggleAllProducts
+			// }
 			,
 			'button[itemId=btnHelp]' : {
 				click: this.btnHelpHandler
@@ -42,9 +42,14 @@ Ext.define('SearchTool.controller.SearchTool',{
 	
 	executeSearch : function(btn,e){ 
 		   		var val = Ext.ComponentQuery.query('#cboxSearch')[0].getValue().trim();
+		   		var chkSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
 				if (val && val.length > 0) { 
-					var k = '<a href="'+val+'" tip="'+val+'"> '+val+'</a>'; 
-					SearchTool.util.dom.modTabChildren('#tbHistory',0,k,{xtype:"displayfield",border:false,value:k,tips:"hi",qtips:"dd",tooltip:"Ext.Date.format(new Date(),'F d g:i a')"},true);
+					var k = '<a href="'+val+'" tip="'+val+'"> '+val+'</a>';
+					if (chkSaveQuery)
+						target='#tbSaved'
+					else 
+					   	target='#tbHistory'
+					SearchTool.util.dom.modTabChildren(target,0,k,{xtype:"displayfield",border:false,value:k,tooltip:"Ext.Date.format(new Date(),'F d g:i a')"},true);
 				}//if
 			}//executeSearch
 			,
@@ -54,11 +59,12 @@ Ext.define('SearchTool.controller.SearchTool',{
 			},
 			btnLogoutHandler : function(b,e){
 				Ext.Msg.confirm('Confirm Logout','Do you wish to log out of the system?');
-			},
-			toggleAllProducts : function(b, e) {
-				if (b.name = 'cboxAll') {
-				var arrProducts = Ext.search('.cboxProducts');
-				arrProducts.setValue(b.getValue());
-	 	}
-	}//toggleAllProducts
+			}
+//			,
+//			toggleAllProducts : function(b, e) {
+//				if (b.name = 'cboxAll') {
+//				var arrProducts = Ext.search('.cboxProducts');
+//				arrProducts.setValue(b.getValue());
+//	 			}
+//			}//toggleAllProducts
 });

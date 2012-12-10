@@ -94,6 +94,7 @@ var tbarMain = Ext.create('Ext.toolbar.Toolbar',{
 Ext.define('SearchTool.view.Main',{ 
 	extend:'Ext.container.Viewport',
 	itemId:'main',
+	dataUrl:'',
 //	requires:['SearchTool.view.SearchMgmt'],
 	tabBar:{
 		layout:{pack:'end',plain:true}
@@ -142,43 +143,50 @@ Ext.define('SearchTool.view.Main',{
 						// sm,
 		      			{   //west panel
 							region:'west',
-							title:'Search Manajgement', 
-							xtype:'tabpanel',  
+							title:'Search Tools',  
 							width:220,  
 							split:true, 
 							collapsible:true,
-							animCollapse:true,
+							animCollapse:true, 
 							collapseDirection:'left', 
-							tabBar:{
-								itemId:'tbar',
-								layout:{width:'100%',flex:1}
-							},
-							defaults:{
-								autoScroll:true 
-							}, 
-							items:[  //contents of west panel within main Search page tab
-					       		{ 
-							    	   itemId:'tbFilters',
-							    	   title:'Filters',
-							    	   layout:'fit'
-							    	   //layout:'accordion'
-							  
-							       },
-							       { 
-							    	   itemId:'tbSaved',
-							    	   title:'Saved',
-							    	   layout:'fit'
-							    	   //layout:'vbox'
-							       }
-							       ,
-							       {
-							    	   itemId:'tbHistory',
-							    	   title:'History', 
-							    	   layout:'fit',
-							    	   //layout:'vbox', 
-							    	   disabled:true
-							       } 
-							] //west panel items array 
+							items:[
+									{ 
+							    	   	xtype:'checkbox', 
+							    	   	itemId:'chkSaveQuery',
+							    	   	boxLabel:'Save Search',
+							    	   	tooltip:'ji',
+							    	   	qtip:'lol',
+							    	   	name:'chkSaveQuery'
+							    	 },
+							    	 {
+							    	 	xtype:'tabpanel',
+							    	 	defaults:{
+							    	 		autoScroll:true
+							    	 	}
+							    	 	,
+										items:[  //contents of west panel within main Search page tab
+					       					{ 
+					       			   			itemId:'tbFilters',
+							    	   			title:'Filters',
+							    	   			layout:'vbox'
+							    	   			//layout:'accordion' 
+							       			},
+							       			{ 
+							    	   			itemId:'tbSaved',
+							    	   			title:'Saved',
+							    	   			//layout:'fit'
+							    	   			layout:'vbox'
+							       			},
+							       			{
+							    	   			itemId:'tbHistory',
+							    	   			title:'History', 
+							    	   			//layout:'fit',
+							    	   			layout:'vbox', 
+							    	   			disabled:true
+							       			}  
+										] //west panel items array  
+							    	 } 
+							]  
 						} //west panel definition
 						,
 						{	//north panel
@@ -233,6 +241,7 @@ Ext.define('SearchTool.view.Main',{
 	 											   width:300,
 	 											   vertical: true,
 	 											   items:[
+	 											   //// this.getDataUrl()
 	 											    {boxLabel: 'All', itemId: 'cboxProdAll', name:'cboxAll', checked:true, tooltip:'Prod1 tooltip'},
 	 											   	{boxLabel: 'Prod1', itemId: 'cboxProd1', checked:true, tooltip:'Prod1 tooltip',cls:'cboxProducts'},
 													{boxLabel: 'Prod2', itemId: 'cboxProd2', checked:true, tooltip:'Prod2 tooltip', cls:'cboxProducts'},
