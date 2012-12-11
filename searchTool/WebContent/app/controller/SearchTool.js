@@ -25,10 +25,23 @@ Ext.define('SearchTool.controller.SearchTool',{
 			'button[itemId=btnSearch]' : {
 				click: this.executeSearch
 			}
-			// ,
-			// checkboxgroup' : {
-			//	check:this.toggleAllProducts
-			// }
+			,
+			'checkbox[itemId=cboxgrpDataSource]' : {
+				beforerender:this.addCheckBoxSource
+			}
+		    ,
+			'checkbox[itemId=cboxProdAll]' : {
+				change:this.toggleAllProducts
+			}
+			,
+			'checkboxgroup[itemId=cboxgrpProducts]' : {
+				beforerender:this.addCheckBox
+			}
+		    ,
+			'checkbox[itemId=cboxSrcAll]' : {
+				change:this.toggleAllSources
+			}
+			
 			,
 			'button[itemId=btnHelp]' : {
 				click: this.btnHelpHandler
@@ -40,12 +53,18 @@ Ext.define('SearchTool.controller.SearchTool',{
 		});//control function
 	},
 	
-	executeSearch : function(btn,e){ 
+	executeSearch : function(btn,e){  
+				//IE8 doesn't support trim, so this is req'd
+				if(typeof String.prototype.trim !== 'function') {
+  					String.prototype.trim = function() {
+    					return this.replace(/^\s+|\s+$/g, ''); 
+  					}
+				}
 		   		var val = Ext.ComponentQuery.query('#cboxSearch')[0].getValue().trim();
-		   		var chkSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
+		   		var boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
 				if (val && val.length > 0) { 
 					var k = '<a href="'+val+'" tip="'+val+'"> '+val+'</a>';
-					if (chkSaveQuery)
+					if (boolSaveQuery)
 						target='#tbSaved'
 					else 
 					   	target='#tbHistory'
@@ -60,11 +79,38 @@ Ext.define('SearchTool.controller.SearchTool',{
 			btnLogoutHandler : function(b,e){
 				Ext.Msg.confirm('Confirm Logout','Do you wish to log out of the system?');
 			}
-//			,
-//			toggleAllProducts : function(b, e) {
-//				if (b.name = 'cboxAll') {
-//				var arrProducts = Ext.search('.cboxProducts');
-//				arrProducts.setValue(b.getValue());
-//	 			}
-//			}//toggleAllProducts
+			,
+			//TODO: fix these..no need to have 2 sep functions here.. in view
+			
+			addCheckBox : function() { 
+				var grp = '#cboxgrpProducts'; 
+				var all = {boxLabel: 'All', xtype:'checkbox', itemId: 'cboxProdAll', name:'cboxProdAll', checked:true, tooltip:'Prod1 tooltip'};
+				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
+				arrProducts.join(all);
+				Ext.ComponentQuery.query(grp)[0].items.items = arrProducts;
+				 			   	
+			},
+			addCheckBoxSource : function() { 
+				var grp = '#cboxgrpDataSource'; 
+				var all = {boxLabel: 'All', xtype:'checkbox', itemId: 'cboxSrcAll', name:'cboxSrcAll', checked:true, qtip:'Src1 qltip'};
+				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
+				arrProducts.join(all);
+				Ext.ComponentQuery.query(grp)[0].items.items = arrProducts;
+				 			   	
+			}, 			   	
+			
+			//TODO: fix these..no need to have 2 sep functions here..in view
+			toggleAllProducts : function(b, e) { 
+				grp = '#cboxgrpProducts'; 
+				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
+				SearchTool.util.dom.toggleCheckBoxArray(b.value, arrProducts);
+	 		
+			}//toggleAllProducts
+			,
+			toggleAllSources : function(b, e) {
+				var grp = '#cboxgrpDataSource';
+				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
+				SearchTool.util.dom.toggleCheckBoxArray(b.value, arrProducts);
+	 		
+			}//toggleAllSources
 });

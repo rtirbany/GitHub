@@ -138,32 +138,29 @@ Ext.define('SearchTool.view.Main',{
 						extend:'Ext.container.Container',
 						title:'Search',
 						layout:'border',
-			 			tooltip:'Search page',
+			 			tooltip:'Search page', 
 						items:[
 						// sm,
 		      			{   //west panel
 							region:'west',
-							title:'Search Tools',  
+							title:'Tools',  
 							width:220,  
 							split:true, 
 							collapsible:true,
-							animCollapse:true, 
+							animCollapse:true,  
 							collapseDirection:'left', 
-							items:[
+							layout:'anchor',
+							items:[{  
+								items:[
 									{ 
 							    	   	xtype:'checkbox', 
 							    	   	itemId:'chkSaveQuery',
-							    	   	boxLabel:'Save Search',
-							    	   	tooltip:'ji',
-							    	   	qtip:'lol',
-							    	   	name:'chkSaveQuery'
+							    	   	boxLabel:'Save Search' 
+							    	    
 							    	 },
 							    	 {
-							    	 	xtype:'tabpanel',
-							    	 	defaults:{
-							    	 		autoScroll:true
-							    	 	}
-							    	 	,
+							    	 	xtype:'tabpanel',   
+							    	 	overFlowY:'auto',
 										items:[  //contents of west panel within main Search page tab
 					       					{ 
 					       			   			itemId:'tbFilters',
@@ -173,19 +170,19 @@ Ext.define('SearchTool.view.Main',{
 							       			},
 							       			{ 
 							    	   			itemId:'tbSaved',
-							    	   			title:'Saved',
-							    	   			//layout:'fit'
-							    	   			layout:'vbox'
+							    	   			title:'Saved', 
+							    	   			autoScroll:true
 							       			},
 							       			{
 							    	   			itemId:'tbHistory',
-							    	   			title:'History', 
-							    	   			//layout:'fit',
+							    	   			title:'History',  
 							    	   			layout:'vbox', 
+							    	   			autoScroll:true,
 							    	   			disabled:true
 							       			}  
 										] //west panel items array  
-							    	 } 
+							    	 }
+							    	 ]} 
 							]  
 						} //west panel definition
 						,
@@ -193,43 +190,70 @@ Ext.define('SearchTool.view.Main',{
 							region:'north',  
 	 						height:100,
 	 						layout:{type:'hbox',align:'stretch'},
+	 						bodyStyle:'padding: 10px 5px 5px 5px;',
 	 						//title:'Search',  
 	 						//collapsible:true,
 	 						//collapseDirection:'up',
 	 						//animCollapse:true,
 	 						items:[	 //contents of north panel within main Search page pab
+	 						
 	 						{
 	 							xtype:'container',
-	 							layout:'hbox',
+	 							layout:'vbox', 
+	 							
 	 							items:[
-		       					ccListCombo,
-	 				       		{		xtype:'button',
-	 									text:'Clear',
-	 									itemId:'btnClear',
-	 									tooltip:'Clear search field',
-	 									handler:function(){
-	 										Ext.ComponentQuery.query('#cboxSearch')[0].reset();
-	 									}
-	 							},
-	 				       		{		xtype:'button',
-	 				       				text:'Search',
-	 				       				itemId:'btnSearch',
-	 				       				tooltip:'Run the search',
-	 				       				scope:this
+	 							{
+	 								xtype:'container',
+	 								layout:'hbox',
+	 								flex:1,
+	 								defaults: {
+	 									margins: '0 2 0 2'
+	 								},
+	 								items:[
+		       						ccListCombo,
+	 				       			{		xtype:'button',
+	 										text:'Clear',
+	 										itemId:'btnClear',
+	 										tooltip:'Clear search field',
+	 										handler:function(){
+	 											Ext.ComponentQuery.query('#cboxSearch')[0].reset();
+	 										}
+	 								},
+	 				       			{		xtype:'button',
+	 				       					text:'Search',
+	 				       					itemId:'btnSearch',
+	 				      	 				tooltip:'Run the search',
+	 				      	 				scope:this
+	 				       			} 
+	 				       			]
 	 				       		}
-	 				       		]
-	 				       		},
+	 				       		,
 	 				       		{
+	 									   xtype:'displayfield',
+	 									   value:'Home > (breadcrumb area)'
+	 							
+	 							}
+	 				       	]
+	 				       	
+	 						}
+	 				       	,
+	 				       	{
 	 							xtype:'container',
 	 							layout:'hbox',
 	 							width:'100%',
+	 							flex:4,
+	 							frame:true,
+	 							defaults: {
+	 								margins: '1 5 1 5'
+	 							},
 	 							items:[
 	 				       		{
 	 				       			 	xtype:'fieldset',
-	 									title:'Available Products',
+	 									title:'Available Products', 
 	 									tooltip:'Types of Products available for search',
 	 									collapsible:true,
 	 									collapsed:false,
+	 									flex:1,
 	 									items:[
 	 										   	{
 	 											   xtype: 'checkboxgroup',
@@ -242,12 +266,11 @@ Ext.define('SearchTool.view.Main',{
 	 											   vertical: true,
 	 											   items:[
 	 											   //// this.getDataUrl()
-	 											    {boxLabel: 'All', itemId: 'cboxProdAll', name:'cboxAll', checked:true, tooltip:'Prod1 tooltip'},
-	 											   	{boxLabel: 'Prod1', itemId: 'cboxProd1', checked:true, tooltip:'Prod1 tooltip',cls:'cboxProducts'},
-													{boxLabel: 'Prod2', itemId: 'cboxProd2', checked:true, tooltip:'Prod2 tooltip', cls:'cboxProducts'},
-													{boxLabel: 'Prod3', itemId: 'cboxProd3', checked:true, tooltip:'Prod3 tooltip',cls:'cboxProducts'},
-													{boxLabel: 'Prod4', itemId: 'cboxProd4', checked:true, tooltip:'Prod4 tooltip',cls:'cboxProducts'},
-													{boxLabel: 'Prod5', itemId: 'cboxProd5', checked:true, tooltip:'Prod5 tooltip',cls:'cboxProducts'}
+	 											    {boxLabel: 'Prod1', xtype:'checkbox', itemId: 'cboxProd1', checked:true, tooltip:'Prod1 tooltip',cls:'cboxProducts'},
+													{boxLabel: 'Prod2', xtype:'checkbox', itemId: 'cboxProd2', checked:true, tooltip:'Prod2 tooltip', cls:'cboxProducts'},
+													{boxLabel: 'Prod3', xtype:'checkbox', itemId: 'cboxProd3', checked:true, tooltip:'Prod3 tooltip',cls:'cboxProducts'},
+													{boxLabel: 'Prod4', xtype:'checkbox', itemId: 'cboxProd4', checked:true, tooltip:'Prod4 tooltip',cls:'cboxProducts'},
+													{boxLabel: 'Prod5', xtype:'checkbox', itemId: 'cboxProd5', checked:true, tooltip:'Prod5 tooltip',cls:'cboxProducts'}
 	 											   ]
 	 											   //items: this.getStore()
 //{boxLabel: 'All Products', itemId: 'cboxAll', handler:toggleAllProducts, checked:true, tooltip:'Select/Deselect all other checkboxes'}
@@ -260,22 +283,22 @@ Ext.define('SearchTool.view.Main',{
 	 									title:'Data Sources',
 	 									qtip:'Types of Products available for search',
 	 									 flex:1,
-	 									collapsible:true,
+	 									collapsible:true, 
+	 									flex:1,
 	 									collapsed:false,
 	 									items:[
 	 										   	{
 	 											   xtype: 'checkboxgroup',
-	 											   itemId:'cboxgrpDatasource',
+	 											   itemId:'cboxgrpDataSource',
 	 											   //fieldLabel: 'Product Types',
 	 											   // Distribute controls across 3 even columns, filling each column
 	 											   // from top to bottom before starting the next column
 	 											   columns: [150,150],
 	 											   vertical: true,
 	 											   items:[
-	 											    {boxLabel: 'All', itemId: 'cboxSrcAll', name:'cboxAll', checked:true, qtip:'Src1 qltip'},
-	 											   	{boxLabel: 'Src1', itemId: 'cboxSrc1', checked:true, qtip:'src1 tooltip',cls:'cboxSrc'},
-													{boxLabel: 'Src2', itemId: 'cboxSrc2', checked:true, qtip:'src2 tooltip', cls:'cboxSrc'},
-													{boxLabel: 'Src3', itemId: 'cboxSrc3', checked:true, qtip:'src3 tooltip',cls:'cboxSrc'}
+	 											    {boxLabel: 'Src1', xtype:'checkbox', itemId: 'cboxSrc1', checked:true, qtip:'src1 tooltip',cls:'cboxSrc'},
+													{boxLabel: 'Src2', xtype:'checkbox', itemId: 'cboxSrc2', checked:true, qtip:'src2 tooltip', cls:'cboxSrc'},
+													{boxLabel: 'Src3', xtype:'checkbox', itemId: 'cboxSrc3', checked:true, qtip:'src3 tooltip',cls:'cboxSrc'}
 												 ]
 	 											   //items: this.getStore()
 //{boxLabel: 'All Products', itemId: 'cboxAll', handler:toggleAllProducts, checked:true, tooltip:'Select/Deselect all other checkboxes'}
