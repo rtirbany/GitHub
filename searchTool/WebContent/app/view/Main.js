@@ -127,6 +127,7 @@ Ext.define('SearchTool.view.Main',{
     			{	//main tabs for Search and Admin
     				region:'center' ,
     				xtype:'tabpanel', 
+    				layout:'fit',
     				plain:true,
     				tabBar:{
 						layout:{pack:'end'}
@@ -152,15 +153,17 @@ Ext.define('SearchTool.view.Main',{
 							layout:'anchor',
 							items:[{  
 								items:[
-									{ 
-							    	   	xtype:'checkbox', 
-							    	   	itemId:'chkSaveQuery',
-							    	   	boxLabel:'Save Search' 
-							    	    
-							    	 },
+//									{ 
+//							    	   	xtype:'checkbox', 
+//							    	   	itemId:'chkSaveQuery',
+//							    	   	boxLabel:'Save Search'  
+//							    	 },
 							    	 {
 							    	 	xtype:'tabpanel',   
-							    	 	overFlowY:'auto',
+//							    	 	overFlowY:'auto',
+							    	 	defaults:{
+							    	 		autoScroll:true
+							    	 	},
 										items:[  //contents of west panel within main Search page tab
 					       					{ 
 					       			   			itemId:'tbFilters',
@@ -170,14 +173,15 @@ Ext.define('SearchTool.view.Main',{
 							       			},
 							       			{ 
 							    	   			itemId:'tbSaved',
-							    	   			title:'Saved', 
-							    	   			autoScroll:true
+							    	   			title:'Saved'
+							    	   			//, 
+//							    	   			autoScroll:true
 							       			},
 							       			{
 							    	   			itemId:'tbHistory',
 							    	   			title:'History',  
-							    	   			layout:'vbox', 
-							    	   			autoScroll:true,
+//							    	   			layout:'vbox', 
+//							    	   			autoScroll:true,
 							    	   			disabled:true
 							       			}  
 										] //west panel items array  
@@ -257,7 +261,8 @@ Ext.define('SearchTool.view.Main',{
 	 									items:[
 	 										   	{
 	 											   xtype: 'checkboxgroup',
-	 											   itemId:'cboxgrpProducts',
+	 											   itemId:'cboxgrpProducts', 
+	 											   //allowBlank:false,
 	 											   //fieldLabel: 'Product Types',
 	 											   // Distribute controls across 3 even columns, filling each column
 	 											   // from top to bottom before starting the next column
@@ -282,14 +287,14 @@ Ext.define('SearchTool.view.Main',{
 	 				       			 	xtype:'fieldset',
 	 									title:'Data Sources',
 	 									qtip:'Types of Products available for search',
-	 									 flex:1,
 	 									collapsible:true, 
 	 									flex:1,
 	 									collapsed:false,
 	 									items:[
 	 										   	{
 	 											   xtype: 'checkboxgroup',
-	 											   itemId:'cboxgrpDataSource',
+	 											   itemId:'cboxgrpDataSource', 
+	 											   //allowBlank:false,
 	 											   //fieldLabel: 'Product Types',
 	 											   // Distribute controls across 3 even columns, filling each column
 	 											   // from top to bottom before starting the next column

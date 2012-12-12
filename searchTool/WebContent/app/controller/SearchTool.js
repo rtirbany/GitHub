@@ -26,7 +26,7 @@ Ext.define('SearchTool.controller.SearchTool',{
 				click: this.executeSearch
 			}
 			,
-			'checkbox[itemId=cboxgrpDataSource]' : {
+			'checkboxgroup[itemId=cboxgrpDataSource]' : {
 				beforerender:this.addCheckBoxSource
 			}
 		    ,
@@ -35,7 +35,7 @@ Ext.define('SearchTool.controller.SearchTool',{
 			}
 			,
 			'checkboxgroup[itemId=cboxgrpProducts]' : {
-				beforerender:this.addCheckBox
+				beforerender:this.addCheckBoxProducts
 			}
 		    ,
 			'checkbox[itemId=cboxSrcAll]' : {
@@ -61,12 +61,12 @@ Ext.define('SearchTool.controller.SearchTool',{
   					}
 				}
 		   		var val = Ext.ComponentQuery.query('#cboxSearch')[0].getValue().trim();
-		   		var boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
+//		   		var boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
 				if (val && val.length > 0) { 
 					var k = '<a href="'+val+'" tip="'+val+'"> '+val+'</a>';
-					if (boolSaveQuery)
-						target='#tbSaved'
-					else 
+//					if (boolSaveQuery)
+//						target='#tbSaved'
+//					else 
 					   	target='#tbHistory'
 					SearchTool.util.dom.modTabChildren(target,0,k,{xtype:"displayfield",border:false,value:k,tooltip:"Ext.Date.format(new Date(),'F d g:i a')"},true);
 				}//if
@@ -80,22 +80,18 @@ Ext.define('SearchTool.controller.SearchTool',{
 				Ext.Msg.confirm('Confirm Logout','Do you wish to log out of the system?');
 			}
 			,
-			//TODO: fix these..no need to have 2 sep functions here.. in view
 			
-			addCheckBox : function() { 
+			//TODO: fix these..no need to have 2 sep functions here.. in view
+			addCheckBoxProducts : function() { 
 				var grp = '#cboxgrpProducts'; 
-				var all = {boxLabel: 'All', xtype:'checkbox', itemId: 'cboxProdAll', name:'cboxProdAll', checked:true, tooltip:'Prod1 tooltip'};
-				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
-				arrProducts.join(all);
-				Ext.ComponentQuery.query(grp)[0].items.items = arrProducts;
+				var allChkbox = Ext.create('Ext.form.field.Checkbox',{boxLabel: 'All', itemId: 'cboxProdAll', name:'cboxProdAll', checked:true, tooltip:'Prod1 tooltip'});
+				Ext.ComponentQuery.query(grp)[0].items.items.unshift(allChkbox);
 				 			   	
 			},
 			addCheckBoxSource : function() { 
 				var grp = '#cboxgrpDataSource'; 
-				var all = {boxLabel: 'All', xtype:'checkbox', itemId: 'cboxSrcAll', name:'cboxSrcAll', checked:true, qtip:'Src1 qltip'};
-				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
-				arrProducts.join(all);
-				Ext.ComponentQuery.query(grp)[0].items.items = arrProducts;
+				var allChkbox = Ext.create('Ext.form.field.Checkbox',{boxLabel: 'All', itemId: 'cboxSrcAll', name:'cboxSrcAll', checked:true, tooltip:'Prod1 tooltip'});
+				Ext.ComponentQuery.query(grp)[0].items.items.unshift(allChkbox);
 				 			   	
 			}, 			   	
 			
