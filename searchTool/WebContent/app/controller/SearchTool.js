@@ -61,12 +61,12 @@ Ext.define('SearchTool.controller.SearchTool',{
   					}
 				}
 		   		var val = Ext.ComponentQuery.query('#cboxSearch')[0].getValue().trim();
-//		   		var boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
+		   		var boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
 				if (val && val.length > 0) { 
 					var k = '<a href="'+val+'" tip="'+val+'"> '+val+'</a>';
-//					if (boolSaveQuery)
-//						target='#tbSaved'
-//					else 
+					if (boolSaveQuery)
+						target='#tbSaved'
+					else 
 					   	target='#tbHistory'
 					SearchTool.util.dom.modTabChildren(target,0,k,{xtype:"displayfield",border:false,value:k,tooltip:"Ext.Date.format(new Date(),'F d g:i a')"},true);
 				}//if
@@ -95,7 +95,8 @@ Ext.define('SearchTool.controller.SearchTool',{
 				 			   	
 			}, 			   	
 			
-			//TODO: fix these..no need to have 2 sep functions here..in view
+			//TODO: fix these..no need to have 2 sep functions here..
+			//singleton manager for checkbox groups
 			toggleAllProducts : function(b, e) { 
 				grp = '#cboxgrpProducts'; 
 				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
