@@ -72,7 +72,7 @@ Ext.define('SearchTool.view.Main',{
 	extend:'Ext.container.Viewport',
 	itemId:'main',
 	dataUrl:'',
-	requires:['SearchTool.view.SearchTools','SearchTool.view.SearchEntry'],
+	requires:['SearchTool.view.SearchNav','SearchTool.view.SearchEntry'],
 	tabBar:{
 		layout:{pack:'end',plain:true}
 	},
@@ -121,7 +121,7 @@ Ext.define('SearchTool.view.Main',{
 		      			{   //west panel
 							region:'west', 
 							width:220, 
-							xtype:'tools',
+							xtype:'searchNav',
 							split:true, 
 							collapsible:true,
 							animCollapse:true,  
@@ -131,19 +131,12 @@ Ext.define('SearchTool.view.Main',{
 						,
 						{	//north panel
 							region:'north',  
-	 						height:100,
+	 						height:200,
 	 						layout:{align:'stretch'},
-	 						bodyStyle:'padding: 10px 5px 5px 5px;',
-	 						//title:'Search',  
-	 						//collapsible:true,
-	 						//collapseDirection:'up',
-	 						//animCollapse:true,
 	 						items:[	 //contents of north panel within main Search page pab
-	 						
-	 						{ 
-	 								 xtype:'search'
-	 								 
-	 						} 
+	 						 { 
+	 								 xtype:'searchEntry'
+	 						 } 
 	 				       ]//north panel items array
 	 					}//north panel definition,
 	 			,		

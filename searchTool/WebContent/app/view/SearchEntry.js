@@ -22,12 +22,14 @@ ccListCombo = new Ext.form.ComboBox({
 
 Ext.define('SearchTool.view.SearchEntry', {
 			extend : 'Ext.container.Container',
-			alias : 'widget.search', 
+			alias : 'widget.searchEntry', 
 			layout:{type:'hbox',align:'stretch'},
 			frame : true,
 			defaults : {
 				margins : '1 5 1 5'
 			},
+			
+	 		bodyStyle:'padding: 10px 5px 5px 5px;', 
 			items : [{
 				layout : 'vbox',
 				flex : 1,

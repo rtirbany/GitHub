@@ -14,9 +14,9 @@ var pnlSearchHistory = Ext.create('Ext.panel.Panel',{
 }); 
  
 
-Ext.define('SearchTool.view.SearchTools',{
+Ext.define('SearchTool.view.SearchNav',{
 	extend:'Ext.panel.Panel',
-	alias:'widget.tools', 
+	alias:'widget.searchNav', 
 		title:'Tools',
 	items:[ 
 		{ 
