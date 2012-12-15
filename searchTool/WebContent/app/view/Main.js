@@ -72,7 +72,7 @@ Ext.define('SearchTool.view.Main',{
 	extend:'Ext.container.Viewport',
 	itemId:'main',
 	dataUrl:'',
-	requires:['SearchTool.view.SearchNav','SearchTool.view.SearchEntry'],
+	requires:['SearchTool.view.SearchNav','SearchTool.view.SearchSources','SearchTool.view.SearchEntry'],
 	tabBar:{
 		layout:{pack:'end',plain:true}
 	},
@@ -118,21 +118,44 @@ Ext.define('SearchTool.view.Main',{
 			 			tooltip:'Search page', 
 						items:[
 						// sm,
-		      			{   //west panel
-							region:'west', 
-							width:220, 
-							xtype:'searchNav',
-							split:true, 
-							collapsible:true,
-							animCollapse:true,  
-							collapseDirection:'left', 
-							layout:'anchor' 
-						} //west panel definition
+		      			{ // west panel
+										region : 'west',
+										flex:3,
+										// xtype:'searchNav',
+										title:'Tools',
+										split : true,  
+										shrinkToFit:true,
+										layout:'hbox',
+										collapsible:true,
+										animCollapse:true,
+										collapseDirection:'left', 
+										defaults:{
+											collapsible : true,
+											animCollapse : true,
+											collapseDirection : 'left',
+											height:'100%'
+										},
+										items : [
+										{
+											xtype : 'searchNav',
+											flex : 3
+											
+										}, {
+											xtype : 'searchSources',
+											flex : 2
+										}
+										]   // west panel items
+									}		//west panel definition
 						,
 						{	//north panel
 							region:'north',  
-	 						height:200,
-	 						layout:{align:'stretch'},
+	 						height:155,
+	 						collapsible : true,
+							animCollapse : true,
+							collapseDirection : 'up',
+							layout : {
+								align : 'stretch'
+							},
 	 						items:[	 //contents of north panel within main Search page pab
 	 						 { 
 	 								 xtype:'searchEntry'
@@ -143,6 +166,7 @@ Ext.define('SearchTool.view.Main',{
 	 					{	//center panel
 							region:'center',
 			 				title:'Results', 
+			 				flex:8,
 			 				html:'(results go here)',
 			 				tooltip:'results will appear here'
 			 			

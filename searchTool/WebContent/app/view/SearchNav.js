@@ -17,12 +17,18 @@ var pnlSearchHistory = Ext.create('Ext.panel.Panel',{
 Ext.define('SearchTool.view.SearchNav',{
 	extend:'Ext.panel.Panel',
 	alias:'widget.searchNav', 
-		title:'Tools',
+		title:'Search',
 	items:[ 
 		{ 
 			xtype:'checkbox', 
 			itemId:'chkSaveQuery',
 			boxLabel:'Save Search'  
+		},
+		{   
+			itemId:'dfFilters', 
+			items:[
+			{xtype:'displayfield',value:'(user selections w/ remove option)'}
+			]
 		},
 		{
 			xtype:'tabpanel', 
@@ -37,9 +43,14 @@ Ext.define('SearchTool.view.SearchNav',{
 			items:[  //contents of west panel within main Search page tab
    	    	{ 
   					itemId:'tbFilters',
-   					title:'Filters',
-  		 			layout:'vbox'
-  		 			//layout:'accordion' 
+   					title:'Filters', 
+  		 			layout:'accordion',
+  		 			animate:true,
+  		 			items:[
+  		 			{ title:'facets',html:'some facets option<BR>more options<BR>more options'},
+  		 			{ title:'filterCategory1',html:'some filter options<BR>more options<BR>more options'},
+  		 			{ title:'filterCategory2',html:'some filter options<BR>more options<BR>more options'} 
+  		 			]
 				},
 				{ 
   		 			itemId:'tbSaved',

@@ -26,16 +26,16 @@ Ext.define('SearchTool.controller.SearchTool',{
 				click: this.executeSearch
 			}
 			,
+			'checkboxgroup[itemId=cboxgrpProducts]' : {
+				beforerender:this.addCheckBoxProducts
+			}
+		    ,
 			'checkboxgroup[itemId=cboxgrpDataSource]' : {
 				beforerender:this.addCheckBoxSource
 			}
-		    ,
+			,
 			'checkbox[itemId=cboxProdAll]' : {
 				change:this.toggleAllProducts
-			}
-			,
-			'checkboxgroup[itemId=cboxgrpProducts]' : {
-				beforerender:this.addCheckBoxProducts
 			}
 		    ,
 			'checkbox[itemId=cboxSrcAll]' : {
