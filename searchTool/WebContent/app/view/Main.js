@@ -120,8 +120,8 @@ Ext.define('SearchTool.view.Main',{
 						// sm,
 		      			{ // west panel
 										region : 'west',
+										itemId:'pnlTools',
 										flex:3,
-										// xtype:'searchNav',
 										title:'Tools',
 										split : true,  
 										shrinkToFit:true,

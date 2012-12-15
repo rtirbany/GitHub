@@ -40,8 +40,7 @@ Ext.define('SearchTool.controller.SearchTool',{
 		    ,
 			'checkbox[itemId=cboxSrcAll]' : {
 				change:this.toggleAllSources
-			}
-			
+			} 
 			,
 			'button[itemId=btnHelp]' : {
 				click: this.btnHelpHandler
@@ -50,9 +49,23 @@ Ext.define('SearchTool.controller.SearchTool',{
 			'button[itemId=btnLogout]' : {
 				click: this.btnLogoutHandler
 			}
+			,
+			'searchSources' : {
+				collapse: this.fn
+			},
+			'searchNav' : {
+				'collapse' : this.fn
+			}
 		});//control function
 	},
-	
+	fn : function(p){ 
+		var n = Ext.ComponentQuery.query('searchNav')[0].collapsedHorizontal();
+		var s = Ext.ComponentQuery.query('searchSources')[0].collapsedHorizontal();
+		if (n && s)
+			Ext.ComponentQuery.query('#pnlTools')[0].collapse();
+		//pnlTools.collapsed
+	}
+	,
 	executeSearch : function(btn,e){  
 				//IE8 doesn't support trim, so this is req'd
 				if(typeof String.prototype.trim !== 'function') {
