@@ -5,6 +5,7 @@ Ext.define('SearchTool.config.Config', {
     //sponsorWs: "http://senchatraining.com/ftextjs4/webservices/sponsor.cfc",
     //stateProviderWs: "http://senchatraining.com/ftextjs4/webservices/stateprovider.cfc",
     products: 'data/products.json',
+    sources:  'data/sources.json',
     loadMsg: 'Loading Application.  Please wait...'
   }
 });

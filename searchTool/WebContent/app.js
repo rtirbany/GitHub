@@ -21,7 +21,7 @@ Ext.application({
 	name : 'SearchTool',
 	appFolder : 'app',
 	//enableQuickTips : true,
-	controllers:['SearchTool'],
+	controllers:['SearchTool','Sources'],
 	requires:['SearchTool.config.Config'],
 	//autoCreateViewport: true,
 	launch : function() {  
