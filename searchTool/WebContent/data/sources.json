@@ -1,0 +1,21 @@
+{
+	sources:	[{
+					boxLabel : 'Src1',
+					xtype : 'checkbox',
+					itemId : 'chkSrc1',
+					checked : true,
+					tooltip : 'Prod1 tooltip' 
+					}, {
+					boxLabel : 'Src2',
+					xtype : 'checkbox',
+					itemId : 'chkSrc2',
+					checked : true,
+					tooltip : 'Prod2 tooltip' 
+					}, {
+					boxLabel : 'Src3',
+					xtype : 'checkbox',
+					itemId : 'chkSrc3',
+					checked : true,
+					tooltip : 'Prod3 tooltip' 
+				}]
+}
