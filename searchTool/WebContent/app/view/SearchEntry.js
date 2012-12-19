@@ -24,6 +24,7 @@ Ext.define('SearchTool.view.SearchEntry', {
 			extend : 'Ext.container.Container',
 			alias : 'widget.searchEntry', 
 			layout:{type:'hbox',align:'stretch'},
+			requires:['SearchTool.view.SearchBoolean'],
 			frame : true,
 			defaults : {
 				margins : '1 5 1 5'
@@ -67,62 +68,22 @@ Ext.define('SearchTool.view.SearchEntry', {
 				}
 
 				]//vbox item array
-			}, {
-				xtype : 'container',
-				layout: 'hbox',
-				flex : 4,
-				items : [
-
+			}, 
 				{
 					xtype : 'fieldset',
-					title : 'Boolean Search',
-					tooltip : 'Types of Products available for search',
+					title: 'Boolean Search',
 					collapsible : true,
-					collapsed : true, 
-					layout:'fit',
-					flex:3,
-					items : [ {
-					   xtype:'textarea',
-					   itemId:'txtAdvSearch'
-					   }
-					   ,
-					   {xtype:'toolbar',
-					    itemId:'advtoolbar',
-					    pack:'end',
-//					    align:'stretch',
-					   items:[
-					   {
-					   xtype:'tbspacer',
-					   width:5
-					   },
-					   {
-					   text:'Help',
-					   handler:function(){
-					   	Ext.Msg.alert('some boolean help page');
-					   
-					   }
-					   },
-					   {
-					   xtype:'tbspacer',
-					   width:500
-					   },
-					   { 
-					   text:'Clear', 
-					   handler:function(){ 
-					   		Ext.ComponentQuery.query('#txtAdvSearch')[0].reset();
-					   }
-					   },
-					   {
-					   xtype:'tbseparator'
-					   }
-					   ,
-					   { 
-					   text:'Search'
-					   }]}
+					collapsed : true,
+					layout : 'fit',
+					flex : 2,
+					items:[
+					{	
+						xtype : 'searchBoolean',
+						tooltip : 'Boolean query entry'
+					}
 					]
-						//fieldset items 
-					},	//fieldset
-					{
+				},	
+				{
 					xtype : 'fieldset',
 					title : '(smthg)', 
 					collapsible : true,
@@ -134,7 +95,7 @@ Ext.define('SearchTool.view.SearchEntry', {
 					]
 						//fieldset items 
 					}
-				]
-			}]
+				 
+			 ]
 
 		});

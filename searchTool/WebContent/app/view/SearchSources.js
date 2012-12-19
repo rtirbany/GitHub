@@ -13,11 +13,12 @@ Ext.define('SearchTool.view.SearchSources',{
 			{  
 			 
 						xtype : 'checkboxgroup',
-						itemId : 'cboxgrpDataSource',
+						itemId : 'chkgrpDataSource',
 						// Distribute controls across 3 even columns, filling
 						// each column from top to bottom before starting the next column
 						columns : [150], 
-						vertical : true,
+						vertical : true
+						,
 						items : [
 								// this.getDataUrl()
 								{
@@ -57,11 +58,12 @@ Ext.define('SearchTool.view.SearchSources',{
 			{  
 			 
 						xtype : 'checkboxgroup',
-						itemId : 'cboxgrpProducts',
+						itemId : 'chkgrpProducts',
 						// Distribute controls across 3 even columns, filling
 						// each column from top to bottom before starting the next column
 						columns : [150], 
-						vertical : true,
+						vertical : true
+						,
 						items : [
 								// this.getDataUrl()
 								{

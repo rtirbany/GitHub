@@ -25,47 +25,16 @@ Ext.define('SearchTool.controller.SearchTool',{
 			'button[itemId=btnSearch]' : {
 				click: this.executeSearch
 			}
-			,
-			'checkboxgroup[itemId=cboxgrpProducts]' : {
-				beforerender:this.addCheckBoxProducts
-			}
-		    ,
-			'checkboxgroup[itemId=cboxgrpDataSource]' : {
-				beforerender:this.addCheckBoxSource
-			}
-			,
-			'checkbox[itemId=cboxProdAll]' : {
-				change:this.toggleAllProducts
-			}
-		    ,
-			'checkbox[itemId=cboxSrcAll]' : {
-				change:this.toggleAllSources
-			} 
-			,
+			, 
 			'button[itemId=btnHelp]' : {
 				click: this.btnHelpHandler
 			}
 			,
 			'button[itemId=btnLogout]' : {
 				click: this.btnLogoutHandler
-			}
-			,
-			'searchSources' : {
-				collapse: this.fn
-			},
-			'searchNav' : {
-				'collapse' : this.fn
-			}
+			} 
 		});//control function
 	},
-	fn : function(p){ 
-		var n = Ext.ComponentQuery.query('searchNav')[0].collapsedHorizontal();
-		var s = Ext.ComponentQuery.query('searchSources')[0].collapsedHorizontal();
-		if (n && s)
-			Ext.ComponentQuery.query('#pnlTools')[0].collapse();
-		//pnlTools.collapsed
-	}
-	,
 	executeSearch : function(btn,e){  
 				//IE8 doesn't support trim, so this is req'd
 				if(typeof String.prototype.trim !== 'function') {
@@ -91,36 +60,6 @@ Ext.define('SearchTool.controller.SearchTool',{
 			},
 			btnLogoutHandler : function(b,e){
 				Ext.Msg.confirm('Confirm Logout','Do you wish to log out of the system?');
-			}
-			,
-			
-			//TODO: fix these..no need to have 2 sep functions here.. in view
-			addCheckBoxProducts : function() { 
-				var grp = '#cboxgrpProducts'; 
-				var allChkbox = Ext.create('Ext.form.field.Checkbox',{boxLabel: 'All', itemId: 'cboxProdAll', name:'cboxProdAll', checked:true, tooltip:'Prod1 tooltip'});
-				Ext.ComponentQuery.query(grp)[0].items.items.unshift(allChkbox);
-				 			   	
-			},
-			addCheckBoxSource : function() { 
-				var grp = '#cboxgrpDataSource'; 
-				var allChkbox = Ext.create('Ext.form.field.Checkbox',{boxLabel: 'All', itemId: 'cboxSrcAll', name:'cboxSrcAll', checked:true, tooltip:'Prod1 tooltip'});
-				Ext.ComponentQuery.query(grp)[0].items.items.unshift(allChkbox);
-				 			   	
-			}, 			   	
-			
-			//TODO: fix these..no need to have 2 sep functions here..
-			//singleton manager for checkbox groups
-			toggleAllProducts : function(b, e) { 
-				grp = '#cboxgrpProducts'; 
-				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
-				SearchTool.util.dom.toggleCheckBoxArray(b.value, arrProducts);
-	 		
-			}//toggleAllProducts
-			,
-			toggleAllSources : function(b, e) {
-				var grp = '#cboxgrpDataSource';
-				var arrProducts = Ext.ComponentQuery.query(grp)[0].items.items;
-				SearchTool.util.dom.toggleCheckBoxArray(b.value, arrProducts);
-	 		
-			}//toggleAllSources
+			} 
+			 
 });

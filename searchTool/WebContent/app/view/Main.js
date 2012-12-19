@@ -41,6 +41,7 @@ Ext.override(Ext.tab.Bar, {
     
  
 var tbarMain = Ext.create('Ext.toolbar.Toolbar',{ 
+	height:50,
 	items:[
 		{
 			xtype:'tbtext',
@@ -76,19 +77,6 @@ Ext.define('SearchTool.view.Main',{
 	tabBar:{
 		layout:{pack:'end',plain:true}
 	},
-//	config:{
-//		title:'SearchToolss', 
-//		tabLayout:[
-//		{
-//			title:'Search'		
-//		},
-//		{
-//			title:'Admin'
-//		}
-//		],
-	initConfig: function(config){ 
-	},
-	
 	initComponent:function(){
     	//this.initConfig(config); 
 		// var sm = new SearchMgmt();
@@ -123,12 +111,11 @@ Ext.define('SearchTool.view.Main',{
 										itemId:'pnlTools',
 										flex:3,
 										title:'Tools',
-										split : true,  
-										shrinkToFit:true,
 										layout:'hbox',
 										collapsible:true,
 										animCollapse:true,
 										collapseDirection:'left', 
+										split:true,
 										defaults:{
 											collapsible : true,
 											animCollapse : true,
@@ -138,18 +125,18 @@ Ext.define('SearchTool.view.Main',{
 										items : [
 										{
 											xtype : 'searchNav',
-											flex : 3
+											flex : 2
 											
 										}, {
 											xtype : 'searchSources',
-											flex : 2
+											width : 120
 										}
 										]   // west panel items
 									}		//west panel definition
 						,
 						{	//north panel
 							region:'north',  
-	 						height:155,
+	 						height:165,
 	 						collapsible : true,
 							animCollapse : true,
 							collapseDirection : 'up',
