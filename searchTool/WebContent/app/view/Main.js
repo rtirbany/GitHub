@@ -113,46 +113,23 @@ Ext.define('SearchTool.view.Main',{
 										animCollapse:true,
 										collapseDirection:'left', 
 										split:true,
-										items : [{header:false,
-												 defaults:{width:'100%'},
-												 items:[
+										items : [  
+//												{
+												//xtype:'container',
+//												layout: {
+//													type:'vbox'  
+//												}, 
+//												items:[ 
+//												  
 												{ 
-													xtype:'checkbox', 
-													itemId:'chkSaveQuery',
-													boxLabel:'Save Search'  
-												},
-												{   
-													itemId:'dfFilters', 
-													items:[
-														{xtype:'displayfield',value:'(user selections w/ remove option)'}
-													]
-												},
-												{
-												xtype:'container',
-												layout:
-													{type:'hbox',
-													 pack:'justify' 
-													},
-												defaults:{
-													collapsible : true,
-													animCollapse : true,
-													collapseDirection : 'left'
-												},
-												items:[
-												{
-														 
-															xtype : 'pnlSearch',
-															flex : 2,
-															height:'100%'
-														}, {
-															xtype : 'pnlSources',
-															width : 120
-														}
-												]
-												}//hbox
-												]}
-										]   // west panel items
-									}		//west panel definition
+													xtype:'container',
+													layout:{type:'hbox',align:'stretch'},
+													defaults:{collapsible : true,animCollapse : true,collapseDirection : 'left', height:'100%', overflowX:'hidden', overflowY:'auto'},
+													items:[	{ xtype : 'pnlSearch',flex : 2}, {xtype : 'pnlSources',width : 120}]
+												 }//hbox
+//												]//vbox items array
+//												}//hbox
+										]} 
 						,
 						{	//north panel
 							region:'north',  
