@@ -11,9 +11,12 @@ Ext.define('SearchTool.util.dom', {
 				parent.items.items[pos].addCls('tabHighlight');
 				parent.tab.addCls('tabHighlight'); 
 				Ext.Function.defer(function(){
-						parent.items.items[pos].removeCls('tabHighlight');
+						//clear out all highlighting
+						Ext.each(parent.items.items, function(item,idx) {
+							item.removeCls('tabHighlight');
+						});
 						s.removeCls('tabHighlight');
-						parent.tab.removeCls('tabHighlight');
+						//parent.tab.removeCls('tabHighlight');
 						},this.highlightTimer);
 			}//if 
 		}//modTabChildren
