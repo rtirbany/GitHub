@@ -1,7 +1,7 @@
 Ext.define('SearchTool.util.dom', {
 	statics:{
 		highlightTimer : 700,
-		modTabChildren : function(querykey,pos,k,obj,boolHighlight){
+		modTabChildren : function(querykey,pos,obj,boolHighlight){
 			var parent = Ext.ComponentQuery.query(querykey)[0];
 			if (parent.disabled)
 				parent.enable();

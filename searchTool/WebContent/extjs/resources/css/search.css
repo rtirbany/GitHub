@@ -36,3 +36,25 @@
     margin-top: -30px;
     margin-bottom: 10px;
 }
+.x-component-linkbutton a {
+	border: 1px solid #888888;
+	font-size: 11px;
+	font-weight: bold;
+	font-color: #FFEEAA;
+	background: #D4D4EE;
+	margin: 2px 5px 1px 5px;
+	padding: 2px 9px 2px 9px;
+	text-decoration:none;
+}
+
+.x-component-linkbutton a:hover {
+	border: 2px solid #888888; 
+	font-size: 12px;
+	font-weight: bold;
+	font-color: #333333;
+	background: #FFEEAA;
+	margin: 1px 5px 1px 5px;
+	padding: 2px 9px 2px 9px;
+	text-decoration:underline;
+}
+

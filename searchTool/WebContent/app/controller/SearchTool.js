@@ -45,12 +45,13 @@ Ext.define('SearchTool.controller.SearchTool',{
 		   		var val = Ext.ComponentQuery.query('#cboxSearch')[0].getValue().trim();
 		   		var boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
 				if (val && val.length > 0) { 
-					var k = '<a href="'+val+'" tip="'+val+'"> '+val+'</a>';
+					var k = val;
+					var b = Ext.create('SearchTool.view.linkbutton',{text:'Search', url:k, tooltip:'hi'});
 					if (boolSaveQuery)
 						target='#tbSaved'
 					else 
 					   	target='#tbHistory'
-					SearchTool.util.dom.modTabChildren(target,0,k,{xtype:"displayfield",border:false,value:k,tooltip:"Ext.Date.format(new Date(),'F d g:i a')"},true);
+					SearchTool.util.dom.modTabChildren(target,0,b,true);//,tooltip:"Ext.Date.format(new Date(),'F d g:i a')"},true);
 				}//if
 			}//executeSearch
 			,
