@@ -1,6 +1,3 @@
-
-
-
 Ext.override(Ext.tab.Bar, {
     initComponent: function() {
         var me = this;
@@ -73,7 +70,7 @@ Ext.define('SearchTool.view.Main',{
 	extend:'Ext.container.Viewport',
 	itemId:'main',
 	dataUrl:'',
-	requires:['SearchTool.view.SearchNav','SearchTool.view.SearchSources','SearchTool.view.SearchEntry'],
+	requires:['SearchTool.view.PnlSearch','SearchTool.view.PnlSources','SearchTool.view.SearchArea'],
 	tabBar:{
 		layout:{pack:'end',plain:true}
 	},
@@ -110,51 +107,72 @@ Ext.define('SearchTool.view.Main',{
 										region : 'west',
 										itemId:'pnlTools',
 										flex:3,
-										title:'Tools',
-										layout:'hbox',
+										title:'Search Tools',
+										layout:'fit',
 										collapsible:true,
 										animCollapse:true,
 										collapseDirection:'left', 
 										split:true,
-										defaults:{
-											collapsible : true,
-											animCollapse : true,
-											collapseDirection : 'left',
-											height:'100%'
-										},
-										items : [
-										{
-											xtype : 'searchNav',
-											flex : 2
-											
-										}, {
-											xtype : 'searchSources',
-											width : 120
-										}
+										items : [{header:false,
+												 defaults:{width:'100%'},
+												 items:[
+												{ 
+													xtype:'checkbox', 
+													itemId:'chkSaveQuery',
+													boxLabel:'Save Search'  
+												},
+												{   
+													itemId:'dfFilters', 
+													items:[
+														{xtype:'displayfield',value:'(user selections w/ remove option)'}
+													]
+												},
+												{
+												xtype:'container',
+												layout:
+													{type:'hbox',
+													 pack:'justify' 
+													},
+												defaults:{
+													collapsible : true,
+													animCollapse : true,
+													collapseDirection : 'left'
+												},
+												items:[
+												{
+														 
+															xtype : 'pnlSearch',
+															flex : 2,
+															height:'100%'
+														}, {
+															xtype : 'pnlSources',
+															width : 120
+														}
+												]
+												}//hbox
+												]}
 										]   // west panel items
 									}		//west panel definition
 						,
 						{	//north panel
 							region:'north',  
 	 						height:165,
-	 						collapsible : true,
-							animCollapse : true,
-							collapseDirection : 'up',
 							layout : {
+								pack:'justify',
 								align : 'stretch'
 							},
 	 						items:[	 //contents of north panel within main Search page pab
 	 						 { 
-	 								 xtype:'searchEntry'
+	 								 xtype:'searchArea'
 	 						 } 
 	 				       ]//north panel items array
 	 					}//north panel definition,
 	 			,		
 	 					{	//center panel
 							region:'center',
+//							xtype:'resultsgrid',
 			 				title:'Results', 
-			 				flex:8,
-			 				html:'(results go here)',
+			 				flex:8, 
 			 				tooltip:'results will appear here'
 			 			
 			 			}   //center panel defintion
