@@ -16,7 +16,7 @@ Ext.define('SearchTool.util.dom', {
 							item.removeCls('tabHighlight');
 						});
 						s.removeCls('tabHighlight');
-						//parent.tab.removeCls('tabHighlight');
+						parent.tab.removeCls('tabHighlight');
 						},this.highlightTimer);
 			}//if 
 		}//modTabChildren
