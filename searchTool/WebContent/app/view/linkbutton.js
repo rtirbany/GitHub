@@ -1,15 +1,17 @@
 Ext.define('SearchTool.view.linkbutton',{
 	extend:'Ext.Component',
 	alias:'widget.linkbutton',
-	renderTpl: '<div id="{id}-btnWrap" style="min-height:24px;" qtip="{ttip}" class="{baseCls}-linkbutton">'+
+	//TODO: renderTpl or ?  need to be able to reference and update/add tooltip 
+	//renderTpl: '<div {itemId}-btnWrap" style="min-height:24px;" title="{ttip}" class="{baseCls}-linkbutton">
+	renderTpl: '<div title="{ttip}" style="min-height:24px;" class="{baseCls}-linkbutton">'+
 	'<a href="{url}">'+'{t}'+'</a></div>',
 	renderSelectors : {
 		linkEl:'a'
 	},
 	initComponent : function(){
 		this.callParent(arguments);
-		this.renderData = {
-			id: this.id,
+		this.renderData = { 
+			//itemId: this.itemId,
 			t: this.text,
 			url: this.url,
 			ttip: this.tooltip

@@ -36,6 +36,9 @@
     margin-top: -30px;
     margin-bottom: 10px;
 }
+.x-component-linkbutton div {
+	width:120px;
+}
 .x-component-linkbutton a {
 	border: 1px solid #888888;
 	font-size: 11px;
