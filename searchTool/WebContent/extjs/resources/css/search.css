@@ -9,7 +9,6 @@
 
 .tabHighlight {
 	background: #FFEEAA;
-	border: 3px solid;
 }
 
 .x-mask.splashscreen {
@@ -36,8 +35,12 @@
     margin-top: -30px;
     margin-bottom: 10px;
 }
+
+.frmSearchBtns {
+	margin : 0px 2px 0px 2px;
+}
+
 .x-component-linkbutton div {
-	width:120px;
 }
 .x-component-linkbutton a {
 	border: 1px solid #888888;
@@ -49,7 +52,15 @@
 	padding: 2px 9px 2px 9px;
 	text-decoration:none;
 }
+.qryLinkbutton{
+	width:55px;
+	margin: 2px 5px 1px 5px;
+}
 
+.overQryLinkbutton {
+	border: 2px solid #FF0000; 
+	
+}
 .x-component-linkbutton a:hover {
 	border: 2px solid #888888; 
 	font-size: 12px;
