@@ -17,7 +17,7 @@ ccListCombo = new Ext.form.ComboBox({
 	listWidth : 450,
 	// forceSelection:false,
 	selectOnFocus : true,
-	width:285,
+	width:240,
 	listeners: {
           afterrender: function(field) {
             field.focus();
@@ -29,20 +29,16 @@ Ext.define('SearchTool.view.SearchArea', {
 			extend : 'Ext.container.Container',
 			alias : 'widget.searchArea', 
 			layout:{type:'hbox',align:'stretch'},
-			requires:['SearchTool.view.SearchBoolean'],
-			frame : true,
+			requires:['SearchTool.view.SearchBoolean'], 
 			defaults : {
-				margins : '1 5 1 5'
+				margins : '10 10 2 10'
 			},
-			
-	 		bodyStyle:'padding: 10px 5px 5px 5px;', 
 			items : [{
 				extend : 'Ext.container.Container',
 				border:false,
 				layout : {
-				type:'vbox',
-				pack:'justify'
-				
+					type:'vbox',
+					pack:'justify'
 				},
 				flex : 1,
 				items : [
@@ -72,7 +68,8 @@ Ext.define('SearchTool.view.SearchArea', {
 				}		// cbox, btnSearch, Clear,
 				, {
 					xtype : 'displayfield',
-					value : 'Home > (breadcrumb area)'
+					value : 'Home > (breadcrumb area)',
+					margins:' 8 5 8 5'
 
 				}
 
