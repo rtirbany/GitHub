@@ -31,8 +31,7 @@ Ext.define('SearchTool.view.SearchBoolean', {
 				xtype : 'toolbar',
 				dock : 'bottom',
 				items : [{
-							xtype : 'tbspacer',
-							width : 300
+							xtype : 'tbfill' 
 						}, {
 							text : 'Clear',
 							handler : function() {

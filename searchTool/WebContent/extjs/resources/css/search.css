@@ -36,6 +36,14 @@
     margin-bottom: 10px;
 }
 
+.breadcrumbstyle {
+	color:blue;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.align-top { vertical-align:top; }
+
 .frmSearchBtns {
 	margin : 0px 2px 0px 2px;
 }
