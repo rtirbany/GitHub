@@ -49,7 +49,7 @@ Ext.define('SearchTool.view.SearchArea', {
 					layout : {
 						type : 'vbox'
 					},
-					margins: '8 12 8 5',  
+					margins: '8 8 8 5',  
 					height:120,
 					items : [
 						{
@@ -86,9 +86,6 @@ Ext.define('SearchTool.view.SearchArea', {
 						   	{
 								xtype : 'button',
 								cls: 'frmSearchBtns',
-								style:{ 
-									fontSize:'12px'
-								},
 								text : 'Clear',
 								itemId : 'btnClear',
 								tooltip : 'Clear search field',
