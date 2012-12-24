@@ -8,7 +8,7 @@ ccListCombo = new Ext.form.ComboBox({
 	cls : 'qrySearch',
 	store : ccStore,
 	// fieldLabel: 'Search By Keyword',
-	// labelSeparator:':',
+	// labelSeparator:':', 
 	hasfocus:true,
 	displayField : 'name',
 	hiddenName : 'ccaction',
@@ -16,8 +16,9 @@ ccListCombo = new Ext.form.ComboBox({
 	typeAhead : true,
 	mode : 'local',
 	width:'100%', 
-	listWidth : 450,
-	// forceSelection:false,
+	height:'130',
+	listWidth : 450, 
+	tooltip:'hello',
 	selectOnFocus : true, 
 	listeners: {
           afterrender: function(field) {
@@ -30,7 +31,7 @@ Ext.define('SearchTool.view.SearchArea', {
 			extend : 'Ext.container.Container',
 			alias : 'widget.searchArea', 
 			layout:{type:'hbox'},
-			requires:['SearchTool.view.SearchBoolean'], 
+			requires:['SearchTool.view.SearchBoolean','SearchTool.config.Config'], 
 			items : [{
 				extend : 'Ext.container.Container', 
 				layout : {
@@ -48,40 +49,46 @@ Ext.define('SearchTool.view.SearchArea', {
 					layout : {
 						type : 'vbox'
 					},
-					margins: '8 8 8 5',  
+					margins: '8 12 8 5',  
 					height:120,
-					items : [{
+					items : [
+						{
 					    		xtype:'displayfield',
 					    		fieldCls:'dfWildcard',
-					    		value:'(? = single char wildcard; * = wildcard)'
+					    		value:SearchTool.config.Config.searchCboxCaption,
+					    		tooltip:'hi'
 					
 					    }
 					    ,ccListCombo,
-					{ xtype:'container',
-						width:'100%',
-						border:true,
-						frame:true,
-					    layout:{type:'hbox',pack:'center', align:'left'},
-					    items:[
-					    {xtype:'container',
-					     items:[ 
-					    {
+						{ xtype:'container',
+							width:'100%',
+							border:true,
+							frame:true,
+						    layout:{type:'hbox',pack:'center', align:'left'},
+						    items:[
+						    {xtype:'container',
+						     items:[
+							    {
 					    		xtype:'checkbox',
 					    		cls:'chkTitles',
 					    		boxLabel:'Search Titles only',
 					    		flex:1
-					    }	
-					    ]},
-					    {
+						    	}
+						    ]
+						   	},
+					   		{
 					    	xtype:'container',
 					    	flex:1,
 					    	border:true,
 					    	frame:true,
 					    	layout:{type:'hbox',pack:'end'},
 					    	items:[
-						   {
+						   	{
 								xtype : 'button',
 								cls: 'frmSearchBtns',
+								style:{ 
+									fontSize:'12px'
+								},
 								text : 'Clear',
 								itemId : 'btnClear',
 								tooltip : 'Clear search field',
