@@ -5,6 +5,7 @@ ccStore = new Ext.data.SimpleStore({
 
 ccListCombo = new Ext.form.ComboBox({
 	itemId : 'cboxSearch',
+	cls : 'qrySearch',
 	store : ccStore,
 	// fieldLabel: 'Search By Keyword',
 	// labelSeparator:':',
@@ -16,8 +17,7 @@ ccListCombo = new Ext.form.ComboBox({
 	mode : 'local',
 	listWidth : 450,
 	// forceSelection:false,
-	selectOnFocus : true,
-	width:240,
+	selectOnFocus : true, 
 	listeners: {
           afterrender: function(field) {
             field.focus();
@@ -28,24 +28,27 @@ ccListCombo = new Ext.form.ComboBox({
 Ext.define('SearchTool.view.SearchArea', {
 			extend : 'Ext.container.Container',
 			alias : 'widget.searchArea', 
-			layout:{type:'hbox',align:'stretch'},
+			layout:{type:'hbox'},
 			requires:['SearchTool.view.SearchBoolean'], 
-			defaults : {
-				margins : '10 10 2 10'
-			},
 			items : [{
-				extend : 'Ext.container.Container',
-				border:false,
+				extend : 'Ext.container.Container', 
 				layout : {
 					type:'vbox',
-					pack:'justify'
+					align:'stretch'
 				},
-				flex : 1,
+				flex : 1, 
 				items : [
 				{
+				    width:'100%',
 					xtype : 'form', 
 					url : '/simplesearch',
-					layout : 'hbox',
+					layout : {
+						type : 'hbox'
+					},
+					margins: '8 5 8 5',
+					bodyPadding:5,
+					border:true,
+					height:120,
 					items : [ccListCombo, 
 						   {
 								xtype : 'button',
@@ -67,9 +70,22 @@ Ext.define('SearchTool.view.SearchArea', {
 					]
 				}		// cbox, btnSearch, Clear,
 				, {
-					xtype : 'displayfield',
-					value : 'Home > (breadcrumb area)',
-					margins:' 8 5 8 5'
+					xtype : 'form',
+					border:false,
+					margins:' 8 5 8 5',
+					items : [
+					{xtype: 'displayfield',
+					 itemId: 'breadcrumb',
+					 fieldCls:'breadcrumbstyle',
+					 fieldBodyCls: 'align-top',
+					 value : ['level1', 'level2', 'more breadcrumbs'],
+					 listeners : {
+					 	beforerender : function(){
+					 		this.value.unshift('Home'); 
+					 	}
+					 }
+					}
+					]
 
 				}
 

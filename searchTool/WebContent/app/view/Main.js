@@ -36,6 +36,7 @@ Ext.override(Ext.tab.Bar, {
     }
 });
     
+//var mnuResults = Ext.create('SearchTool.view.MnuResults');
  
 var tbarMain = Ext.create('Ext.toolbar.Toolbar',{ 
 	height:50,
@@ -115,17 +116,20 @@ Ext.define('SearchTool.view.Main',{
 										split:true,
 										items : [  
 //												{
-												//xtype:'container',
+//												xtype:'container',
 //												layout: {
-//													type:'vbox'  
+////													type:'vbox'  
 //												}, 
 //												items:[ 
+//												{header:false, html:'test'},
 //												  
 												{ 
 													xtype:'container',
 													layout:{type:'hbox',align:'stretch'},
 													defaults:{collapsible : true,animCollapse : true,collapseDirection : 'left', height:'100%', overflowX:'hidden', overflowY:'auto'},
-													items:[	{ xtype : 'pnlSearch',flex : 2}, {xtype : 'pnlSources',width : 120}]
+													items:[
+														{ xtype : 'pnlSearch',flex : 2}, 
+														{ xtype : 'pnlSources',width : 120}]
 												 }//hbox
 //												]//vbox items array
 //												}//hbox
@@ -149,6 +153,7 @@ Ext.define('SearchTool.view.Main',{
 							region:'center',
 //							xtype:'resultsgrid',
 			 				title:'Results', 
+			 				id:'results',
 			 				flex:8, 
 			 				tooltip:'results will appear here'
 			 			

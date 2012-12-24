@@ -42,41 +42,46 @@
 	font-size: 12px;
 }
 
+.qrySearch { 
+}
+
 .align-top { vertical-align:top; }
 
 .frmSearchBtns {
 	margin : 0px 2px 0px 2px;
 }
 
-.x-component-linkbutton div {
-}
-.x-component-linkbutton a {
-	border: 1px solid #888888;
+.x-component-linkbutton {
+	text-decoration:none; 
 	font-size: 11px;
 	font-weight: bold;
 	font-color: #FFEEAA;
 	background: #D4D4EE;
+	
+}
+.x-component-linkbutton a { 
 	margin: 2px 5px 1px 5px;
 	padding: 2px 9px 2px 9px;
-	text-decoration:none;
 }
+
 .qryLinkbutton{
+	background: #D4D4EE;
+	text-decoration: none;
 	width:55px;
-	margin: 2px 5px 1px 5px;
+	margin: 2px 5px 1px 5px; 
+	border: 1px solid #888888;
+	padding: 2px 9px 2px 9px;
+	font-size: 11px;
+	font-weight: bold;  
+	font-color: #333333; 
+	
 }
 
 .overQryLinkbutton {
 	border: 2px solid #FF0000; 
-	
-}
-.x-component-linkbutton a:hover {
-	border: 2px solid #888888; 
-	font-size: 12px;
-	font-weight: bold;
 	font-color: #333333;
-	background: #FFEEAA;
-	margin: 1px 5px 1px 5px;
-	padding: 2px 9px 2px 9px;
 	text-decoration:underline;
+	font-size: 13px;
+	font-weight: bold;
 }
 
