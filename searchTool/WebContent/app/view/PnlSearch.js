@@ -29,7 +29,7 @@ Ext.define('SearchTool.view.PnlSearch',{
 			plain:true,
 			border:false,
 			defaults:{  
-				border:true
+				border:true	//required to display border around qrylink
 			}, 
 			items:[  //contents of west panel within main Search page tab
    	    		{ 
@@ -59,9 +59,7 @@ Ext.define('SearchTool.view.PnlSearch',{
 					title:'History',
 					layout:{
 						align:'center'
-					},
-					//height:'50%',//needed for scrollbar? always appears though..why? wrong height?
-					
+					},  
 					disabled:true
 				}  
 			] //west panel items array  

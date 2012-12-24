@@ -128,8 +128,8 @@ Ext.define('SearchTool.view.Main',{
 													layout:{type:'hbox',align:'stretch'},
 													defaults:{collapsible : true,animCollapse : true,collapseDirection : 'left', height:'100%', overflowX:'hidden', overflowY:'auto'},
 													items:[
-														{ xtype : 'pnlSearch',flex : 2}, 
-														{ xtype : 'pnlSources',width : 120}]
+														{ xtype : 'pnlSearch',flex : 1.3}, 
+														{ xtype : 'pnlSources',flex : .7}]
 												 }//hbox
 //												]//vbox items array
 //												}//hbox
@@ -137,7 +137,7 @@ Ext.define('SearchTool.view.Main',{
 						,
 						{	//north panel
 							region:'north',  
-	 						height:165,
+	 						height:160,
 							layout : {
 								pack:'justify',
 								align : 'stretch'
@@ -154,7 +154,7 @@ Ext.define('SearchTool.view.Main',{
 //							xtype:'resultsgrid',
 			 				title:'Results', 
 			 				id:'results',
-			 				flex:8, 
+			 				flex:10, 
 			 				tooltip:'results will appear here'
 			 			
 			 			}   //center panel defintion

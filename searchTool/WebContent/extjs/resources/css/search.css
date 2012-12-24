@@ -49,6 +49,7 @@
 
 .frmSearchBtns {
 	margin : 0px 2px 0px 2px;
+	width:80px; 
 }
 
 .x-component-linkbutton {
