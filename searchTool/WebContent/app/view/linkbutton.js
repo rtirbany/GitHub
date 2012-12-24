@@ -1,10 +1,12 @@
 Ext.define('SearchTool.view.linkbutton',{
 	extend:'Ext.Component',
 	alias:'widget.linkbutton',
+	cls:'qryLinkbutton',
+	overCls:'overQryLinkbutton', 
 	//TODO: renderTpl or ?  need to be able to reference and update/add tooltip 
 	//renderTpl: '<div {itemId}-btnWrap" style="min-height:24px;" title="{ttip}" class="{baseCls}-linkbutton">
-	renderTpl: '<div title="{ttip}" style="min-height:24px;" class="{baseCls}-linkbutton">'+
-	'<a href="{url}">'+'{t}'+'</a></div>',
+	renderTpl: '<div title="{ttip}" style="min-height:24px;">'+
+		'<a href="{url}" class="{baseCls}-linkbutton" >'+'{t}'+'</a></div>',
 	renderSelectors : {
 		linkEl:'a'
 	},
@@ -26,8 +28,8 @@ Ext.define('SearchTool.view.linkbutton',{
 	handler : function(e){
 		Ext.Msg.alert('you clicked me');
 	},
-	mouseoverHandler : function(e){
-			Ext.Msg.alert('you ran over me');
+	mouseoverHandler : function(e,d,f){
+			Ext.Msg.alert(d.text+'you ran over me');
 	}
 	
 });
