@@ -50,13 +50,35 @@ Ext.define('SearchTool.view.SearchArea', {
 					},
 					margins: '8 8 8 5',  
 					height:120,
-					items : [ccListCombo,
+					items : [{
+					    		xtype:'displayfield',
+					    		fieldCls:'dfWildcard',
+					    		value:'(? = single char wildcard; * = wildcard)'
+					
+					    }
+					    ,ccListCombo,
 					{ xtype:'container',
 						width:'100%',
 						border:true,
 						frame:true,
-					    layout:{type:'hbox',pack:'end'},
+					    layout:{type:'hbox',pack:'center', align:'left'},
 					    items:[
+					    {xtype:'container',
+					     items:[ 
+					    {
+					    		xtype:'checkbox',
+					    		cls:'chkTitles',
+					    		boxLabel:'Search Titles only',
+					    		flex:1
+					    }	
+					    ]},
+					    {
+					    	xtype:'container',
+					    	flex:1,
+					    	border:true,
+					    	frame:true,
+					    	layout:{type:'hbox',pack:'end'},
+					    	items:[
 						   {
 								xtype : 'button',
 								cls: 'frmSearchBtns',
@@ -66,7 +88,8 @@ Ext.define('SearchTool.view.SearchArea', {
 								handler : function() {
 									Ext.ComponentQuery.query('#cboxSearch')[0].reset();
 							}
-							}, {
+							},
+							{
 								xtype : 'button',
 								cls: 'frmSearchBtns',
 								text : 'Search',
@@ -74,6 +97,7 @@ Ext.define('SearchTool.view.SearchArea', {
 								tooltip : 'Run the search',
 								scope : this
 							}
+							]}
 					    ]
 					    }
 					]
