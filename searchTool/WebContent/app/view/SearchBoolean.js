@@ -10,7 +10,10 @@ Ext.define('SearchTool.view.SearchBoolean', {
 							width : 3
 						}, {
 							text : 'Query Builder',
-							tooltip : 'Launch Query Builder'
+							tooltip : 'Launch Query Builder',
+							handler : function(){
+								Ext.Msg.alert('query builder launched');
+							}
 						}, {
 							xtype : 'tbspacer',
 							width : 2
@@ -19,18 +22,20 @@ Ext.define('SearchTool.view.SearchBoolean', {
 						}, {
 							xtype : 'tbspacer',
 							width : 2
-						}, {
-							text : 'Help',
-							handler : function() {
-								Ext.Msg.alert('some boolean help page');
-							}
 						}]
 			}		// top
 
 			, {
 				xtype : 'toolbar',
 				dock : 'bottom',
-				items : [{
+				items : [
+						{
+							text : 'Help',
+							handler : function() {
+								Ext.Msg.alert('some boolean help page');
+							}
+						},
+						{
 							xtype : 'tbfill' 
 						}, {
 							text : 'Clear',
@@ -55,6 +60,8 @@ Ext.define('SearchTool.view.SearchBoolean', {
 
 			items : [{
 						xtype : 'textarea',
+						value: '(edit not available)',
+						disabled: true,
 						itemId:'txtSearchBoolean',
 						width : '100%'
 					}]
