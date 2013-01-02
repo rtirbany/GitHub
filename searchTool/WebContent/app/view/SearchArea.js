@@ -1,37 +1,8 @@
-ccStore = new Ext.data.SimpleStore({
-			fields : ['name', 'value'],
-			data : [['a keyword1', 'a keyword1'], ['b keyword2', 'b keyword2']]
-		});
-
-ccListCombo = new Ext.form.ComboBox({
-	itemId : 'cboxSearch',
-	cls : 'qrySearch',
-	store : ccStore,
-	// fieldLabel: 'Search By Keyword',
-	// labelSeparator:':', 
-	hasfocus:true,
-	displayField : 'name',
-	hiddenName : 'ccaction',
-	valueField : 'value',
-	typeAhead : true,
-	mode : 'local',
-	width:'100%', 
-	height:'130',
-	listWidth : 450, 
-	tooltip:'hello',
-	selectOnFocus : true, 
-	listeners: {
-          afterrender: function(field) {
-            field.focus();
-          }
-        }
-	});
-
 Ext.define('SearchTool.view.SearchArea', {
-			extend : 'Ext.container.Container',
+			extend : 'Ext.container.Container', 
 			alias : 'widget.searchArea', 
 			layout:{type:'hbox'},
-			requires:['SearchTool.view.SearchBoolean','SearchTool.config.Config'], 
+			requires:['SearchTool.view.QueryBuilder','SearchTool.config.Config'], 
 			items : [{
 				extend : 'Ext.container.Container', 
 				layout : {
@@ -45,67 +16,78 @@ Ext.define('SearchTool.view.SearchArea', {
 				    width:'100%',
 					xtype : 'form', 
 					url : '/simplesearch',
+					bodyPadding:5, 
 					border:false,
-					layout : {
-						type : 'vbox'
-					},
 					margins: '8 8 8 5',  
 					height:120,
 					items : [
 						{
 					    		xtype:'displayfield',
+					    		anchor:'100%',
 					    		fieldCls:'dfWildcard',
-					    		value:SearchTool.config.Config.searchCboxCaption,
-					    		tooltip:'hi'
+					    		labelCls:'dfLabel',
+					    		fieldLabel:SearchTool.config.Config.searchCboxCaptionLabel,
+					    		value:SearchTool.config.Config.searchCboxCaptionValue,
+					    		qtip:'hi'
 					
 					    }
-					    ,ccListCombo,
+					    ,{
+					       xtype:'combo',
+					       id:'cboxSearch',
+					       name:'search',
+					       store : 'Keywords',
+					       valueField: 'id',
+					       displayField: 'keyword',
+					       triggerAction:'query',
+					       multiselect:false,
+					       anchor:'100%',
+					       queryMode:'local',
+					       typeahead:true,
+					       listeners : {
+							afterrender : function(field) {
+								field.focus();
+							}
+        }
+					    },
 						{ xtype:'container',
 							width:'100%',
-							border:true,
-							frame:true,
-						    layout:{type:'hbox',pack:'center', align:'left'},
-						    items:[
-						    {xtype:'container',
-						     items:[
-							    {
-					    		xtype:'checkbox',
-					    		cls:'chkTitles',
-					    		boxLabel:'Search Titles only',
-					    		flex:1
-						    	}
-						    ]
-						   	},
-					   		{
-					    	xtype:'container',
-					    	flex:1,
-					    	border:true,
-					    	frame:true,
-					    	layout:{type:'hbox',pack:'end'},
-					    	items:[
-						   	{
-								xtype : 'button',
-								cls: 'frmSearchBtns',
-								text : 'Clear',
-								itemId : 'btnClear',
-								tooltip : 'Clear search field',
-								handler : function() {
-									Ext.ComponentQuery.query('#cboxSearch')[0].reset();
+							layout:'column',
+						    items : [{
+									xtype : 'checkbox',
+									itemId : 'chkTitleQuery',
+									cls : 'chkTitles',
+									boxLabel : 'Search Titles only',
+									columnWidth : .4
+								}, {
+									xtype : 'container',
+									layout : 'column',
+									columnWidth : .6,
+									items : [{
+												// layout:{type:'hbox',pack:'end'},
+												xtype : 'button',
+												cls : 'frmSearchBtns',
+												columnWidth : .5,
+												text : 'Clear',
+												itemId : 'btnClear',
+												tooltip : 'Clears keyword criteria',
+												handler : function() {
+													this.up('form').getForm()
+															.reset();
+												}
+											}, {
+												xtype : 'button',
+												cls : 'frmSearchBtns',
+												columnWidth : .5,
+												text : 'Search',
+												itemId : 'btnSearch',
+												tooltip : 'Run the search',
+												scope : this
+											}]
+								}]
 							}
-							},
-							{
-								xtype : 'button',
-								cls: 'frmSearchBtns',
-								text : 'Search',
-								itemId : 'btnSearch',
-								tooltip : 'Run the search',
-								scope : this
-							}
-							]}
 					    ]
 					    }
-					]
-				}		// cbox, btnSearch, Clear,
+					 	// cbox, btnSearch, Clear,
 				, {
 					xtype : 'form',
 					border:false,
@@ -117,7 +99,8 @@ Ext.define('SearchTool.view.SearchArea', {
 					 fieldBodyCls: 'align-top',
 					 value : ['level1', 'level2', 'more breadcrumbs'],
 					 listeners : {
-					 	beforerender : function(){
+					 	beforerender : function(){ 
+					 		//TODO: Dynamically add 'home' to breadcrumbs (which come from json call)
 					 		this.value.unshift('Home'); 
 					 	}
 					 }
