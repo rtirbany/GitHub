@@ -1,22 +1,6 @@
 //TODO: tabpanel tabs should be equal-sized and fit/stretched
 //TODO: plain = true
-//TODO: make this more lightweight
-
-var pnlSearchHistory = Ext.create('Ext.panel.Panel',{
-	title:'History',
-	autoScroll:true,
-	layout:'vbox',
-	items: [{ 
-        title: 'Hist panel1', 
-        flex: 2
-    },
-    { 
-        title: 'Hist panel2', 
-        flex: 4
-    }]
-	//	hidden:true
-}); 
- 
+//TODO: make this more lightweight 
 
 Ext.define('SearchTool.view.PnlSearch',{
 	extend:'Ext.panel.Panel',

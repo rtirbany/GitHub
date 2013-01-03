@@ -56,7 +56,7 @@ Ext.define('SearchTool.view.SearchArea', {
 									xtype : 'checkbox',
 									itemId : 'chkTitleQuery',
 									cls : 'chkTitles',
-									boxLabel : 'Search Titles only',
+									boxLabel : SearchTool.config.Config.searchChkCaptionLabel,
 									columnWidth : .4
 								}, {
 									xtype : 'container',
@@ -69,7 +69,7 @@ Ext.define('SearchTool.view.SearchArea', {
 												columnWidth : .5,
 												text : 'Clear',
 												itemId : 'btnClear',
-												tooltip : 'Clears keyword criteria',
+												tooltip : SearchTool.config.Config.searchBtnClearTtip,
 												handler : function() {
 													this.up('form').getForm()
 															.reset();
@@ -80,7 +80,7 @@ Ext.define('SearchTool.view.SearchArea', {
 												columnWidth : .5,
 												text : 'Search',
 												itemId : 'btnSearch',
-												tooltip : 'Run the search',
+												tooltip : SearchTool.config.Config.searchBtnSearchTtip,
 												scope : this
 											}]
 								}]
@@ -113,21 +113,21 @@ Ext.define('SearchTool.view.SearchArea', {
 			}, 
 				{
 					xtype : 'fieldset',
-					title: 'Boolean Search',
+					title: SearchTool.config.Config.qryBuilderCaptionLabel,
 					collapsible : true,
 					collapsed : true,
 					layout : 'fit',
 					flex : 2,
+					qtip : 'Boolean query entry',
 					items:[
 					{	
-						xtype : 'searchBoolean',
-						tooltip : 'Boolean query entry'
+						xtype : 'searchBoolean'
 					}
 					]
 				},	
 				{
 					xtype : 'fieldset',
-					title : '(smthg)', 
+					title : SearchTool.config.Config.SmthgCaptionLabel, 
 					collapsible : true,
 					collapsed : true, 
 					flex:1,
