@@ -51,7 +51,7 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					emptyText : '(Select Operation)',
 					typeAhead : true,
 					mode : 'local',
-					width : '18%'
+					width : '20%'
 				}
 				, 
 				{
