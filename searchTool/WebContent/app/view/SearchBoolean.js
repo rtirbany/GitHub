@@ -79,8 +79,8 @@ Ext.define('SearchTool.view.SearchBoolean', {
 
 			items : [{
 						xtype : 'textarea',
-						value: '(edit not available)',
-						disabled : true,
+						value: '(validation not available)',
+						disabled : false,
 						width:'100%',
 						height:'90%',
 						itemId : 'txtSearchBoolean'
