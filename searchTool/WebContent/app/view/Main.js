@@ -70,7 +70,6 @@ var tbarMain = Ext.create('Ext.toolbar.Toolbar',{
 Ext.define('SearchTool.view.Main',{ 
 	extend:'Ext.container.Viewport',
 	itemId:'main',
-	dataUrl:'',
 	requires:['SearchTool.view.PnlSearch','SearchTool.view.PnlSources','SearchTool.view.SearchArea'],
 	tabBar:{
 		layout:{pack:'end',plain:true}
@@ -128,8 +127,8 @@ Ext.define('SearchTool.view.Main',{
 													layout:{type:'hbox',align:'stretch'},
 													defaults:{collapsible : true,animCollapse : true,collapseDirection : 'left', height:'100%', overflowX:'hidden', overflowY:'auto'},
 													items:[
-														{ xtype : 'pnlSearch',flex : 1.3}, 
-														{ xtype : 'pnlSources',flex : .7}]
+														{ xtype : 'pnlSearch', flex : 1.3}, 
+														{ xtype : 'pnlSources', flex : .7}]
 												 }//hbox
 //												]//vbox items array
 //												}//hbox
@@ -139,12 +138,12 @@ Ext.define('SearchTool.view.Main',{
 							region:'north',  
 	 						height:160,
 							layout : {
-								pack:'justify',
+								pack: 'justify',
 								align : 'stretch'
 							},
 	 						items:[	 //contents of north panel within main Search page pab
 	 						 { 
-	 								 xtype:'searchArea'
+	 								 xtype : 'searchArea' 
 	 						 } 
 	 				       ]//north panel items array
 	 					}//north panel definition,

@@ -2,8 +2,7 @@ Ext.Loader.setConfig({
     enabled: true
     });
 
-Ext.onReady(function() {
-	 
+Ext.onReady(function() { 
 	Ext.getBody().mask('Loading Application.  Please wait...'); 
 	/*
 	// Start the mask on the body and get a reference to the mask
@@ -25,9 +24,10 @@ Ext.application({
 	requires:['SearchTool.config.Config'],
 	//autoCreateViewport: true,
 	launch : function() {  
-//    	Ext.tip.QuickTipManager.init();
+    	Ext.tip.QuickTipManager.init();
 		//Ext.create('Ext.container.Viewport',{});//layout, items[] go in here
-		Ext.create('SearchTool.view.Main',{dataUrl:SearchTool.config.Config.products});
+		Ext.create('SearchTool.view.Main',{ 
+		});
 		Ext.getBody().unmask();
 		/* RT - if using full screen mask w/ logo, add this to fade out mask + logo
 		 * var task = new Ext.util.DelayedTask(function() {

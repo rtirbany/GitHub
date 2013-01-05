@@ -2,6 +2,7 @@ Ext.define('SearchTool.view.PnlSources',{
 	extend:'Ext.panel.Panel',
 	alias:'widget.pnlSources', 
 	title:'Sources',
+	src:'',
 	layout: {
 		type: 'vbox',
 		shrinkToFit:true
@@ -20,34 +21,10 @@ Ext.define('SearchTool.view.PnlSources',{
 						columns : [150], 
 						vertical : true
 						,
-						items : [
-								// this.getDataUrl()
-								{
-							boxLabel : 'Src1',
-							xtype : 'checkbox',
-							itemId : 'cboxSrc1',
-							checked : true,
-							tooltip : 'Prod1 tooltip',
-							cls : 'cboxSrc'
-						}, {
-							boxLabel : 'Src2',
-							xtype : 'checkbox',
-							itemId : 'cboxSrc2',
-							checked : true,
-							tooltip : 'Prod2 tooltip',
-							cls : 'cboxSrc'
-						}, {
-							boxLabel : 'Src3',
-							xtype : 'checkbox',
-							itemId : 'cboxSrc3',
-							checked : true,
-							tooltip : 'Prod3 tooltip',
-							cls : 'cboxSrc'
-						} 	 ]
-							// items: this.getStore()
-							// {boxLabel: 'All Products', itemId: 'cboxAll',
-							// handler:toggleAllProducts, checked:true,
-							// tooltip:'Select/Deselect all other checkboxes'}
+						store : 'Sources',
+						renderer: function(b,e){
+							
+						}
 						}
 					]
 		}//Data Sources fieldset
@@ -102,11 +79,7 @@ Ext.define('SearchTool.view.PnlSources',{
 							checked : true,
 							tooltip : 'Prod5 tooltip',
 							cls : 'cboxProducts'
-						}]
-							// items: this.getStore()
-							// {boxLabel: 'All Products', itemId: 'cboxAll',
-							// handler:toggleAllProducts, checked:true,
-							// tooltip:'Select/Deselect all other checkboxes'}
+						}] 
 						}
 					]
 		}
