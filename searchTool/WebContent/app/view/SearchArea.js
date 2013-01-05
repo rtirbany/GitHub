@@ -116,7 +116,8 @@ Ext.define('SearchTool.view.SearchArea', {
 					title: SearchTool.config.Config.qryBuilderCaptionLabel,
 					collapsible : true,
 					collapsed : true,
-					layout : 'fit',
+					overflowX : 'hidden', 
+					overflowY : 'auto',
 					flex : 2,
 					qtip : 'Boolean query entry',
 					items:[

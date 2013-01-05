@@ -72,7 +72,7 @@ Ext.define('SearchTool.view.QueryBuilder', {
 							text : 'Build Query',
 							handler : function(b) {
 								var s = Ext.ComponentQuery.query('#txtSearchBoolean')[0];
-								s.setValue('new query \r\n hi k');
+								s.setValue('new query \r\n hi k \r\n hi k \r\n hi k \r\n hi k \r\n hi ');
 							}
 						}, {
 							xtype : 'tbspacer',
