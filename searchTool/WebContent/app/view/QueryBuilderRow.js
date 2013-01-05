@@ -7,8 +7,8 @@ var fieldStore = new Ext.data.SimpleStore({
 var operStore = new Ext.data.SimpleStore({
 			fields : ['opername', 'opervalue'],
 			data : [[' = ', 'f1'], [' > ', 'f2'], [' < ', 'f3'], ['>=', 'f4'],
-					['<=', 'f5'], ['<>', 'f6'], ['IS NULL', 'f7'],
-					['IS NOT NULL', 'f8'], ['BETWEEN', 'f9']]
+					['<=', 'f5'], ['<>', 'f6'], ['BETWEEN', 'f7'], ['IS NOT NULL', 'f8'],
+					['IS NULL', 'f9']]
 		});
 
 var andorStore = new Ext.data.SimpleStore({

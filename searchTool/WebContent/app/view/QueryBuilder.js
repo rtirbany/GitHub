@@ -1,16 +1,33 @@
 Ext.define('SearchTool.view.QueryBuilder', {
 			extend : 'Ext.form.Panel',
-			alias : 'widget.searchBoolean', 
-			requires: ['SearchTool.view.QueryBuilderRow'],
-			height : 100,
-			layout :'fit',
+			itemId : 'queryBuilder', 
+			title : 'Query Builder',
+			floating : true,
+			centered : true,
+			hidden : true,
+			requires : ['SearchTool.view.QueryBuilderRow'],
 			border : false,
-			overflowX:'hidden', 
-			overflowY:'auto',
+			overflowX :'hidden', 
+			overflowY :'auto', 
+			tools : [
+				{
+					xtype : 'tool',
+					type : 'close',
+					handler : function(e, target, p, tool) {
+							Ext.Msg.confirm('Exit Query Builder','Are you sure you wish to exit?');
+							this.up('form').hide();
+					}
+
+				}
+			],
 			dockedItems : [ 
 			{
 				xtype : 'toolbar',
 				dock : 'bottom',
+				layout : {
+					type : 'hbox',
+					pack : 'center'
+				},
 				items : [
 						{
 							xtype : 'tbspacer',
@@ -19,8 +36,11 @@ Ext.define('SearchTool.view.QueryBuilder', {
 						{
 							text : 'Help',
 							handler : function() {
-								Ext.Msg.alert('some boolean help page');
+								Ext.Msg.alert('some querybuilder help page');
 							}
+						},
+						{
+							xtype : 'tbfill'
 						},
 						{
 							xtype : 'tbspacer',
@@ -30,24 +50,13 @@ Ext.define('SearchTool.view.QueryBuilder', {
 						}, {
 							xtype : 'tbspacer',
 							width : 2
-						},
-						{
-							text : 'Freehand Query',
-							tooltip : 'Launch Query Form (future)',
-							disabled: true,
-							handler : function(){
-								//var z = Ext.create('SearchTool.view.QueryBuilder');
-								//z.show();
-								
-							}
-						
-						},
+						}, 
 						{
 							xtype : 'tbfill' 
 						}, {
 							text : 'Clear All',
 							handler : function() {
-								this.up('form').getForm().reset();
+								this.up('panel').getForm().reset();
 							}
 						}
 							,
@@ -60,7 +69,7 @@ Ext.define('SearchTool.view.QueryBuilder', {
 							xtype : 'tbspacer',
 							width : 2
 						}, {
-							text : 'Search'
+							text : 'Build Query'
 						}, {
 							xtype : 'tbspacer',
 							width : 3
@@ -70,13 +79,11 @@ Ext.define('SearchTool.view.QueryBuilder', {
 			] //dockedItems
 			, 
 			items:  [ 
-			{xtype:'container',
-			 items:[
-				{
-					xtype:'builderRow'
-				} 
-				
-			]}]  
+			{ 
+				xtype:'builderRow'
+				    
+			}
+			]  
 		}
 
 );

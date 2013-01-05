@@ -2,56 +2,56 @@ Ext.define('SearchTool.view.SearchArea', {
 			extend : 'Ext.container.Container', 
 			alias : 'widget.searchArea', 
 			layout:{type:'hbox'},
-			requires:['SearchTool.view.QueryBuilder','SearchTool.config.Config'], 
+			//requires:['SearchTool.view.QueryBuilder','SearchTool.config.Config'], 
+			requires : ['SearchTool.view.SearchBoolean','SearchTool.config.Config'], 
 			items : [{
 				extend : 'Ext.container.Container', 
 				layout : {
-					type:'vbox',
-					align:'stretch'
+					type : 'vbox',
+					align : 'stretch'
 				},
 				flex : 1, 
-				border:false,
+				border : false,
 				items : [
 				{
-				    width:'100%',
+				    width :'100%',
 					xtype : 'form', 
-					url : '/simplesearch',
-					bodyPadding:5, 
-					border:false,
-					margins: '8 8 8 5',  
-					height:120,
+					url : '/simplesearch', 
+					border : false,
+					margins : '8 8 8 5',  
+					height : 120,
 					items : [
 						{
-					    		xtype:'displayfield',
-					    		anchor:'100%',
-					    		fieldCls:'dfWildcard',
-					    		labelCls:'dfLabel',
-					    		fieldLabel:SearchTool.config.Config.searchCboxCaptionLabel,
-					    		value:SearchTool.config.Config.searchCboxCaptionValue,
-					    		qtip:'hi'
+					    		xtype : 'displayfield',
+					    		anchor : '100%',
+					    		fieldCls : 'dfWildcard',
+					    		labelCls : 'dfLabel',
+					    		fieldLabel : SearchTool.config.Config.searchCboxCaptionLabel,
+					    		value : SearchTool.config.Config.searchCboxCaptionValue,
+					    		qtip : 'hi'
 					
 					    }
 					    ,{
-					       xtype:'combo',
-					       id:'cboxSearch',
-					       name:'search',
+					       xtype : 'combo',
+					       id : 'cboxSearch',
+					       name : 'search',
 					       store : 'Keywords',
-					       valueField: 'id',
-					       displayField: 'keyword',
-					       triggerAction:'query',
-					       multiselect:false,
-					       anchor:'100%',
-					       queryMode:'local',
-					       typeahead:true,
+					       valueField : 'id',
+					       displayField : 'keyword',
+					       triggerAction :'query',
+					       multiselect : false,
+					       anchor : '100%',
+					       queryMode : 'local',
+					       typeahead : true,
 					       listeners : {
 							afterrender : function(field) {
 								field.focus();
 							}
         }
 					    },
-						{ xtype:'container',
-							width:'100%',
-							layout:'column',
+						{ xtype : 'container',
+							width : '100%',
+							layout : 'column',
 						    items : [{
 									xtype : 'checkbox',
 									itemId : 'chkTitleQuery',
@@ -90,13 +90,13 @@ Ext.define('SearchTool.view.SearchArea', {
 					 	// cbox, btnSearch, Clear,
 				, {
 					xtype : 'form',
-					border:false,
-					margins:' 8 5 8 5',
+					border : false,
+					margins :' 8 5 8 5',
 					items : [
-					{xtype: 'displayfield',
-					 itemId: 'breadcrumb',
-					 fieldCls:'breadcrumbstyle',
-					 fieldBodyCls: 'align-top',
+					{xtype : 'displayfield',
+					 itemId : 'breadcrumb',
+					 fieldCls : 'breadcrumbstyle',
+					 fieldBodyCls : 'align-top',
 					 value : ['level1', 'level2', 'more breadcrumbs'],
 					 listeners : {
 					 	beforerender : function(){ 
@@ -123,19 +123,19 @@ Ext.define('SearchTool.view.SearchArea', {
 					{	
 						xtype : 'searchBoolean'
 					}
-					]
+					]//fieldset items 
 				},	
 				{
 					xtype : 'fieldset',
 					title : SearchTool.config.Config.SmthgCaptionLabel, 
 					collapsible : true,
 					collapsed : true, 
-					flex:1,
+					flex : 1,
 					items : [ { 
 						html:'(area for shopping cart, subscriptions, or ?'
 					   }
-					]
-						//fieldset items 
+					]//fieldset items 
+						
 					}
 				 
 			 ]

@@ -1,7 +1,15 @@
+var z =  Ext.create('SearchTool.view.QueryBuilder',{ 
+									renderTo:Ext.getBody()
+								});
+
 Ext.define('SearchTool.view.SearchBoolean', {
 			extend : 'Ext.panel.Panel',
 			alias : 'widget.searchBoolean',
+			itemId : 'pnlSearchBoolean',
+			requires : ['SearchTool.view.QueryBuilder','SearchTool.view.QueryBuilderRow'],
 			height : 100,
+			overflowX : 'hidden', 
+			overflowY : 'auto',
 			dockedItems : [{
 				dock : 'top',
 				xtype : 'toolbar',
@@ -11,15 +19,32 @@ Ext.define('SearchTool.view.SearchBoolean', {
 						}, {
 							text : 'Query Builder',
 							tooltip : 'Launch Query Builder',
-							handler : function(){
-								Ext.Msg.alert('query builder launched');
+							handler : function(b){  
+								z.setHeight(Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getHeight());
+								z.setWidth(Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getWidth());
+								z.show(); 
 							}
-						}, {
+						}
+						,
+						{
 							xtype : 'tbspacer',
 							width : 2
-						}, {
-							xtype : 'tbseparator'
-						}, {
+						}
+						,
+						{xtype : 'tbseparator'}
+						,
+						{
+							xtype : 'tbspacer',
+							width : 2
+						}
+						,
+						{
+							text : 'Help',
+							handler : function() {
+								Ext.Msg.alert('some boolean help page');
+							}
+						},	
+						{
 							xtype : 'tbspacer',
 							width : 2
 						}]
@@ -28,13 +53,7 @@ Ext.define('SearchTool.view.SearchBoolean', {
 			, {
 				xtype : 'toolbar',
 				dock : 'bottom',
-				items : [
-						{
-							text : 'Help',
-							handler : function() {
-								Ext.Msg.alert('some boolean help page');
-							}
-						},
+				items : [ 
 						{
 							xtype : 'tbfill' 
 						}, {
@@ -61,8 +80,8 @@ Ext.define('SearchTool.view.SearchBoolean', {
 			items : [{
 						xtype : 'textarea',
 						value: '(edit not available)',
-						disabled: true,
-						itemId:'txtSearchBoolean',
+						disabled : true, 
+						itemId : 'txtSearchBoolean', 
 						width : '100%'
 					}]
 		}
