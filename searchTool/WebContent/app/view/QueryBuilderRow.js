@@ -20,7 +20,7 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 			//extend:'Ext.panel.Panel', 
 			extend:'Ext.container.Container',
 			alias:'widget.builderRow',
-			layout : 'hbox',
+			layout : 'hbox', 
 			items : [	
 				{
 					xtype : 'combo',
@@ -36,7 +36,6 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					emptyText : '(Select Field)',
 					typeAhead : true,
 					mode : 'local',
-					height : '130',
 					width : '15%'
 				}, 
 				{
@@ -84,23 +83,27 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					itemId : 'val2',
 					disabled : true,
 					width : '20%'
-				}, 
+				}
+				, 
 				{
 					xtype : 'button',
 					itemId : 'btnDelBoolean',
-					disabled : true,
 					text : '-',
-					width : '5%'
-				}, 
+					disabled : true,
+					width : '5%',
+					handler : function(t,e,o) {
+								t.up('panel').remove(t.up('container'));
+							}
+				}
+				, 
 				{
 						xtype : 'button',
 						itemId : 'btnAddBoolean',
 						text : '+',
 						width : '5%',
-						handler : function() {
-								Ext.Msg.alert('add new row');
-								//var x = 
-								//this.up('container').getForm().reset();
+						handler : function() { 
+								var x =  Ext.create('SearchTool.view.QueryBuilderRow'); 
+								this.up('panel').add(x)
 							}
 				}
 			]
