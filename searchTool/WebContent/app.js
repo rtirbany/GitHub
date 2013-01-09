@@ -25,6 +25,12 @@ Ext.application({
 	//autoCreateViewport: true,
 	launch : function() {  
     	Ext.tip.QuickTipManager.init();
+    	
+    	if(typeof String.prototype.trim !== 'function') {
+  					String.prototype.trim = function() {
+    					return this.replace(/^\s+|\s+$/g, ''); 
+  					}
+				}
 		//Ext.create('Ext.container.Viewport',{});//layout, items[] go in here
 		Ext.create('SearchTool.view.Main',{ 
 		});
@@ -58,8 +64,6 @@ Ext.application({
  
 //TODO: filters - need to remove all, remove by click
 //TODO: requery if click for remove/removeAll children 
-//TODO: ellipsis on overflow (max width set)
-//TODO: how to display if many?  >1 column?
 //TODO: descriptions for tool tips 
 //TODO: highlight row based on product type setting - icon and/or row coloring and/or bg color based on 
 		//prod type in result set

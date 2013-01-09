@@ -6,7 +6,7 @@ Ext.define('SearchTool.view.QueryBuilder', {
 			centered : true,
 			hidden : true,
 			requires : ['SearchTool.view.QueryBuilderRow'],
-			border : false,
+			border : false, 
 			overflowX :'hidden', 
 			overflowY :'auto', 
 			tools : [
@@ -15,7 +15,7 @@ Ext.define('SearchTool.view.QueryBuilder', {
 					type : 'close',
 					handler : function(e, target, p, tool) {
 							Ext.Msg.confirm('Exit Query Builder','Are you sure you wish to exit?');
-							this.up('form').hide();
+							this.up('panel').hide();
 					}
 
 				}
@@ -56,7 +56,9 @@ Ext.define('SearchTool.view.QueryBuilder', {
 						}, {
 							text : 'Clear All',
 							handler : function() {
-								this.up('panel').getForm().reset();
+								var p = this.up('panel');
+								p.removeAll(); 
+								p.add({xtype:'builderRow'});
 							}
 						}
 							,
@@ -71,8 +73,20 @@ Ext.define('SearchTool.view.QueryBuilder', {
 						}, {
 							text : 'Build Query',
 							handler : function(b) {
-								var s = Ext.ComponentQuery.query('#txtSearchBoolean')[0];
-								s.setValue('new query \r\n hi k \r\n hi k \r\n hi k \r\n hi k \r\n hi ');
+								var dest = Ext.ComponentQuery.query('#txtSearchBoolean')[0];
+								var qbrows = b.up('panel').items.items;
+								var row, s,tmp;
+								var newval=''; //to prevent missing entire row data from overwriting prev values 
+								for (var i = 0; i < qbrows.length; i++) {
+									tmp = '( ';
+        							row = qbrows[i];
+        							tmp = ((s = row.down('combo').getValue()) ?  tmp += s : tmp);
+        							tmp = ((s = row.down('combo').next('combo').getValue()) ? tmp += ' '+ s : tmp);
+        							tmp = ((s =	row.down('combo').next('combo').next('textfield').getValue().trim()) ? tmp += " '"+ s +"'": tmp); 
+        							newval += tmp + ' )\r\n';
+    							} 
+    							dest.setValue(newval);
+							
 							}
 						}, {
 							xtype : 'tbspacer',
@@ -83,10 +97,9 @@ Ext.define('SearchTool.view.QueryBuilder', {
 			] //dockedItems
 			, 
 			items:  [ 
-			{ 
+				{ 
 				xtype:'builderRow'
-				    
-			}
+				}  
 			]  
 		}
 

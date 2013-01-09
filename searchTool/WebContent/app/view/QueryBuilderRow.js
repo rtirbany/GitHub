@@ -1,19 +1,19 @@
 var fieldStore = new Ext.data.SimpleStore({
 			fields : ['fieldname', 'fieldvalue'],
-			data : [['field1', 'f1'], ['field2', 'f2'], ['field3', 'f3'],
-					['field4', 'f4']]
+			data : [['field1', 'FIELD1'], ['field2', 'FIELD2'], ['field3', 'FIELD3'],
+					['field4', 'FIELD4']]
 		});
 
 var operStore = new Ext.data.SimpleStore({
 			fields : ['opername', 'opervalue'],
-			data : [[' = ', 'f1'], [' > ', 'f2'], [' < ', 'f3'], ['>=', 'f4'],
-					['<=', 'f5'], ['<>', 'f6'], ['BETWEEN', 'f7'], ['IS NOT NULL', 'f8'],
-					['IS NULL', 'f9']]
+			data : [[' = ', '='], [' > ', '>'], [' < ', '<'], ['>=', '>='],
+					['<=', '<='], ['NOT', 'NOT'], ['BETWEEN', 'BETWEEN'], ['IS NOT NULL', 'IS NOT NULL'],
+					['IS NULL', 'IS NULL']]
 		});
 
 var andorStore = new Ext.data.SimpleStore({
 			fields : ['opername', 'opervalue'],
-			data : [[' AND ', 'and'], [' OR ', 'or']]
+			data : [[' AND ', 'AND'], [' OR ', 'OR']]
 		});
 
 Ext.define('SearchTool.view.QueryBuilderRow', {
@@ -56,7 +56,7 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 				{
 					xtype : 'textfield',
 					itemId : 'val1',
-					width : '20%',
+					width : '18%',
 					emptyText : '(Enter value...)'
 				}, 
 				{
@@ -82,12 +82,12 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					xtype : 'textfield',
 					itemId : 'val2',
 					disabled : true,
-					width : '20%'
+					width : '18%'
 				}
 				, 
 				{
 					xtype : 'button',
-					itemId : 'btnDelBoolean',
+					itemId : 'btnDel',
 					text : '-',
 					disabled : true,
 					width : '5%',
@@ -98,8 +98,18 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 				, 
 				{
 						xtype : 'button',
-						itemId : 'btnAddBoolean',
-						text : '+',
+						itemId : 'btnAnd',
+						text : 'AND',
+						width : '5%',
+						handler : function() { 
+								var x =  Ext.create('SearchTool.view.QueryBuilderRow'); 
+								this.up('panel').add(x)
+							}
+				},
+				{
+						xtype : 'button',
+						itemId : 'btnOr',
+						text : 'OR',
 						width : '5%',
 						handler : function() { 
 								var x =  Ext.create('SearchTool.view.QueryBuilderRow'); 
@@ -118,8 +128,7 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 			}//init
 			,
 			toggleFields : function(f,e){
-					if (this.prev('combo').prev('combo').value && this.prev('combo').value && r.value.length > 0) {
-							Ext.Msg.alert(r.value);
+					if (this.prev('combo').prev('combo').value && this.prev('combo').value && r.value.length > 0) { 
 							this.next('combo').enable();
 							this.next('textfield').enable();
 							this.up('form').down('button').enable();
