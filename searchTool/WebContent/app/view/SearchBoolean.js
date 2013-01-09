@@ -20,7 +20,7 @@ Ext.define('SearchTool.view.SearchBoolean', {
 							handler : function(b){
 								if (z.hidden) { 
 									var parent = Ext.ComponentQuery.query('#pnlSearchBoolean')[0];
-									z.setHeight(parent.getHeight());
+									z.setHeight(parent.getHeight()*2);
 									z.setWidth(parent.getWidth());
 									z.show(); 
 							}
@@ -79,11 +79,13 @@ Ext.define('SearchTool.view.SearchBoolean', {
 
 			items : [{
 						xtype : 'textarea',
-						value: '(validation not available)',
-						disabled : false,
+						itemId : 'txtSearchBoolean',
+						cls : 'searchBooleanTextArea',
+						emptyText: '(Error checking not available)', 
+						bodyStyle: 'border: none; background-color:#dfe8f5;',
+						hideBorders:true,
 						width:'100%',
-						height:'90%',
-						itemId : 'txtSearchBoolean'
+						height:'90%'
 					}]
 		}
 
