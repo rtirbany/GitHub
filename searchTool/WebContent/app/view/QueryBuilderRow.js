@@ -90,7 +90,7 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					itemId : 'btnDel',
 					text : '-',
 					disabled : true,
-					width : '5%',
+					width : '4%',
 					handler : function(t,e,o) {
 								t.up('panel').remove(t.up('container'));
 							}
