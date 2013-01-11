@@ -20,16 +20,19 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 			//extend:'Ext.panel.Panel', 
 			extend:'Ext.container.Container',
 			alias:'widget.builderRow',
-			layout : 'hbox', 
+			layout : 'hbox',
 			items : [	
 				{
 					xtype : 'combo',
 					itemId : 'cboxFields',
 					cls : 'cboxFields',
+//					store : 'SearchFields',
 					store : fieldStore,
 					// fieldLabel: 'Search By Keyword',
 					// labelSeparator:':',
 					hasfocus : true,
+//					displayField : 'display',
+//					valueField : 'value',
 					displayField : 'fieldname',
 					valueField : 'fieldvalue',
 					hiddenName : 'ccaction',
@@ -42,8 +45,11 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					xtype : 'combo',
 					itemId : 'cboxOpers',
 					cls : 'cboxOpers',
+//					store : 'QBuilderOperators',
 					store : operStore, 
 					hasfocus : true,
+//					displayField : 'display',
+//					valueField : 'value',
 					displayField : 'opername',
 					valueField : 'opervalue',
 					hiddenName : 'ccaction',
@@ -89,45 +95,61 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					xtype : 'button',
 					itemId : 'btnDel',
 					text : '-',
-					disabled : true,
 					width : '4%',
 					handler : function(t,e,o) {
-								t.up('panel').remove(t.up('container'));
-							}
+							t.up('panel').remove(t.up('container'));
+					}
+				},
+				{
+					xtype : 'hidden',
+					value : ''
 				}
 				, 
 				{
-						xtype : 'button',
-						itemId : 'btnAnd',
-						text : 'AND',
-						width : '5%',
-						handler : function() { 
-								var x =  Ext.create('SearchTool.view.QueryBuilderRow'); 
-								this.up('panel').add(x)
-							}
+					xtype : 'button',
+					itemId : 'btnAnd',
+					text : 'AND',
+					width : '5%',
+					handler : function() { 
+							var x =  Ext.create('SearchTool.view.QueryBuilderRow',{disAble:false}); 
+							var b = this.prev('hidden');
+							if (!b.getValue())
+								this.up('panel').add(x);
+							b.setValue(' AND ');
+							this.addCls('qbuilderBtnSelected');
+							this.next('button').removeCls('qbuilderBtnSelected');
+							this.next('button').addCls('qbuilderBtnDeselected');
+							
+					}
 				},
 				{
-						xtype : 'button',
-						itemId : 'btnOr',
-						text : 'OR',
-						width : '5%',
-						handler : function() { 
-								var x =  Ext.create('SearchTool.view.QueryBuilderRow'); 
-								this.up('panel').add(x)
-							}
+					xtype : 'button',
+					itemId : 'btnOr',
+					text : 'OR',
+					width : '5%',
+					handler : function() { 
+							var x =  Ext.create('SearchTool.view.QueryBuilderRow',{disAble:false}); 
+							var b = this.prev('hidden');
+							if (!b.getValue())
+								this.up('panel').add(x);
+							b.setValue(' OR ');
+							this.prev('button').removeCls('qbuilderBtnSelected');
+							this.prev('button').addCls('qbuilderBtnDeselected');
+							this.addCls('qbuilderBtnSelected');
+					}
 				}
 			]
 			,
 			init : function() {
 					this.control({
 						'textfield[itemId=val1]' : {
-							change : this.toggleFields 
+							change : this.toggleFieldEnable 
 						}
 					}
 				);// control function
 			}//init
 			,
-			toggleFields : function(f,e){
+			toggleFieldEnable : function(f,e){
 					if (this.prev('combo').prev('combo').value && this.prev('combo').value && r.value.length > 0) { 
 							this.next('combo').enable();
 							this.next('textfield').enable();

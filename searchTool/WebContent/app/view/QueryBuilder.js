@@ -54,7 +54,7 @@ Ext.define('SearchTool.view.QueryBuilder', {
 						{
 							xtype : 'tbfill' 
 						}, {
-							text : 'Clear All',
+							text : 'Reset',
 							handler : function() {
 								var p = this.up('panel');
 								p.removeAll(); 
@@ -72,22 +72,7 @@ Ext.define('SearchTool.view.QueryBuilder', {
 							width : 2
 						}, {
 							text : 'Build Query',
-							handler : function(b) {
-								var dest = Ext.ComponentQuery.query('#txtSearchBoolean')[0];
-								var qbrows = b.up('panel').items.items;
-								var row, s,tmp;
-								var newval=''; //to prevent missing entire row data from overwriting prev values 
-								for (var i = 0; i < qbrows.length; i++) {
-									tmp = '( ';
-        							row = qbrows[i];
-        							tmp = ((s = row.down('combo').getValue()) ?  tmp += s : tmp);
-        							tmp = ((s = row.down('combo').next('combo').getValue()) ? tmp += ' '+ s : tmp);
-        							tmp = ((s =	row.down('combo').next('combo').next('textfield').getValue().trim()) ? tmp += " '"+ s +"'": tmp); 
-        							newval += tmp + ' )\r\n';
-    							} 
-    							dest.setValue(newval);
-							
-							}
+							itemId : 'btnBuildQuery'
 						}, {
 							xtype : 'tbspacer',
 							width : 3
