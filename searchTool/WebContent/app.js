@@ -18,22 +18,20 @@ Ext.onReady(function() {
 
 Ext.application({
 	name : 'SearchTool',
+	paths : {'Ext.ux':'extjs/ux'},
 	appFolder : 'app',
 	//enableQuickTips : true,
+//	controllers:['SearchTool','Sources','SearchFields'],
 	controllers:['SearchTool','Sources'],
 	requires:['SearchTool.config.Config'],
-	//autoCreateViewport: true,
+	autoCreateViewport: true,
 	launch : function() {  
-    	Ext.tip.QuickTipManager.init();
-    	
+    	Ext.tip.QuickTipManager.init(); 
     	if(typeof String.prototype.trim !== 'function') {
   					String.prototype.trim = function() {
     					return this.replace(/^\s+|\s+$/g, ''); 
   					}
 				}
-		//Ext.create('Ext.container.Viewport',{});//layout, items[] go in here
-		Ext.create('SearchTool.view.Main',{ 
-		});
 		Ext.getBody().unmask();
 		/* RT - if using full screen mask w/ logo, add this to fade out mask + logo
 		 * var task = new Ext.util.DelayedTask(function() {
