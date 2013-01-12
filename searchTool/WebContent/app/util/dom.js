@@ -1,4 +1,5 @@
 Ext.define('SearchTool.util.dom', {
+	requires : ['SearchTool.config.Config'],
 	statics:{
 		//timer for highlighting
 		highlightTimer : 700,
@@ -42,6 +43,17 @@ Ext.define('SearchTool.util.dom', {
 						prod.setValue(val);
 					}
 				} ); 
+		},
+		qBuilderRowValidations : function (i,row){
+			var escapeChar = SearchTool.config.Config.dbEscapeChar; 
+			var tmp = '', tmpS = '';
+	   	 	tmp += ((s = row.down('combo').getValue()) ? s : '');
+			tmp += ((s = row.down('combo').next('combo').getValue()) ? ' ' + s : '');
+			//escape out single quotes
+			tmpS = row.down('combo').next('combo').next('textfield').getValue().trim();
+			tmpS = tmpS.indexOf("'") >= 0 ? tmpS.replace("'","\\'") : tmpS;
+			tmp += ( tmpS ? " '" + tmpS + "'" : '');
+			return tmp;
 		}
 	}
 });

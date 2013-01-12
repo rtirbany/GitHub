@@ -17,7 +17,6 @@ var andorStore = new Ext.data.SimpleStore({
 		});
 
 Ext.define('SearchTool.view.QueryBuilderRow', {
-			//extend:'Ext.panel.Panel', 
 			extend:'Ext.container.Container',
 			alias:'widget.builderRow',
 			layout : 'hbox',
@@ -111,10 +110,9 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					text : 'AND',
 					width : '5%',
 					handler : function() { 
-							var x =  Ext.create('SearchTool.view.QueryBuilderRow',{disAble:false}); 
 							var b = this.prev('hidden');
-							if (!b.getValue())
-								this.up('panel').add(x);
+							if (!this.nextNode() || !b.getValue() )
+								this.up('panel').add(Ext.create('SearchTool.view.QueryBuilderRow'));
 							b.setValue(' AND ');
 							this.addCls('qbuilderBtnSelected');
 							this.next('button').removeCls('qbuilderBtnSelected');
@@ -128,10 +126,9 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					text : 'OR',
 					width : '5%',
 					handler : function() { 
-							var x =  Ext.create('SearchTool.view.QueryBuilderRow',{disAble:false}); 
-							var b = this.prev('hidden');
-							if (!b.getValue())
-								this.up('panel').add(x);
+							var b = this.prev('hidden'); 
+							if (!this.nextNode() || !b.getValue() )
+								this.up('panel').add(Ext.create('SearchTool.view.QueryBuilderRow'));
 							b.setValue(' OR ');
 							this.prev('button').removeCls('qbuilderBtnSelected');
 							this.prev('button').addCls('qbuilderBtnDeselected');

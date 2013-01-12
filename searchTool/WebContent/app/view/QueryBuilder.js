@@ -2,11 +2,15 @@ Ext.define('SearchTool.view.QueryBuilder', {
 			extend : 'Ext.form.Panel',
 			itemId : 'queryBuilder', 
 			title : 'Query Builder',
+			bodyStyle : 'padding: 6px',
+			draggable : true,
 			floating : true,
+			titleCollapse : true,
+			collapsible: true,
 			centered : true,
 			hidden : true,
 			requires : ['SearchTool.view.QueryBuilderRow'],
-			border : false, 
+			border : true, 
 			overflowX :'hidden', 
 			overflowY :'auto', 
 			tools : [
@@ -54,7 +58,7 @@ Ext.define('SearchTool.view.QueryBuilder', {
 						{
 							xtype : 'tbfill' 
 						}, {
-							text : 'Reset',
+							text : 'Clear All',
 							handler : function() {
 								var p = this.up('panel');
 								p.removeAll(); 
