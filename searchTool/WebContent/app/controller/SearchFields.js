@@ -19,12 +19,11 @@ Ext.define('SearchTool.controller.SearchFields', {
 		var row, s;
 		var newval = ''; //to prevent missing entire row data from overwriting prev values 
 		for (var i = 0; i < qbrows.length; i++) {
-			tmp = '( ';
 			row = qbrows[i];
-			tmp += SearchTool.util.dom.qBuilderRowValidations(i,row)+ ' ) '+ row.down('hidden').getValue()+'\r\n';
+			tmp  = '( ' + SearchTool.util.dom.qBuilderRowValidations(i,row)+ ' ) '+ row.down('hidden').getValue() + '\r\n'; 
 			newval += tmp;
 		}
-		dest.setValue(newval);
+		dest.setValue(newval.substr(0,newval.lastIndexOf('\r\n')));
 	}
 
 });

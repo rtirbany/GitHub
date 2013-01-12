@@ -18,7 +18,6 @@ Ext.define('SearchTool.view.QueryBuilder', {
 					xtype : 'tool',
 					type : 'close',
 					handler : function(e, target, p, tool) {
-							Ext.Msg.confirm('Exit Query Builder','Are you sure you wish to exit?');
 							this.up('panel').hide();
 					}
 
