@@ -110,8 +110,8 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					text : 'AND',
 					width : '5%',
 					handler : function() { 
-							var b = this.prev('hidden');
-							if (!this.nextNode() || !b.getValue() )
+							var b = this.prev('hidden'); 
+							if (!this.up('container').nextNode() || !b.getValue() )
 								this.up('panel').add(Ext.create('SearchTool.view.QueryBuilderRow'));
 							b.setValue(' AND ');
 							this.addCls('qbuilderBtnSelected');
@@ -127,7 +127,7 @@ Ext.define('SearchTool.view.QueryBuilderRow', {
 					width : '5%',
 					handler : function() { 
 							var b = this.prev('hidden'); 
-							if (!this.nextNode() || !b.getValue() )
+							if (!this.up('container').nextNode() || !b.getValue() )
 								this.up('panel').add(Ext.create('SearchTool.view.QueryBuilderRow'));
 							b.setValue(' OR ');
 							this.prev('button').removeCls('qbuilderBtnSelected');
