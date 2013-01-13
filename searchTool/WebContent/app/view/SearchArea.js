@@ -1,8 +1,7 @@
 Ext.define('SearchTool.view.SearchArea', {
 			extend : 'Ext.container.Container', 
 			alias : 'widget.searchArea', 
-			layout:{type:'hbox'},
-			//requires:['SearchTool.view.QueryBuilder','SearchTool.config.Config'], 
+			layout:{type:'hbox'},  
 			requires : ['SearchTool.view.SearchBoolean','SearchTool.config.Config'], 
 			items : [{
 				extend : 'Ext.container.Container', 
@@ -42,13 +41,31 @@ Ext.define('SearchTool.view.SearchArea', {
 					       multiselect : false,
 					       anchor : '100%',
 					       queryMode : 'local',
-					       typeahead : true,
+					       typeahead : true, 
+					       //vtype : 'searchKeyword',
+					       /*
+					         Ext.apply(Ext.form.field.VTypes, {
+       		 					searchKeyword: function(val, field) {
+            					if (/^[a-z0-9]+$/i.test(val)) {
+               					return true;
+            				}
+        					},
+        					searchKeywordText: 'Keyword search only contain letters and numbers.'
+   							 });
+					        * 
+					        * */
 					       listeners : {
 							afterrender : function(field) {
 								field.focus();
-							}
-        }
-					    },
+							}, 
+                			specialkey: function(field, event) {
+        							if (event.getKey() == event.ENTER) {
+           	 							field.up('form').getForm().submit();
+        							}
+    							}
+					       }
+					       }
+					    ,
 						{ xtype : 'container',
 							width : '100%',
 							layout : 'column',
