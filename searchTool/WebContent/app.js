@@ -20,7 +20,6 @@ Ext.application({
 	name : 'SearchTool',
 	paths : {'Ext.ux':'extjs/ux'},
 	appFolder : 'app',
-	//enableQuickTips : true,
 	controllers:['SearchTool','Sources','SearchFields'],
 	requires:['SearchTool.config.Config'],
 	autoCreateViewport: true,

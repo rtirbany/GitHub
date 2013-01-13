@@ -4,13 +4,15 @@ Ext.define('SearchTool.config.Config', {
   	keywords: 'data/keywords.json',
     products: 'data/products.json',
     sources:  'data/sources.json',
-    
+    fields:  'data/searchfields.json',
+    dbEscapeChar : '\\',  //for mysql
+    searchUrl : 'http://localhost:80/r',
     //captions & labels
     searchCboxCaptionLabel:'Enter search term(s)',
     searchCboxCaptionValue:'(* = wildcard; ? = single char wildcard)',
-    searchChkCaptionLabel:'Search Titles Only',
-    qryBuilderCaptionLabel:'Query Builder',
-    SmthgCaptionLabel:'(Smthg)',
+    searchChkCaptionLabel:'Search Summary Only',
+    qryBuilderCaptionLabel:'Advanced Query',
+    SmthgCaptionLabel:'(Smthg - User Tools or ?)',
     
     //tooltips
     searchBtnClearTtip:'Clears keyword search criteria',

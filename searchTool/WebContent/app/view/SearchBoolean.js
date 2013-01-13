@@ -6,7 +6,8 @@ Ext.define('SearchTool.view.SearchBoolean', {
 			extend : 'Ext.form.Panel',
 			alias : 'widget.searchBoolean',
 			itemId : 'pnlSearchBoolean',
-			requires : ['SearchTool.view.QueryBuilder','SearchTool.view.QueryBuilderRow'], 
+			url: SearchTool.config.Config.searchUrl, 
+			requires : ['SearchTool.view.QueryBuilder','SearchTool.config.Config'], 
 			height:115,
 			dockedItems : [{
 				dock : 'top',
@@ -18,12 +19,18 @@ Ext.define('SearchTool.view.SearchBoolean', {
 							text : 'Query Builder',
 							tooltip : 'Launch Query Builder',
 							handler : function(b){
-								if (z.hidden) { 
+								if (z.hidden || z.collapsed) { 
 									var parent = Ext.ComponentQuery.query('#pnlSearchBoolean')[0];
 									z.setHeight(parent.getHeight()*2);
 									z.setWidth(parent.getWidth());
-									z.show(); 
-							}
+									z.center();
+									z.expand();
+									z.show(); 	
+								}
+								else if (!z.collapsed){
+									z.center();
+									z.hide();
+								}
 							}
 						}
 						,
@@ -51,13 +58,28 @@ Ext.define('SearchTool.view.SearchBoolean', {
 						},
 						{
 							xtype : 'tbfill'
-						}
-						,
+						},
 						{
 							text : 'Clear',
 							handler : function() {
 								Ext.ComponentQuery.query('#txtSearchBoolean')[0].reset();
-							}
+							}  
+						}
+						,
+						{
+							xtype : 'tbspacer',
+							width : 2
+						}, {
+							xtype : 'tbseparator'
+						}, {
+							xtype : 'tbspacer',
+							width : 2
+						}
+						,
+						{
+							xtype : 'checkbox',
+							fieldLabel:'Save',
+							labelStyle:'width:10px;'
 						}, {
 							xtype : 'tbspacer',
 							width : 2
@@ -67,7 +89,10 @@ Ext.define('SearchTool.view.SearchBoolean', {
 							xtype : 'tbspacer',
 							width : 2
 						}, {
-							text : 'Search'
+							text : 'Search',
+							handler : function(){
+								this.up('form').getForm().submit();
+							}
 						}, {
 							xtype : 'tbspacer',
 							width : 3
@@ -80,6 +105,7 @@ Ext.define('SearchTool.view.SearchBoolean', {
 			items : [{
 						xtype : 'textarea',
 						itemId : 'txtSearchBoolean',
+						name : 'txtSearchBoolean',
 						cls : 'searchBooleanTextArea',
 						emptyText: '(Error checking not available)', 
 						bodyStyle: 'border: none; background-color:#dfe8f5;',
