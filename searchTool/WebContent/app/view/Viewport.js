@@ -68,9 +68,10 @@ Ext.define('SearchTool.view.Viewport', {
 	 				{ 
 										region : 'west',
 										itemId:'pnlTools', 
-										title:'Search Tools',
+										title:'Tools',
 										layout: {
-											type:'fit' //vbox to have resizing of parent children will autofit
+											type:'fit', //vbox to have resizing of parent children will autofit
+											align : 'stretch'
 										}
 										,
 										collapsible:true,
@@ -81,16 +82,15 @@ Ext.define('SearchTool.view.Viewport', {
 										{
 											  xtype : 'pnlSearchnav'
 										}
-										]
+										],
+										flex:.45
 					}//west
 //	 				,
 //	 				{
 //	 				region:'center',
-////							xtype:'resultsgrid',
-////							xtype:'grid',
+//							xtype:'resultsgrid', 
 //			 				title:'Results', 
-//			 				id:'results',
-//			 				flex:10, 
+//			 				id:'results', 
 //			 				tooltip:'results will appear here'
 //				}		//search tab contents
 				]

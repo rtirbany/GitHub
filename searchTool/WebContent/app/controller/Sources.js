@@ -1,10 +1,9 @@
 Ext.define('SearchTool.controller.Sources', {
 			extend : 'Ext.app.Controller',
-			views : ['PnlSources'],
+			views : ['main.component.PnlSources'],
 			model : ['Source'],
 			stores : ['Sources'],
-			requires : ['SearchTool.util.dom'],
-			//TODO: fix refs
+			requires : ['SearchTool.util.dom'], 
 			  refs : [
 				{
 					ref:'searchPanel',
@@ -21,8 +20,7 @@ Ext.define('SearchTool.controller.Sources', {
 			], 
 			init : function() {
 				this.chkSources = [];
-				//add listeners to Sources store
-				//TODO: must use databound component for dyn updates, etc
+				//add listeners to Sources store 
 				//admin adds/removes availability of a source
 				this.getSourcesStore().addListener('datachanged',this.availSources,this);
 				//sources are loaded
@@ -37,11 +35,7 @@ Ext.define('SearchTool.controller.Sources', {
 					},
 					'checkboxgroup[itemId=chkgrpProducts]' : {
 						beforerender:this.addChkAllProducts
-					}
-//		    		,
-//					'checkboxgroup[itemId=chkgrpDataSource]' : {
-//						beforerender:this.addChkAllSources
-//					}
+					} 
 					,
 					'pnlSources' : {
 						collapse : this.panelCollapse
@@ -77,8 +71,8 @@ Ext.define('SearchTool.controller.Sources', {
 			}
 			,
 			panelExpand : function(p){  
-//				var n = Ext.ComponentQuery.query('searchNav')[0].collapsedHorizontal();
-//				var s = Ext.ComponentQuery.query('searchSources')[0].collapsedHorizontal();
+//				var n = this.getSearchPanel().collapsedHorizontal();
+//				var s = this.getSourcesPanel().collapsedHorizontal();
 //				if (n && s) {
 					this.getSearchPanel().expand(true);
 					this.getSourcesPanel().expand(true);

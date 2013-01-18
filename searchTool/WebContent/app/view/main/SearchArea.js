@@ -55,15 +55,15 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					        * 
 					        * */
 					       listeners : {
-							afterrender : function(field) {
-								field.focus();
-							}, 
-                			specialkey: function(field, event) {
+								afterrender : function(field) {
+									field.focus();
+								}, 
+                				specialkey: function(field, event) {
         							if (event.getKey() == event.ENTER) {
            	 							field.up('form').getForm().submit();
         							}
     							}
-					       }
+					       }//listeners
 					       }
 					    ,
 						{ xtype : 'container',
@@ -101,6 +101,15 @@ Ext.define('SearchTool.view.main.SearchArea', {
 												scope : this
 											}]
 								}]
+							}
+							,{ 
+									xtype : 'checkbox',
+									itemId : 'chkSaveQuery',
+									name: 'chkSaveQuery',
+									cls : 'chkSaveQuery',
+									tooltip : 'hi',
+									boxLabel : SearchTool.config.Config.searchSaveChkCaptionLabel 
+								 
 							}
 					    ]
 					    }

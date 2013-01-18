@@ -5,25 +5,40 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 	viewConfig:{
 		stripeRows:true
 	},
+	autoScroll:true,
 	initComponent : function(){ 
-	this.store = 'Results',
+	//this.store = 'Results',
 	this.columns = [
-		{
-			text:'product',
-			flex:1,
-			sortable:true,
-			dataIndex:'product'
-		},
-		{
-			text:'subject',
-			flex:1,
-			sortable:true,
-			dataIndex:'subject'
-		},
-		{
+	 	{
 			xtype:'actioncolumn',
-			flex:1,
-			items:[{xtype:'checkbox',tooltip:'Add to cart'}]
+			items:[{xtype:'checkbox',tooltip:'Add to cart'}],
+			text : 'Add to Cart',
+			textwrap:true,
+			width:40
+		},
+		{
+			text : 'Source',
+			dataIndex:'source',
+			width:75,
+			hidden:true
+		},
+		{
+			text:'Product',
+			dataIndex:'product',
+			width:80,
+			sortable:true
+		},
+		{
+			text:'Subject',
+			dataIndex:'subject',
+			flex:2,
+			sortable:true
+		},
+		{
+			text:'Title',
+			dataIndex:'title',
+			flex:2,
+			sortable:true
 		}
 		],
 	this.callParent(arguments);
