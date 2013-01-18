@@ -1,5 +1,6 @@
-Ext.define('SearchTool.view.QueryBuilder', {
+Ext.define('SearchTool.view.main.component.QueryBuilder', {
 			extend : 'Ext.form.Panel',
+			alias : 'widget.qbuilder',
 			itemId : 'queryBuilder', 
 			title : 'Query Builder',
 			bodyStyle : 'padding: 6px',
@@ -9,7 +10,7 @@ Ext.define('SearchTool.view.QueryBuilder', {
 			collapsible: true,
 			centered : true,
 			hidden : true,
-			requires : ['SearchTool.view.QueryBuilderRow'],
+			requires : ['SearchTool.view.main.component.QueryBuilderRow'],
 			border : true, 
 			overflowX :'hidden', 
 			overflowY :'auto', 

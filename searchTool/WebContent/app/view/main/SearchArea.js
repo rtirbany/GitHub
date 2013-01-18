@@ -1,8 +1,8 @@
-Ext.define('SearchTool.view.SearchArea', {
+Ext.define('SearchTool.view.main.SearchArea', {
 			extend : 'Ext.container.Container', 
 			alias : 'widget.searchArea', 
 			layout:{type:'hbox'},  
-			requires : ['SearchTool.view.SearchBoolean','SearchTool.config.Config'], 
+			requires : ['SearchTool.view.main.component.SearchBoolean','SearchTool.config.Config'], 
 			items : [{
 				extend : 'Ext.container.Container', 
 				layout : {
@@ -71,8 +71,9 @@ Ext.define('SearchTool.view.SearchArea', {
 							layout : 'column',
 						    items : [{
 									xtype : 'checkbox',
-									itemId : 'chkTitleQuery',
-									cls : 'chkTitles',
+									itemId : 'chkSummaryOnlySearch',
+									name: 'chkSummaryOnlySearch',
+									cls : 'chkSummaryOnly',
 									boxLabel : SearchTool.config.Config.searchChkCaptionLabel,
 									columnWidth : .4
 								}, {
@@ -88,8 +89,7 @@ Ext.define('SearchTool.view.SearchArea', {
 												itemId : 'btnClear',
 												tooltip : SearchTool.config.Config.searchBtnClearTtip,
 												handler : function() {
-													this.up('form').getForm()
-															.reset();
+													this.up('form').getForm().reset();
 												}
 											}, {
 												xtype : 'button',

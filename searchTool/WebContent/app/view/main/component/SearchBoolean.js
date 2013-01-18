@@ -1,13 +1,10 @@
-var z =  Ext.create('SearchTool.view.QueryBuilder',{ 
-									renderTo:Ext.getBody()
-		});
-
-Ext.define('SearchTool.view.SearchBoolean', {
+//TODO: clean this up
+ Ext.define('SearchTool.view.main.component.SearchBoolean', {
 			extend : 'Ext.form.Panel',
 			alias : 'widget.searchBoolean',
 			itemId : 'pnlSearchBoolean',
 			url: SearchTool.config.Config.searchUrl, 
-			requires : ['SearchTool.view.QueryBuilder','SearchTool.config.Config'], 
+			requires : ['SearchTool.view.main.component.QueryBuilder','SearchTool.config.Config'], 
 			height:115,
 			dockedItems : [{
 				dock : 'top',
@@ -17,20 +14,19 @@ Ext.define('SearchTool.view.SearchBoolean', {
 							width : 3
 						}, {
 							text : 'Query Builder',
-							tooltip : 'Launch Query Builder',
+							tooltip : 'Launch Query Builder', 
 							handler : function(b){
-								if (z.hidden || z.collapsed) { 
-									var parent = Ext.ComponentQuery.query('#pnlSearchBoolean')[0];
-									z.setHeight(parent.getHeight()*2);
-									z.setWidth(parent.getWidth());
-									z.center();
-									z.expand();
-									z.show(); 	
+								var pnlQbuilder = this.up('panel').down('qbuilder'); 
+								pnlQbuilder.center();
+								pnlQbuilder.setHeight(Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getHeight()*2);
+								pnlQbuilder.setWidth(Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getWidth());
+								if (pnlQbuilder.hidden || pnlQbuilder.collapsed) { 
+									pnlQbuilder.show();
+									pnlQbuilder.expand();
 								}
-								else if (!z.collapsed){
-									z.center();
-									z.hide();
-								}
+								else if (!pnlQbuilder.collapsed){ 
+									pnlQbuilder.hide();
+								} 
 							}
 						}
 						,
@@ -108,11 +104,19 @@ Ext.define('SearchTool.view.SearchBoolean', {
 						name : 'txtSearchBoolean',
 						cls : 'searchBooleanTextArea',
 						emptyText: '(Error checking not available)', 
-						bodyStyle: 'border: none; background-color:#dfe8f5;',
+						style: 'border:none; !important;',
+						bodyStyle: 'border: none; !important;',
 						hideBorders:true,
 						width:'100%',
 						height:'90%'
-					}]
+					}
+					,
+					{
+						xtype : 'qbuilder',
+						itemId : 'pnlQbuilder',
+						hidden : true
+					}
+					]
 		}
 
 );
