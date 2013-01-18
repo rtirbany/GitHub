@@ -1,7 +1,7 @@
 Ext.define('SearchTool.controller.SearchFields', {
 	extend : 'Ext.app.Controller',
 	models: ['SearchField'],
-	views : ['QueryBuilder', 'QueryBuilderRow'],
+	views : ['main.component.QueryBuilder', 'main.component.QueryBuilderRow'],
 //	views : ['QueryBuilderRow'],  //per recommendation of dev-all, moved QueryBuilder into requires
 	requires : ['SearchTool.util.dom'],
 //	stores : ['SearchFields'],
