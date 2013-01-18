@@ -10,7 +10,8 @@ Ext.define('SearchTool.config.Config', {
     //captions & labels
     searchCboxCaptionLabel:'Enter search term(s)',
     searchCboxCaptionValue:'(* = wildcard; ? = single char wildcard)',
-    searchChkCaptionLabel:'Search Summary Only',
+    searchChkCaptionLabel: 'Summary Field Only',
+    searchSaveChkCaptionLabel : 'Save Query',
     qryBuilderCaptionLabel:'Advanced Query',
     SmthgCaptionLabel:'(Smthg - User Tools or ?)',
     

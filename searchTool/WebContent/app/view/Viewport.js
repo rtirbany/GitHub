@@ -1,7 +1,7 @@
 Ext.define('SearchTool.view.Viewport', {
 			extend : 'Ext.container.Viewport',
 			itemId : 'main',
-			requires : [ 'SearchTool.view.main.SearchArea'],
+			requires : ['SearchTool.view.main.pnlSearchNav', 'SearchTool.view.main.SearchArea'],
 			defaults : {
 						width:'100%',
 						border : false,
@@ -79,7 +79,7 @@ Ext.define('SearchTool.view.Viewport', {
 										split:true,
 										items : [  
 										{
-											 //xtype : 'searchArea'
+											  xtype : 'pnlSearchnav'
 										}
 										]
 					}//west
