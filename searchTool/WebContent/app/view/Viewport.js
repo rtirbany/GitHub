@@ -7,8 +7,7 @@ Ext.define('SearchTool.view.Viewport', {
 					'SearchTool.view.main.component.PnlSave'],
 			layout : 'border',
 			items : [ 
-					 { //top banner panel
-						xtype : 'container',
+					 { //top banner panel 
 						region : 'north',
 						width : '100%',
 						height : 60,
@@ -31,20 +30,22 @@ Ext.define('SearchTool.view.Viewport', {
 							itemId : 'btnLogout'
 						}
 						]
-					 }, // top banner panel
+					 } // top banner panel
+					 , 
 					{ 		
 						region:'center',
-						xtype : 'tabpanel',
-						tabBar:{
-							layout:{pack:'end'}
-						},
+						xtype : 'tabpanel', 
 						items : [{// searchtab
 							title : 'Search',
 							itemId : 'pnlMainTabSearch',
 							layout : 'border',
 							items : [{
 								region : 'north',
-								xtype:'searchArea'
+								items : [
+									{
+										xtype:'searchArea' 
+									}
+								]
 							},{
 								region : 'west',
 								itemId : 'pnlTools',
@@ -68,7 +69,8 @@ Ext.define('SearchTool.view.Viewport', {
 								 xtype:'resultsgrid' 
 							}]
 						}		// searchtab
-						, {
+						, 
+						{//admin tab
 							title : 'Admin', 
 							html : '(Admin pages go here)',
 							tooltip : 'admin pages appear here'
