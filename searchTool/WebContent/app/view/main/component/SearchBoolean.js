@@ -1,6 +1,7 @@
 //TODO: clean this up
  Ext.define('SearchTool.view.main.component.SearchBoolean', {
 			extend : 'Ext.form.Panel',
+			border : false,
 			alias : 'widget.searchBoolean',
 			itemId : 'pnlSearchBoolean',
 			url: SearchTool.config.Config.searchUrl, 
@@ -9,6 +10,7 @@
 			dockedItems : [{
 				dock : 'top',
 				xtype : 'toolbar',
+				frame : true,
 				items : [{
 							xtype : 'tbspacer',
 							width : 3
@@ -103,6 +105,7 @@
 						itemId : 'txtSearchBoolean',
 						name : 'txtSearchBoolean',
 						cls : 'searchBooleanTextArea',
+						border: false,
 						emptyText: '(Error checking not available)', 
 						style: 'border:none; !important;',
 						bodyStyle: 'border: none; !important;',

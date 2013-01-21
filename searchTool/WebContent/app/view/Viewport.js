@@ -9,6 +9,7 @@ Ext.define('SearchTool.view.Viewport', {
 			items : [ 
 					 { //top banner panel 
 						region : 'north',
+						border : false,
 						width : '100%',
 						height : 60,
 						layout : 'hbox',
@@ -41,6 +42,7 @@ Ext.define('SearchTool.view.Viewport', {
 							layout : 'border',
 							items : [{
 								region : 'north',
+								border : false,
 								items : [
 									{
 										xtype:'searchArea' 

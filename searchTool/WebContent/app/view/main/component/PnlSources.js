@@ -8,12 +8,13 @@ Ext.define('SearchTool.view.main.component.PnlSources', {
 	items : [{
 				xtype : 'fieldset',
 				width : '100%',
+				defaults : {
+					labelStyle:'width:10px;font-size:12px',
+				},
 				items : [{
 					xtype : 'checkboxgroup',
 					itemId : 'chkgrpDataSource',
 					fieldLabel : 'Data Sources',
-					labelStyle:'width:10px;',
-					frame : true,
 					// Distribute controls across 3 even columns, filling
 					// each column from top to bottom before starting the next
 					// column
@@ -21,29 +22,29 @@ Ext.define('SearchTool.view.main.component.PnlSources', {
 					vertical : true,
 					store : 'Sources',
 					renderer : function(b, e) {
-					},
-					items : [{
-								boxLabel : 'SrcA',
-								xtype : 'checkbox',
-								itemId : 'cboxProd1',
-								checked : true,
-								tooltip : 'Prod1 tooltip',
-								cls : 'cboxProducts'
-							}, {
-								boxLabel : 'SrcB',
-								xtype : 'checkbox',
-								itemId : 'cboxProd2',
-								checked : true,
-								tooltip : 'Prod2 tooltip',
-								cls : 'cboxProducts'
-							}]
+					}
+//					,
+//					items : [{
+//								boxLabel : 'SrcA',
+//								xtype : 'checkbox',
+//								itemId : 'cboxProd1',
+//								checked : true,
+//								tooltip : 'Prod1 tooltip',
+//								cls : 'cboxProducts'
+//							}, {
+//								boxLabel : 'SrcB',
+//								xtype : 'checkbox',
+//								itemId : 'cboxProd2',
+//								checked : true,
+//								tooltip : 'Prod2 tooltip',
+//								cls : 'cboxProducts'
+//							}]
 
 					}		// Data Sources fieldset
 				, {
 					xtype : 'checkboxgroup',
 					itemId : 'chkgrpProducts',
-					fieldLabel : 'Products',
-					width:'100%',
+					fieldLabel : 'Products', 
 					// Distribute controls across 3 even columns, filling
 					// each column from top to bottom before starting the next
 					// column
