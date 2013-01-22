@@ -10,7 +10,8 @@
 			dockedItems : [{
 				dock : 'top',
 				xtype : 'toolbar',
-				frame : true,
+				frame : false,
+				border : 1,
 				items : [{
 							xtype : 'tbspacer',
 							width : 3
@@ -77,7 +78,7 @@
 						{
 							xtype : 'checkbox',
 							fieldLabel:'Save',
-							labelStyle:'width:10px;'
+							labelStyle:'width:20px;'
 						}, {
 							xtype : 'tbspacer',
 							width : 2

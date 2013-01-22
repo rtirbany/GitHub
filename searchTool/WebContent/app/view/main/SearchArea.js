@@ -108,7 +108,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 									name: 'chkSaveQuery',
 									cls : 'chkSaveQuery',
 									tooltip : 'hi',
-									boxLabel : SearchTool.config.Config.searchSaveChkCaptionLabel 
+									fieldLabel : SearchTool.config.Config.searchSaveChkCaptionLabel 
 								 
 							}
 					    ]
@@ -145,7 +145,8 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					overflowX : 'hidden', 
 					overflowY : 'auto',
 					flex : 2,
-					qtip : 'Boolean query entry',
+					border : false,
+					tooltip : 'Boolean query entry',
 					items:[
 					{	
 						xtype : 'searchBoolean'
@@ -158,6 +159,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					collapsible : true,
 					collapsed : true, 
 					flex : 1,
+					border : false,
 					items : [ { 
 						html:'(area for shopping cart, subscriptions, or ?'
 					   }
