@@ -1,3 +1,7 @@
+var sm = Ext.create('Ext.selection.CheckboxModel',{
+ 	  checkOnly:true 
+});
+
 Ext.define('SearchTool.view.main.ResultsGrid',{
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.resultsgrid',
@@ -5,8 +9,18 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 	store : 'Results',
 	viewConfig:{
 		stripeRows : true
+//		,
+//		getRowClass : function(r,i){ 
+//			var c = r.get('product');
+//			if (c = 'a') {
+//                return 'childRow';
+//            } else  
+//                return 'parentRow';
+//		}
 	},
 	autoScroll : true,
+	selModel: sm,
+	
 	initComponent : function(){ 
 	
 	this.dockedItems = [  
@@ -19,10 +33,28 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 				items : [{
 					xtype:'button',
 					type : 'submit',
+					url : '/addtocart',
+//					params:{'cartIds':ids},
 					text:'Add To Cart (87)',
 					cls:'btnPagingToolbar',
 					width:65,
-					scale:'medium' //medium works well in IE, FFox
+					scale:'medium',//medium works well in IE, FFox
+					handler :function() {
+					  var ids = ''; 
+					  Ext.each(this.up('panel').getSelectionModel().getSelection(), 
+					  function(row, index, value) {
+	  					ids += row.data.product + ',';
+	 				  });
+	 				  ids = ids.slice(0,-1);
+//	 				  Ext.Ajax.request({
+//						  method:'post',
+//						  url: this.url,
+//						  params:{'id':ids},
+//						  
+//						  success : function(action){},
+//						  failure : function(action){}
+//                      });
+                    }
 				},{
 					xtype:'tbseparator'
 				},  
@@ -46,14 +78,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 				xtype:'tbfill'}]
 			}];
 			
-	this.columns = [
-	 	{
-			xtype : 'actioncolumn',
-			items : [{xtype:'checkbox',tooltip:'Add to cart'}],
-			text : 'Add',
-			textwrap : true,
-			width : 40
-		},
+	this.columns = [ 
 		{
 			text : 'Source',
 			dataIndex : 'source',
