@@ -15,6 +15,10 @@ Ext.define('SearchTool.config.Config', {
     qryBuilderCaptionLabel:'Advanced Query',
     SmthgCaptionLabel:'(Smthg - User Tools or ?)',
     
+    //results
+    PageSizeOptions : [[2,2],[4,4],[6,6],[8,8]],
+    defaultPageSize : 6,
+    
     //tooltips
     searchBtnClearTtip:'Clears keyword search criteria',
     searchBtnSearchTtip:'Runs Search',

@@ -5,6 +5,7 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
 Ext.define('SearchTool.view.main.ResultsGrid',{
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.resultsgrid',
+	requires : ['SearchTool.config.Config'],
 	title : 'Results',
 	store : 'Results',
 	viewConfig:{
@@ -33,8 +34,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 				items : [{
 					xtype:'button',
 					type : 'submit',
-					url : '/addtocart',
-//					params:{'cartIds':ids},
+					url : '/addtocart', 
 					text:'Add To Cart (87)',
 					cls:'btnPagingToolbar',
 					width:65,
@@ -47,12 +47,13 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 	 				  });
 	 				  ids = ids.slice(0,-1);
 //	 				  Ext.Ajax.request({
-//						  method:'post',
+//						  method:'GET',
 //						  url: this.url,
 //						  params:{'id':ids},
 //						  
 //						  success : function(action){},
-//						  failure : function(action){}
+//						  failure : function(action){},
+//						  scope : this
 //                      });
                     }
 				},{
@@ -64,8 +65,9 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 					itemId:'cbPageSize',
 					labelWidth:55,
 					fields:['pagesize','pagesizeval'],
-					store:[[10,10],[25,25],[50,50],[100,100]],
+					store:SearchTool.config.Config.PageSizeOptions,
 					queryMode:'local',
+					value : SearchTool.config.Config.defaultPageSize,
 					editable:false,
 					typeAhead:false,
 					displayField:'pagesize',
