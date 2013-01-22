@@ -5,7 +5,7 @@ Ext.define('SearchTool.view.Viewport', {
 					'SearchTool.view.main.SearchArea',
 					'SearchTool.view.main.ResultsGrid',
 					'SearchTool.view.main.component.PnlSave'],
-			layout : 'border',
+			layout : 'border', 
 			items : [ 
 					 { //top banner panel 
 						region : 'north',
@@ -45,7 +45,9 @@ Ext.define('SearchTool.view.Viewport', {
 								border : false,
 								items : [
 									{
-										xtype:'searchArea' 
+										xtype:'searchArea',
+										height : 160
+									
 									}
 								]
 							},{
@@ -79,6 +81,6 @@ Ext.define('SearchTool.view.Viewport', {
 						}		// admin tab contents
 
 					]
-				}] 
+				}]
 
 		});
