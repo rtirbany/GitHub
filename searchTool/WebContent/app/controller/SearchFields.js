@@ -23,7 +23,7 @@ Ext.define('SearchTool.controller.SearchFields', {
 			tmp  = '( ' + SearchTool.util.dom.qBuilderRowValidations(i,row)+ ' ) '+ row.down('hidden').getValue() + '\r\n'; 
 			newval += tmp;
 		}
-		dest.setValue(newval.substr(0,newval.lastIndexOf('\r\n')));
+		dest.setValue(newval.slice(0,-3));
 	}
 
 });
