@@ -5,7 +5,7 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
  	  		var btn = Ext.ComponentQuery.query('#btnAddToCart')[0]; 
  	  		var cnt = this.getCount(); 
  	  		btn.setDisabled(cnt ==0); 
- 	  		btn.setText('Add To Cart ('+cnt+')'); 
+ 	  		btn.setText('Add Selected Items To Cart ('+cnt+')'); 
  	  	}
  	  }
 });
@@ -28,67 +28,67 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 //		}
 	},
 	autoScroll : true,
-	selModel: sm,
-	
-	initComponent : function(){ 
-	
-	this.dockedItems = [  
-		    {
+	selModel: sm, 
+	dockedItems:
+	[{
 				xtype : 'pagingtoolbar',
 				store : 'Results',
 				dock : 'top',
 				displayInfo : true,
 				prependButtons : true,
 				items : [{
-					xtype:'button',
-					itemId:'btnAddToCart',
+					xtype : 'button',
+					itemId : 'btnAddToCart',
 					type : 'submit',
-					url : '/addtocart', 
-					text:'Add To Cart ('+this.getSelectionModel().getCount()+')',
-					cls:'btnPagingToolbar',
+					url : '/addtocart',
+					text : 'Add Selected Items To Cart (-)',
+					cls : 'btnPagingToolbar',
 					disabled : true,
-					width:65,
-					scale:'medium',//medium works well in IE, FFox
-					handler :function() {
-					  var ids = ''; 
-					  Ext.each(this.up('panel').getSelectionModel().getSelection(), 
-					  function(row, index, value) {
-	  					ids += row.data.product + ',';
-	 				  });
-	 				  ids = ids.slice(0,-1);
-//	 				  Ext.Ajax.request({
-//						  method:'GET',
-//						  url: this.url,
-//						  params:{'id':ids},
-//						  
-//						  success : function(action){},
-//						  failure : function(action){},
-//						  scope : this
-//                      });
-                    }
-				},{
-					xtype:'tbseparator'
-				},  
-				{
-					xtype:'combo',
-					fieldLabel:'Results Per Page',
-					itemId:'cbPageSize',
-					labelWidth:55,
-					fields:['pagesize','pagesizeval'],
-					store:SearchTool.config.Config.PageSizeOptions,
-					queryMode:'local',
+					width : 100,
+					scale : 'large',// medium works well in IE, FFox
+					handler : function() {
+						var ids = '';
+						Ext.each(this.up('panel').getSelectionModel().getSelection(), function(row, index, value) {
+									ids += row.data.product + ',';
+								});
+						ids = ids.slice(0, -1);
+						// Ext.Ajax.request({
+						// method:'GET',
+						// url: this.url,
+						// params:{'id':ids},
+						//						  
+						// success : function(action){},
+						// failure : function(action){},
+						// scope : this
+						// });
+					}
+				}, {
+					xtype : 'tbseparator'
+				}, {
+					xtype : 'combo',
+					fieldLabel : 'Results Per Page',
+					itemId : 'cbPageSize',
+					labelWidth : 55,
+					listWidth : 30,
+					fields : ['pagesize', 'pagesizeval'],
+					store : SearchTool.config.Config.PageSizeOptions,
+					queryMode : 'local',
 					value : SearchTool.config.Config.defaultPageSize,
-					editable:false,
-					typeAhead:false,
-					displayField:'pagesize',
-					valueField:'pagesizeval',
-					allowBlank:false,
-					selectOnFocus:false,
-					width:120
-				},
-				{
-				xtype:'tbfill'}]
-			}];
+					editable : false,
+					typeAhead : false,
+					displayField : 'pagesize',
+					valueField : 'pagesizeval',
+					forceselection : true,
+					allowBlank : false,
+					selectOnFocus : false,
+					width : 120
+
+				}, {
+					xtype : 'tbfill'
+				}]
+			}],
+	
+	initComponent : function(){ 
 			
 	this.columns = [ 
 		{
@@ -116,7 +116,20 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			sortable:true
 		}
 		],
+		
+//	this.control({
+//		'combo[itemId=cbPageSize]' : {
+//			select : this.rsPageSizeSet
+//		}
+//	});
+	
 	this.callParent(arguments);
+	},
+	
+	rsPageSizeSet : function(){
+		debugger;
+//		var ps = parseInt(record.get(''))
+		this.down('pagingtoolbar').store.reload();
 	}
 	
 });
