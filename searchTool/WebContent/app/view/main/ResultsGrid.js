@@ -1,5 +1,13 @@
 var sm = Ext.create('Ext.selection.CheckboxModel',{
- 	  checkOnly:true 
+ 	  checkOnly:true,
+ 	  listeners:{
+ 	  	'selectionchange' : function() { 
+ 	  		var btn = Ext.ComponentQuery.query('#btnAddToCart')[0]; 
+ 	  		var cnt = this.getCount(); 
+ 	  		btn.setDisabled(cnt ==0); 
+ 	  		btn.setText('Add To Cart ('+cnt+')'); 
+ 	  	}
+ 	  }
 });
 
 Ext.define('SearchTool.view.main.ResultsGrid',{
@@ -33,10 +41,12 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 				prependButtons : true,
 				items : [{
 					xtype:'button',
+					itemId:'btnAddToCart',
 					type : 'submit',
 					url : '/addtocart', 
-					text:'Add To Cart (87)',
+					text:'Add To Cart ('+this.getSelectionModel().getCount()+')',
 					cls:'btnPagingToolbar',
+					disabled : true,
 					width:65,
 					scale:'medium',//medium works well in IE, FFox
 					handler :function() {
