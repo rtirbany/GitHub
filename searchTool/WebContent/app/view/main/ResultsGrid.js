@@ -96,7 +96,8 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			text : 'Source',
 			dataIndex : 'source',
 			width : 75,
-			hidden : true
+			hidden : true,
+			sortable:true
 		},
 		{
 			text:'Pub Date',
@@ -104,6 +105,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			xtype: 'datecolumn',
             format: SearchTool.config.Config.rsDateColFormat,
 			width:80,
+			hidden : true,
 			sortable:true
 		},
 		{
