@@ -1,35 +1,59 @@
 {
 	'rows' : [{
 				'id' : 1,  
-				'product' : 'a',
+				'dt' : '1/1/2012',
+				'source' : 'A',
+				'product' : 'a1',
+				'title' : 'a title',
 				'subject' : 'a keyword'
 			}, {
 				'id' : 2, 
-				'product' : 'b',
+				'dt' : '2/1/2012',
+				'source' : 'A',
+				'product' : 'A1',
+				'title' : '2 title',
 				'subject' : 'b keyword'
 			}, {
 				'id' : 3,  
-				'product' : 'c',
+				'dt' : '3/1/2012',
+				'product' : 'a',
+				'source' : 'A',
+				'title' : '3 title',
 				'subject' : 'c keyword'
 			}, {
 				'id' : 4,  
-				'product' : 'd',
+				'dt' : '4/1/2012',
+				'product' : ' a',
+				'source' : 'A',
+				'title' : '4 title',
 				'subject' : 'd keyword'
 			}, {
 				'id' : 5,  
-				'product' : 'e',
+				'dt' : '5/1/2012',
+				'product' : ' A',
+				'source' : 'A',
+				'title' : '5 title',
 				'subject' : 'e keyword'
 			}, {
 				'id' : 6,  
-				'product' : 'f',
+				'dt' : '6/1/2012',
+				'product' : 'aa',
+				'source' : 'A',
+				'title' : '6 title',
 				'subject' : 'f keyword'
 			}, {
 				'id' : 7,  
-				'product' : 'g',
+				'dt' : '7/1/2012',
+				'product' : 'ab',
+				'source' : 'A',
+				'title' : '7 title',
 				'subject' : 'g keyword'
 			}, {
-				'id' : 8,   
-				'product' : 'h',
+				'id' : 8, 
+				'dt' : '8/1/2012',  
+				'product' : 'z',
+				'source' : 'A',
+				'title' : '8 title',
 				'subject' : 'abc keyword'
 			} 
 			],

@@ -67,6 +67,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 				}, {
 					xtype : 'combo',
 					fieldLabel : 'Results Per Page',
+					labelAlign : 'right',
 					itemId : 'cbPageSize',
 					labelWidth : 55,
 					listWidth : 30,
@@ -98,6 +99,14 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			hidden : true
 		},
 		{
+			text:'Pub Date',
+			dataIndex:'dt',
+			xtype: 'datecolumn',
+            format: 'm-d-Y',//xtype: 'datecolumn',   format:'m-d-Y'
+			width:80,
+			sortable:true
+		},
+		{
 			text:'Product',
 			dataIndex:'product',
 			width:80,
@@ -126,8 +135,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 	this.callParent(arguments);
 	},
 	
-	rsPageSizeSet : function(){
-		debugger;
+	rsPageSizeSet : function(){ 
 //		var ps = parseInt(record.get(''))
 		this.down('pagingtoolbar').store.reload();
 	}
