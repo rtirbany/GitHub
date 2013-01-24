@@ -108,7 +108,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 									name: 'chkSaveQuery',
 									cls : 'chkSaveQuery',
 									tooltip : 'hi',
-									fieldLabel : SearchTool.config.Config.searchSaveChkCaptionLabel 
+									boxLabel : SearchTool.config.Config.searchSaveChkCaptionLabel 
 								 
 							}
 					    ]
