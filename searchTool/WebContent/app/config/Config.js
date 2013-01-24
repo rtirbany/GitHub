@@ -20,6 +20,7 @@ Ext.define('SearchTool.config.Config', {
     defaultPageSize : 5,
     warningExport : 5, //number of results to exceed for export warning to appear
     maxResults : 5, //maximum number of results to display
+    rsDateColFormat : 'm-d-Y',//y=2 dig yr
     
     //tooltips
     searchBtnClearTtip:'Clears keyword search criteria',

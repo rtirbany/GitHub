@@ -102,7 +102,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			text:'Pub Date',
 			dataIndex:'dt',
 			xtype: 'datecolumn',
-            format: 'm-d-Y',//xtype: 'datecolumn',   format:'m-d-Y'
+            format: SearchTool.config.Config.rsDateColFormat,
 			width:80,
 			sortable:true
 		},
