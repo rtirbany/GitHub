@@ -16,8 +16,10 @@ Ext.define('SearchTool.config.Config', {
     SmthgCaptionLabel:'(Smthg - User Tools or ?)',
     
     //results
-    PageSizeOptions : [[2,2],[4,4],[6,6],[8,8]],
-    defaultPageSize : 6,
+    PageSizeOptions : [[2,2],[5,5],[12,12],[15,15]],
+    defaultPageSize : 5,
+    warningExport : 5, //number of results to exceed for export warning to appear
+    maxResults : 5, //maximum number of results to display
     
     //tooltips
     searchBtnClearTtip:'Clears keyword search criteria',
