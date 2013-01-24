@@ -44,7 +44,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 					text : 'Add Selected Items To Cart (-)',
 					cls : 'btnPagingToolbar',
 					disabled : true,
-					width : 100,
+					width : 120,
 					scale : 'large',// medium works well in IE, FFox
 					handler : function() {
 						var ids = '';
@@ -82,7 +82,11 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 					forceselection : true,
 					allowBlank : false,
 					selectOnFocus : false,
-					width : 120
+					width : 120,
+					listeners : { 'change' : function(){
+						this.up('pagingtoolbar').store.load({start:0,limit:this.value});
+					}
+					}
 
 				}, {
 					xtype : 'tbfill'
