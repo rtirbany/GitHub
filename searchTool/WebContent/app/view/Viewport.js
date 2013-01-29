@@ -68,9 +68,8 @@ Ext.define('SearchTool.view.Viewport', {
 								flex : .45
 							}, {// center
 								region : 'center',
-								title : 'Results',
 								border : true,
-								 xtype:'resultsgrid' 
+							    xtype:'resultsgrid' 
 							}]
 						}		// searchtab
 						, 

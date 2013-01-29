@@ -15,6 +15,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 	alias : 'widget.resultsgrid',
 	requires : ['SearchTool.config.Config'],
 	title : 'Results',
+	tools:[{type:'help',tooltip:'Help page for Results area',handler:function(ev,el,p){}}],
 	store : 'Results',
 	loadMask : true,
 	viewConfig:{
