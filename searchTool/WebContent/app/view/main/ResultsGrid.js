@@ -16,11 +16,13 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 	requires : ['SearchTool.config.Config'],
 	title : 'Results',
 	store : 'Results',
+	loadMask : true,
 	viewConfig:{
 		stripeRows : true
 //		,
-//		getRowClass : function(r,i){ 
+//		getRowClass : function(r,i,p,d){ 
 //			var c = r.get('product');
+//			debugger;
 //			if (c = 'a') {
 //                return 'childRow';
 //            } else  
@@ -123,25 +125,29 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			text:'Product',
 			dataIndex:'product',
 			width:80,
-			sortable:true
+			sortable:true,
+			draggable:true
 		},
 		{
 			text:'Serial No.',
 			dataIndex:'serial',
 			flex:2,
-			sortable:true
+			sortable:true,
+			draggable:true
 		},
 		{
 			text:'Subject',
 			dataIndex:'subject',
 			flex:2,
-			sortable:true
+			sortable:true,
+			draggable:true
 		},
 		{
 			text:'Summary',
 			dataIndex:'summary',
 			flex:2,
-			sortable:true
+			sortable:true,
+			draggable:true
 		}
 		],
 		
