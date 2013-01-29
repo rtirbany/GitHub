@@ -102,8 +102,10 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			text : 'Source',
 			dataIndex : 'source',
 			width : 75,
+			align : 'center',
 			hidden : true,
 			sortable:true,
+			tooltip: 'Source',
 			renderer:function(val){
 				if (val == 'B'){
 					return '<span style="color:red;">'+val+'</span>';
@@ -118,36 +120,42 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			xtype: 'datecolumn',
             format: SearchTool.config.Config.rsDateColFormat,
 			width:80,
+			align : 'center',
 			hidden : true,
-			sortable:true
+			sortable:true,
+			tooltip: 'Pub Date'
 		},
 		{
 			text:'Product',
 			dataIndex:'product',
 			width:80,
 			sortable:true,
-			draggable:true
+			align : 'center',
+			tooltip: 'Product'
 		},
 		{
 			text:'Serial No.',
 			dataIndex:'serial',
 			flex:2,
 			sortable:true,
-			draggable:true
+			align:'left',
+			tooltip: 'Serial No.'
 		},
 		{
 			text:'Subject',
 			dataIndex:'subject',
 			flex:2,
 			sortable:true,
-			draggable:true
+			align : 'center',
+			tooltip: 'Subject' 
 		},
 		{
 			text:'Summary',
 			dataIndex:'summary',
 			flex:2,
 			sortable:true,
-			draggable:true
+			align : 'center',
+			tooltip: 'Summary'
 		}
 		],
 		
