@@ -68,9 +68,8 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 					xtype : 'combo',
 					fieldLabel : 'Results Per Page',
 					labelAlign : 'right',
-					itemId : 'cbPageSize',
 					labelWidth : 55,
-					listWidth : 30,
+					itemId : 'cbPageSize',
 					fields : ['pagesize', 'pagesizeval'],
 					store : SearchTool.config.Config.PageSizeOptions,
 					queryMode : 'local',
@@ -79,6 +78,7 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 					typeAhead : false,
 					displayField : 'pagesize',
 					valueField : 'pagesizeval',
+					matchFieldWidth:true,
 					forceselection : true,
 					allowBlank : false,
 					selectOnFocus : false,
@@ -94,14 +94,21 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			}],
 	
 	initComponent : function(){ 
-			
+	//Per Scott - by default: Source(hidden), Product, Pub Date, Serial #, Subject, Summary
 	this.columns = [ 
 		{
 			text : 'Source',
 			dataIndex : 'source',
 			width : 75,
 			hidden : true,
-			sortable:true
+			sortable:true,
+			renderer:function(val){
+				if (val == 'B'){
+					return '<span style="color:red;">'+val+'</span>';
+				}
+				else
+					return val;
+			}
 		},
 		{
 			text:'Pub Date',
@@ -119,14 +126,20 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 			sortable:true
 		},
 		{
+			text:'Serial No.',
+			dataIndex:'serial',
+			flex:2,
+			sortable:true
+		},
+		{
 			text:'Subject',
 			dataIndex:'subject',
 			flex:2,
 			sortable:true
 		},
 		{
-			text:'Title',
-			dataIndex:'title',
+			text:'Summary',
+			dataIndex:'summary',
 			flex:2,
 			sortable:true
 		}

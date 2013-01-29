@@ -19,7 +19,7 @@
 				'id' : 3,  
 				'dt' : '3/1/2012',
 				'product' : 'a',
-				'source' : 'A',
+				'source' : 'B',
 				'summary' : '3 summ',
 				'subject' : 'c keyword',
 				'serial' : '0-1'
