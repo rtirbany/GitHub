@@ -15,7 +15,9 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 	alias : 'widget.resultsgrid',
 	requires : ['SearchTool.config.Config'],
 	title : 'Results',
-	tools:[{type:'help',tooltip:'Help page for Results area',handler:function(ev,el,p){}}],
+	tools:[
+		{type:'help',tooltip:'Help page for Results area',handler:function(ev,el,p){}}
+	],
 	store : 'Results',
 	loadMask : true,
 	viewConfig:{
@@ -36,8 +38,11 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 	[{
 				xtype : 'pagingtoolbar',
 				store : 'Results',
+				hideRefresh:true,
+				displayMsg:'Results {0} - {1} of {2}',
 				dock : 'top',
 				displayInfo : true,
+				emptyMsg : 'No items to display',
 				prependButtons : true,
 				items : [{
 					xtype : 'button',
@@ -89,11 +94,46 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 					listeners : { 'change' : function(){
 						this.up('pagingtoolbar').store.load({start:0,limit:this.value});
 					}
+					}},
+					{
+						xtype : 'tbseparator' 
+					},
+					{	xtype: 'tbfill'
+					},
+					{	xtype: 'tbfill'
+					},
+					{	xtype: 'tbfill'
 					}
-
-				}, {
-					xtype : 'tbfill'
-				}]
+					,
+					{
+						xtype : 'tbfill' 
+					},
+					{
+						xtype:'tbfill'
+					},
+					{	xtype: 'tbfill'
+					},
+					{
+						text : 'Print',
+						tooltip : 'Print Results',
+						iconCls : 'icon-btnPrint'
+					}, {
+						xtype : 'tbseparator' 
+					}, 
+					{
+					text : 'Export',
+					iconCls : 'icon-btnExport',
+					align : 'right',
+					menu : {
+						plain : true,
+						showSeparator : false,
+						items : [
+							{text:'Export as Excel', iconCls : 'icon-mnuExcel', tooltip:'Export Results as Excel (.xls) file'},
+							{text:'Export PDF', iconCls : 'icon-mnuPdf', tooltip:'Export Results as PDF (.pdf) file'}
+						]
+					}
+					}
+				]
 			}],
 	
 	initComponent : function(){ 

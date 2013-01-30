@@ -156,3 +156,17 @@
 .icon-btnDelete {
  	background-image: url(../images/delete.png) !important;
 }
+
+.icon-btnPrint {
+	background-image: url(../images/printer.png) !important;
+}
+
+.icon-btnExport {
+	background-image: url(../images/table_go.png) !important;
+}
+.icon-mnuExcel { 
+	background-image: url(../images/page_white_excel.png) !important;
+}
+.icon-mnuPdf { 
+	background-image: url(../images/page_white_acrobat.png) !important;
+}
