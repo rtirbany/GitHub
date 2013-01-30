@@ -153,6 +153,10 @@
  	background-image: url(../images/add.png) !important;
 }
 
+.icon-btnCartAdd {
+ 	background-image: url(../images/cart_add.png) !important;
+}
+
 .icon-btnDelete {
  	background-image: url(../images/delete.png) !important;
 }

@@ -47,12 +47,13 @@ Ext.define('SearchTool.view.main.ResultsGrid',{
 				items : [{
 					xtype : 'button',
 					itemId : 'btnAddToCart',
+					iconCls : 'icon-btnCartAdd',
 					type : 'submit',
 					url : '/addtocart',
-					text : 'Add Selected Items To Cart (-)',
+					text : 'Add Selections to Cart (-)',
 					cls : 'btnPagingToolbar',
 					disabled : true,
-					width : 120,
+					width : 130,
 					scale : 'large',// medium works well in IE, FFox
 					handler : function() {
 						var ids = '';
