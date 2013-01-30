@@ -6,17 +6,19 @@
 			itemId : 'pnlSearchBoolean',
 			url: SearchTool.config.Config.searchUrl, 
 			requires : ['SearchTool.view.main.component.QueryBuilder','SearchTool.config.Config'], 
-			height:115,
+			height:115, 
 			dockedItems : [{
 				dock : 'top',
 				xtype : 'toolbar',
 				frame : false,
 				border : 1,
-				items : [{
+				items : [ 
+						{
 							xtype : 'tbspacer',
 							width : 3
 						}, {
 							text : 'Query Builder',
+							icon : 'extjs/resources/images/bricks.png',
 							tooltip : 'Launch Query Builder', 
 							handler : function(b){
 								var pnlQbuilder = this.up('panel').down('qbuilder'); 
@@ -46,7 +48,9 @@
 						}
 						,
 						{
-							text : 'Help',
+							xtype: 'tool',
+							type : 'help',
+							tooltip : 'Some boolean help page',
 							handler : function() {
 								Ext.Msg.alert('some boolean help page');
 							}
@@ -77,8 +81,8 @@
 						,
 						{
 							xtype : 'checkbox',
-							fieldLabel:'Save',
-							labelStyle:'width:20px;'
+							boxLabel:'Save Boolean',
+							labelStyle:'width:10px;'
 						}, {
 							xtype : 'tbspacer',
 							width : 2
@@ -89,9 +93,13 @@
 							width : 2
 						}, {
 							text : 'Search',
-							handler : function(){
-								this.up('form').getForm().submit();
-							}
+							itemId : 'boolSearch',
+							icon : 'extjs/resources/images/find.png',
+							padding : 5
+//							,
+//							handler : function(){
+//								this.up('form').getForm().submit();
+//							}
 						}, {
 							xtype : 'tbspacer',
 							width : 3

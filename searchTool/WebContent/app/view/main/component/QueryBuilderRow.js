@@ -40,7 +40,13 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					typeAhead : true,
 					triggerAction :'query',
 					queryMode : 'local',
-					width : '15%'
+					width : '15%',
+					handler : {
+					    afterrender: function () {
+					    this.focus();	
+					    }
+					
+					}
 				}, 
 				{
 					xtype : 'combo',
@@ -54,14 +60,14 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					displayField : 'opername',
 					valueField : 'opervalue',
 					hiddenName : 'ccaction',
-					emptyText : '(Select Operation)', 
+					emptyText : '(Select Oper)', 
 					forceSelection : true,
 					typeAhead : true,
 					triggerAction :'query',
 					shrinkWrap:1,
 					selectOnFocus:false,
 					queryMode : 'local',
-					width : '20%'
+					width : '15%'
 				}
 				, 
 				{
@@ -93,14 +99,15 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					xtype : 'textfield',
 					itemId : 'val2',
 					disabled : true,
-					width : '18%'
+					width : '17%'
 				}
 				, 
 				{
 					xtype : 'button',
-					itemId : 'btnDel',
-					text : '-',
-					width : '4%',
+					itemId : 'btnDel', 
+					icon : 'extjs/resources/images/delete.png',
+					text : 'DEL',
+					width : '7%',
 					handler : function(t,e,o) {
 							t.up('panel').remove(t.up('container'));
 					}
@@ -113,8 +120,9 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 				{
 					xtype : 'button',
 					itemId : 'btnAnd',
+					icon : 'extjs/resources/images/add.png',
 					text : 'AND',
-					width : '5%',
+					width : '7%',
 					handler : function() { 
 							var b = this.prev('hidden'); 
 							if (!this.up('container').nextNode() || !b.getValue() )
@@ -129,8 +137,9 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 				{
 					xtype : 'button',
 					itemId : 'btnOr',
+					icon : 'extjs/resources/images/add.png',
 					text : 'OR',
-					width : '5%',
+					width : '6.5%',
 					handler : function() { 
 							var b = this.prev('hidden'); 
 							if (!this.up('container').nextNode() || !b.getValue() )
