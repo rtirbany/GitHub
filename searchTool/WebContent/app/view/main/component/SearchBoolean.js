@@ -18,7 +18,7 @@
 							width : 3
 						}, {
 							text : 'Query Builder',
-							icon : 'extjs/resources/images/bricks.png',
+							iconCls : 'icon-qbuilder',
 							tooltip : 'Launch Query Builder', 
 							handler : function(b){
 								var pnlQbuilder = this.up('panel').down('qbuilder'); 
@@ -64,6 +64,7 @@
 						},
 						{
 							text : 'Clear',
+							iconCls : 'icon-btnClear',
 							handler : function() {
 								Ext.ComponentQuery.query('#txtSearchBoolean')[0].reset();
 							}  
@@ -94,7 +95,7 @@
 						}, {
 							text : 'Search',
 							itemId : 'boolSearch',
-							icon : 'extjs/resources/images/find.png',
+							iconCls : 'icon-btnSearch',
 							padding : 5
 //							,
 //							handler : function(){

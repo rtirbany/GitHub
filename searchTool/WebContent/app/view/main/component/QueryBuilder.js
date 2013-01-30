@@ -1,7 +1,8 @@
 Ext.define('SearchTool.view.main.component.QueryBuilder', {
 			extend : 'Ext.form.Panel',
 			alias : 'widget.qbuilder',
-			itemId : 'queryBuilder', 
+			itemId : 'queryBuilder',
+			iconCls : 'icon-qbuilder',
 			title : 'Query Builder',
 			bodyStyle : 'padding: 6px',
 			draggable : true,
@@ -15,6 +16,12 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
 			overflowX :'hidden', 
 			overflowY :'auto', 
 			tools : [
+				{	type:'help',
+					tooltip:'Help page for Query Builder area',
+					handler:function(ev,el,p){
+					Ext.Msg.alert('some querybuilder help page');
+					}
+				},
 				{
 					xtype : 'tool',
 					type : 'close',
@@ -37,12 +44,12 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
 							xtype : 'tbspacer',
 							width : 2
 						},
-						{
-							text : 'Help',
-							handler : function() {
-								Ext.Msg.alert('some querybuilder help page');
-							}
-						},
+//						{
+//							text : 'Help',
+//							handler : function() {
+//								Ext.Msg.alert('some querybuilder help page');
+//							}
+//						},
 						{
 							xtype : 'tbfill'
 						},
@@ -59,6 +66,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
 							xtype : 'tbfill' 
 						}, {
 							text : 'Clear All',
+							iconCls : 'icon-btnClear',
 							handler : function() {
 								var p = this.up('panel');
 								p.removeAll(); 
@@ -76,6 +84,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
 							width : 2
 						}, {
 							text : 'Build Query',
+							iconCls : 'icon-qbuilder',
 							itemId : 'btnBuildQuery'
 						}, {
 							xtype : 'tbspacer',
@@ -87,7 +96,8 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
 			, 
 			items:  [ 
 				{ 
-				xtype:'builderRow'
+				xtype:'builderRow',
+				focus:true
 				}  
 			]  
 		}

@@ -26,17 +26,21 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					    		fieldCls : 'dfWildcard',
 					    		labelCls : 'dfLabel',
 					    		fieldLabel : SearchTool.config.Config.searchCboxCaptionLabel,
-					    		value : SearchTool.config.Config.searchCboxCaptionValue,
-					    		qtip : 'hi'
+					    		value : SearchTool.config.Config.searchCboxCaptionValue
 					
 					    }
 					    ,{
+//					       fieldLabel:SearchTool.config.Config.searchCboxCaptionLabel+': '+SearchTool.config.Config.searchCboxCaptionValue,
+//					       labelAlign:'top',
+//					       labelCls : 'dfLabel',
+					       
 					       xtype : 'combo',
 					       id : 'cboxSearch',
 					       name : 'search',
 					       store : 'Keywords',
 					       valueField : 'id',
 					       displayField : 'keyword',
+					       hideTrigger : true,
 					       triggerAction :'query',
 					       multiselect : false,
 					       anchor : '100%',
@@ -87,6 +91,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 												columnWidth : .5,
 												text : 'Clear',
 												itemId : 'btnClear',
+												iconCls : 'icon-btnClear',
 												tooltip : SearchTool.config.Config.searchBtnClearTtip,
 												handler : function() {
 													this.up('form').getForm().reset();
@@ -97,6 +102,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 												columnWidth : .5,
 												text : 'Search',
 												itemId : 'btnSearch',
+												iconCls : 'icon-btnSearch',
 												tooltip : SearchTool.config.Config.searchBtnSearchTtip,
 												scope : this
 											}]
@@ -132,6 +138,13 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					 }
 					}
 					]
+//					layout:'hbox',
+//					items:[
+//						{xtype:'displayfield', value:'Filter Options:', width:40},
+//						{xtype:'checkbox', boxLabel:'Remove all', width:40},
+//						{xtype:'checkbox', value:'Relax all', width:40}
+//						
+//					]
 
 				}
 
