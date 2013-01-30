@@ -63,10 +63,9 @@
 
 .align-top { vertical-align:top; }
 
-/* sizing of main search button */
+/* sizing of main search buttons */
 .frmSearchBtns {
 	margin : 0px 2px 0px 2px;
-	height:30px; 
 }
 
 /* link button settings - normal, mouseover settings */

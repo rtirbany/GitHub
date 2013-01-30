@@ -72,24 +72,26 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					    ,
 						{ xtype : 'container',
 							width : '100%',
-							layout : 'column',
+							margin : '2px 5px 0px 5px',
+							layout : 'hbox',
 						    items : [{
 									xtype : 'checkbox',
 									itemId : 'chkSummaryOnlySearch',
 									name: 'chkSummaryOnlySearch',
 									cls : 'chkSummaryOnly',
 									boxLabel : SearchTool.config.Config.searchChkCaptionLabel,
-									columnWidth : .4
-								}, {
-									xtype : 'container',
-									layout : 'column',
-									columnWidth : .6,
-									items : [{
+									flex : 1
+									}, {
+//									xtype : 'container',
+//									layout : 'hbox',
+//									columnWidth : .6,
+//									items : [{
 												// layout:{type:'hbox',pack:'end'},
 												xtype : 'button',
 												cls : 'frmSearchBtns',
-												columnWidth : .5,
+												flex : 1,
 												text : 'Clear',
+												scale : 'medium',
 												itemId : 'btnClear',
 												iconCls : 'icon-btnClear',
 												tooltip : SearchTool.config.Config.searchBtnClearTtip,
@@ -99,16 +101,25 @@ Ext.define('SearchTool.view.main.SearchArea', {
 											}, {
 												xtype : 'button',
 												cls : 'frmSearchBtns',
-												columnWidth : .5,
+												flex : 1,
 												text : 'Search',
+												scale : 'medium',
 												itemId : 'btnSearch',
 												iconCls : 'icon-btnSearch',
 												tooltip : SearchTool.config.Config.searchBtnSearchTtip,
 												scope : this
-											}]
+//											}]
 								}]
-							}
-							,{ 
+							} 
+					    ]
+					    }
+					 	// cbox, btnSearch, Clear,
+				, { 
+					border : false,
+					margins :' 8 5 8 5',
+					items : [
+					{ 
+						 
 									xtype : 'checkbox',
 									itemId : 'chkSaveQuery',
 									name: 'chkSaveQuery',
@@ -116,26 +127,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 									tooltip : 'hi',
 									boxLabel : SearchTool.config.Config.searchSaveChkCaptionLabel 
 								 
-							}
-					    ]
-					    }
-					 	// cbox, btnSearch, Clear,
-				, {
-					xtype : 'form',
-					border : false,
-					margins :' 8 5 8 5',
-					items : [
-					{xtype : 'displayfield',
-					 itemId : 'breadcrumb',
-					 fieldCls : 'breadcrumbstyle',
-					 fieldBodyCls : 'align-top',
-					 value : ['level1', 'level2', 'more breadcrumbs'],
-					 listeners : {
-					 	beforerender : function(){ 
-					 		//TODO: Dynamically add 'home' to breadcrumbs (which come from json call)
-					 		this.value.unshift('Home'); 
-					 	}
-					 }
+							 
 					}
 					]
 //					layout:'hbox',
