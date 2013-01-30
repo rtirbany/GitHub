@@ -148,3 +148,11 @@
 .icon-btnSearch {
 	background-image: url(../images/find.png) !important;
 }
+ 
+.icon-btnAdd {
+ 	background-image: url(../images/add.png) !important;
+}
+
+.icon-btnDelete {
+ 	background-image: url(../images/delete.png) !important;
+}

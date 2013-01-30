@@ -105,7 +105,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 				{
 					xtype : 'button',
 					itemId : 'btnDel', 
-					icon : 'extjs/resources/images/delete.png',
+					iconCls : 'icon-btnDelete',
 					text : 'DEL',
 					width : '7%',
 					handler : function(t,e,o) {
@@ -120,7 +120,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 				{
 					xtype : 'button',
 					itemId : 'btnAnd',
-					icon : 'extjs/resources/images/add.png',
+					iconCls : 'icon-btnAdd',
 					text : 'AND',
 					width : '7%',
 					handler : function() { 
@@ -137,7 +137,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 				{
 					xtype : 'button',
 					itemId : 'btnOr',
-					icon : 'extjs/resources/images/add.png',
+					iconCls : 'icon-btnAdd',
 					text : 'OR',
 					width : '6.5%',
 					handler : function() { 
