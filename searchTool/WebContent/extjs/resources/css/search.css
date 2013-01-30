@@ -128,3 +128,23 @@
 	height:auto;
 	
 }
+
+ .childRow{
+        background-color: #C0C0C0;
+    }
+
+    .parentRow{
+        background-color: 009911;
+    }
+    
+ .icon-qbuilder {
+ 	background-image: url(../images/bricks.png) !important;
+ }
+ 
+ .icon-btnClear {
+ 	background-image: url(../images/cross.png) !important;
+ }
+ 
+.icon-btnSearch {
+	background-image: url(../images/find.png) !important;
+}
