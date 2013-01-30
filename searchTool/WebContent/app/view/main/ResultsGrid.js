@@ -5,7 +5,7 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
  	  		var btn = Ext.ComponentQuery.query('#btnAddToCart')[0]; 
  	  		var cnt = this.getCount(); 
  	  		btn.setDisabled(cnt ==0); 
- 	  		btn.setText('Add Selected Items To Cart ('+cnt+')'); 
+ 	  		btn.setText('Add Selections to Cart ('+cnt+')'); 
  	  	}
  	  }
 });
