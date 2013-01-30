@@ -1,50 +1,33 @@
 Ext.define('SearchTool.view.main.SearchArea', {
 			extend : 'Ext.container.Container', 
 			alias : 'widget.searchArea', 
-			layout:{type:'hbox'},  
+			layout:{type:'hbox'},
+			height : 120,
 			requires : ['SearchTool.view.main.component.SearchBoolean','SearchTool.config.Config'], 
-			items : [{
-				extend : 'Ext.container.Container', 
-				layout : {
-					type : 'vbox',
-					align : 'stretch'
-				},
-				flex : 1, 
-				border : false,
-				items : [
-				{
-				    width :'100%',
-					xtype : 'form', 
-					url : '/simplesearch', 
-					border : false,
+			items : [
+				{ 
+					xtype : 'form',  
+					flex:1, 
+					url : '/simplesearch',  
+					border : false, 
+					layout:'vbox', 
 					margins : '8 8 8 5',  
-					height : 120,
+					defaults: {
+						width:'100%',
+						border:false},
 					items : [
-						{
-					    		xtype : 'displayfield',
-					    		anchor : '100%',
-					    		fieldCls : 'dfWildcard',
-					    		labelCls : 'dfLabel',
-					    		fieldLabel : SearchTool.config.Config.searchCboxCaptionLabel,
-					    		value : SearchTool.config.Config.searchCboxCaptionValue
-					
-					    }
-					    ,{
-//					       fieldLabel:SearchTool.config.Config.searchCboxCaptionLabel+': '+SearchTool.config.Config.searchCboxCaptionValue,
-//					       labelAlign:'top',
-//					       labelCls : 'dfLabel',
-					       
-					       xtype : 'combo',
-					       id : 'cboxSearch',
-					       name : 'search',
-					       store : 'Keywords',
-					       valueField : 'id',
-					       displayField : 'keyword',
-					       hideTrigger : true,
+						{ xtype : 'displayfield', fieldCls : 'dfWildcard', labelCls : 'dfLabel', fieldLabel : SearchTool.config.Config.searchCboxCaptionLabel,value : SearchTool.config.Config.searchCboxCaptionValue },
+						{ 
+					       xtype : 'combo', 
+					       id : 'cboxSearch', 
+					       name : 'search', 
+					       store : 'Keywords', 
+					       valueField : 'id', 
+					       displayField : 'keyword', 
+					       hideTrigger : true, 
 					       triggerAction :'query',
-					       multiselect : false,
-					       anchor : '100%',
-					       queryMode : 'local',
+					       multiselect : false,  
+					       queryMode : 'local', 
 					       typeahead : true, 
 					       //vtype : 'searchKeyword',
 					       /*
@@ -58,91 +41,84 @@ Ext.define('SearchTool.view.main.SearchArea', {
    							 });
 					        * 
 					        * */
-					       listeners : {
-								afterrender : function(field) {
-									field.focus();
-								}, 
-                				specialkey: function(field, event) {
-        							if (event.getKey() == event.ENTER) {
-           	 							field.up('form').getForm().submit();
-        							}
-    							}
-					       }//listeners
-					       }
+					       listeners : { 
+					       	afterrender : function(field) { 
+					       		field.focus();  
+					       		}//afterrender
+					       	,  
+					       	specialkey: function(field, event) {
+					       		if (event.getKey() == event.ENTER) 
+					       			{ field.up('form').getForm().submit(); 
+					       			}//if
+					       		}//specialkey
+					       	}//listeners
+					    }//cboxsearch
 					    ,
-						{ xtype : 'container',
-							width : '100%',
+						{ xtype : 'container', 
 							margin : '2px 5px 0px 5px',
 							layout : 'hbox',
-						    items : [{
-									xtype : 'checkbox',
-									itemId : 'chkSummaryOnlySearch',
-									name: 'chkSummaryOnlySearch',
-									cls : 'chkSummaryOnly',
-									boxLabel : SearchTool.config.Config.searchChkCaptionLabel,
-									flex : 1
-									}, {
-//									xtype : 'container',
-//									layout : 'hbox',
-//									columnWidth : .6,
-//									items : [{
-												// layout:{type:'hbox',pack:'end'},
-												xtype : 'button',
-												cls : 'frmSearchBtns',
-												flex : 1,
-												text : 'Clear',
-												scale : 'medium',
-												itemId : 'btnClear',
-												iconCls : 'icon-btnClear',
-												tooltip : SearchTool.config.Config.searchBtnClearTtip,
-												handler : function() {
-													this.up('form').getForm().reset();
-												}
-											}, {
-												xtype : 'button',
-												cls : 'frmSearchBtns',
-												flex : 1,
-												text : 'Search',
-												scale : 'medium',
-												itemId : 'btnSearch',
-												iconCls : 'icon-btnSearch',
-												tooltip : SearchTool.config.Config.searchBtnSearchTtip,
-												scope : this
-//											}]
-								}]
-							} 
-					    ]
-					    }
-					 	// cbox, btnSearch, Clear,
-				, { 
-					border : false,
-					margins :' 8 5 8 5',
-					items : [
-					{ 
-						 
-									xtype : 'checkbox',
-									itemId : 'chkSaveQuery',
-									name: 'chkSaveQuery',
-									cls : 'chkSaveQuery',
-									tooltip : 'hi',
-									boxLabel : SearchTool.config.Config.searchSaveChkCaptionLabel 
-								 
-							 
-					}
-					]
-//					layout:'hbox',
-//					items:[
-//						{xtype:'displayfield', value:'Filter Options:', width:40},
-//						{xtype:'checkbox', boxLabel:'Remove all', width:40},
-//						{xtype:'checkbox', value:'Relax all', width:40}
-//						
-//					]
-
-				}
-
-				]//vbox item array
-			}, 
-				{
+							defaults:{ 
+								flex:1
+							},
+						    items : [
+						    		{
+										xtype : 'checkbox',
+										itemId : 'chkSummaryOnlySearch',
+										name: 'chkSummaryOnlySearch',
+										cls : 'chkSummaryOnly',
+										boxLabel : SearchTool.config.Config.searchChkCaptionLabel
+									}, 
+									{  
+										xtype : 'button',
+										cls : 'frmSearchBtns', 
+										text : 'Clear',
+										scale : 'medium',
+										itemId : 'btnClear',
+										iconCls : 'icon-btnClear',
+										tooltip : SearchTool.config.Config.searchBtnClearTtip,
+										handler : function() {
+											this.up('form').getForm().reset();
+										}
+									}, 
+									{
+										xtype : 'button',
+										cls : 'frmSearchBtns', 
+										text : 'Search',
+										scale : 'medium',
+										itemId : 'btnSearch',
+										iconCls : 'icon-btnSearch',
+										tooltip : SearchTool.config.Config.searchBtnSearchTtip,
+										scope : this 
+								}]//hbox container items array
+							} //container w/ summary only, search buttons
+							,
+							{ 	//FROM, TO dates
+								xtype:'container', 
+								margins :' 8 5 8 5',
+					 			layout:'hbox',
+					 			defaults: {
+					 				xtype:'datefield',
+					 				labelWidth:40,
+					 				width:150
+					 			},
+					 			items:[
+					  				{ name:'searchFromDate', fieldLabel:'From', value:Ext.Date.add(new Date(), Ext.Date.DAY,SearchTool.config.Config.defaultDatePeriod)},
+					  				{ name:'searchToDate', fieldLabel:'To', value:new Date()}
+								]
+							}//container
+							,
+							{   
+								xtype : 'checkbox',
+								itemId : 'chkSaveQuery',
+								name: 'chkSaveQuery',
+								cls : 'chkSaveQuery',
+								boxLabel : SearchTool.config.Config.searchSaveChkCaptionLabel  
+							}
+					    ]//forms item array
+					    } //form (all below items belong to hbox)
+					 	// cbox, btnSearch, Clear,  
+			 , 
+				{	//Advanced Search area
 					xtype : 'fieldset',
 					title: SearchTool.config.Config.qryBuilderCaptionLabel,
 					collapsible : true,
@@ -153,12 +129,12 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					border : false,
 					tooltip : 'Boolean query entry',
 					items:[
-					{	
-						xtype : 'searchBoolean'
-					}
+						{	
+							xtype : 'searchBoolean'
+						}
 					]//fieldset items 
 				},	
-				{
+				{	//OTHER fieldset of SearchArea
 					xtype : 'fieldset',
 					title : SearchTool.config.Config.SmthgCaptionLabel, 
 					collapsible : true,
