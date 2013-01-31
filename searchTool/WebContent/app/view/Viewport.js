@@ -31,15 +31,15 @@ Ext.define('SearchTool.view.Viewport', {
 							iconCls : 'icon-help'
 						},{
 							xtype : 'button',
-							itemId : 'btnContact',
-							text : 'Contact',
-							iconCls : 'icon-contact'
-						},{
-							xtype : 'button',
 							itemId : 'btnHome',
 							text : 'Home',
 							iconCls : 'icon-home'
 						}, {
+							xtype : 'button',
+							itemId : 'btnSupport',
+							text : 'Contact Us',
+							iconCls : 'icon-contact'
+						},{
 							xtype : 'tbseparator'
 						}, {
 							xtype : 'tbseparator'
