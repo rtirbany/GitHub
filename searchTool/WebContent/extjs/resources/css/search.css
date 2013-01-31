@@ -140,6 +140,10 @@
 	background-image: url(../images/house.png) !important;
 }
 
+.icon-help { 
+	background-image: url(../images/help.png) !important;
+}
+
 .icon-logout { 
 	background-image: url(../images/door_in.png) !important;
 }

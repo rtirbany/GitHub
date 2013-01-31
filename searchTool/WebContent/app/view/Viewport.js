@@ -21,15 +21,16 @@ Ext.define('SearchTool.view.Viewport', {
 							xtype : 'tbfill'
 						}, {
 							xtype : 'button',
+							itemId : 'btnHelp',
+							text : 'Help',
+							iconcls : 'icon-help'
+						},{
+							xtype : 'button',
 							itemId : 'btnHome',
 							text : 'Home',
 							iconCls : 'icon-home'
 						}, {
 							xtype : 'tbseparator'
-						},{
-							xtype : 'button',
-							itemId : 'btnHelp',
-							text : 'Help'
 						}, {
 							xtype : 'tbseparator'
 						}, {
@@ -70,11 +71,7 @@ Ext.define('SearchTool.view.Viewport', {
 								animCollapse : true,
 								collapseDirection : 'left',
 								split : true,
-//								items : [
-//									{ 
-									xtype: 'pnlSearch' ,
-//									}
-//								],
+								xtype: 'pnlSearch',
 								flex : .25
 							},
 							{
@@ -88,12 +85,8 @@ Ext.define('SearchTool.view.Viewport', {
 								collapsible : true,
 								animCollapse : true,
 								collapseDirection : 'left',
-								split : true,
-//								items : [
-//									{ 
-									xtype: 'pnlSources' ,
-//									}
-//								],
+								split : true, 
+								xtype: 'pnlSources',
 								flex : .2
 							}
 							
