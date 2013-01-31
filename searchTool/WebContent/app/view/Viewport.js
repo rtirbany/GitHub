@@ -12,18 +12,28 @@ Ext.define('SearchTool.view.Viewport', {
 						border : false,
 						width : '100%',
 						height : 60,
-						layout : 'hbox',
+						layout : 
+							{	type : 'hbox',
+								defaultMargins : '2px 5px 5px 5px',
+								padding : '2 4 2 4' 
+							}, 
 						items : [
 						{ 
 							xtype : 'tbtext',
 							text : 'CHROME Search'
 						}, {
 							xtype : 'tbfill'
-						}, {
+						},
+						{
 							xtype : 'button',
 							itemId : 'btnHelp',
 							text : 'Help',
-							iconcls : 'icon-help'
+							iconCls : 'icon-help'
+						},{
+							xtype : 'button',
+							itemId : 'btnContact',
+							text : 'Contact',
+							iconCls : 'icon-contact'
 						},{
 							xtype : 'button',
 							itemId : 'btnHome',

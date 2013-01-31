@@ -140,6 +140,10 @@
 	background-image: url(../images/house.png) !important;
 }
 
+.icon-contact { 
+	background-image: url(../images/book_open.png) !important;
+}
+
 .icon-help { 
 	background-image: url(../images/help.png) !important;
 }
