@@ -21,6 +21,13 @@ Ext.define('SearchTool.view.Viewport', {
 							xtype : 'tbfill'
 						}, {
 							xtype : 'button',
+							itemId : 'btnHome',
+							text : 'Home',
+							iconCls : 'icon-home'
+						}, {
+							xtype : 'tbseparator'
+						},{
+							xtype : 'button',
 							itemId : 'btnHelp',
 							text : 'Help'
 						}, {
@@ -28,7 +35,8 @@ Ext.define('SearchTool.view.Viewport', {
 						}, {
 							xtype : 'button',
 							text : 'Logout',
-							itemId : 'btnLogout'
+							itemId : 'btnLogout',
+							iconCls : 'icon-logout'
 						}
 						]
 					 } // top banner panel
@@ -52,8 +60,8 @@ Ext.define('SearchTool.view.Viewport', {
 								]
 							},{
 								region : 'west',
-								itemId : 'pnlTools',
-								title : 'Tools',
+								itemId : 'pnlSearch',
+								title : 'Filters',
 								layout : {
 									type : 'fit',  
 									align : 'stretch'
@@ -62,14 +70,38 @@ Ext.define('SearchTool.view.Viewport', {
 								animCollapse : true,
 								collapseDirection : 'left',
 								split : true,
-								items : [{
-									xtype : 'pnlSearchnav'
-								}],
-								flex : .45
-							}, {// center
+//								items : [
+//									{ 
+									xtype: 'pnlSearch' ,
+//									}
+//								],
+								flex : .25
+							},
+							{
+								region : 'west',
+								itemId : 'pnlSources',
+								title : 'Sources',
+								layout : {
+									type : 'fit',  
+									align : 'stretch'
+								},
+								collapsible : true,
+								animCollapse : true,
+								collapseDirection : 'left',
+								split : true,
+//								items : [
+//									{ 
+									xtype: 'pnlSources' ,
+//									}
+//								],
+								flex : .2
+							}
+							
+							, {// center
 								region : 'center',
 								border : true,
-							    xtype:'resultsgrid' 
+							    xtype:'resultsgrid',
+							    flex : .75
 							}]
 						}		// searchtab
 						, 

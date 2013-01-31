@@ -65,7 +65,7 @@
 
 /* sizing of main search buttons */
 .frmSearchBtns {
-	margin : 0px 2px 0px 2px;
+	padding-left:25px;
 }
 
 /* link button settings - normal, mouseover settings */
@@ -132,9 +132,17 @@
         background-color: #C0C0C0;
     }
 
-    .parentRow{
+ .parentRow{
         background-color: 009911;
     }
+ 
+.icon-home { 
+	background-image: url(../images/house.png) !important;
+}
+
+.icon-logout { 
+	background-image: url(../images/door_in.png) !important;
+}
     
  .icon-qbuilder {
  	background-image: url(../images/bricks.png) !important;
