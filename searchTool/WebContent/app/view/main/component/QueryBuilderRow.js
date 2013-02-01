@@ -85,7 +85,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					displayField : 'opername',
 					valueField : 'opervalue',
 					hiddenName : 'ccaction',
-					disabled : true,
+//					disabled : true,
 					typeAhead : true,
 					emptyText : '(AND/OR)',
 					forceSelection : true,
@@ -98,8 +98,9 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 				{
 					xtype : 'textfield',
 					itemId : 'val2',
-					disabled : true,
-					width : '17%'
+//					disabled : true,
+					width : '17%',
+					emptyText : '(Enter value...)'
 				}
 				, 
 				{
