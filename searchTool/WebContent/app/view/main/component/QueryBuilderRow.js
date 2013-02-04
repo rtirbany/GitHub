@@ -102,17 +102,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					width : '17%',
 					emptyText : '(Enter value...)'
 				}
-				, 
-				{
-					xtype : 'button',
-					itemId : 'btnDel', 
-					iconCls : 'icon-btnDelete',
-					text : 'DEL',
-					width : '7%',
-					handler : function(t,e,o) {
-							t.up('panel').remove(t.up('container'));
-					}
-				},
+				,  
 				{
 					xtype : 'hidden',
 					value : ''
@@ -124,12 +114,15 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					iconCls : 'icon-btnAdd',
 					text : 'AND',
 					width : '7%',
-					handler : function() { 
+					handler : function(t) { 
 							var b = this.prev('hidden'); 
-							if (!this.up('container').nextNode() || !b.getValue() )
+							if (!this.up('container').nextNode() || !b.getValue() ) {
 								this.up('panel').add(Ext.create('SearchTool.view.main.component.QueryBuilderRow'));
+								t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').next('button').next('button').hide(); //prev row del btn
+							}
 							b.setValue(' AND ');
 							this.addCls('qbuilderBtnSelected');
+							t.up('panel').items.items[t.up('panel').items.items.length-1].down('button').next('button').next('button').show(); 
 							this.next('button').removeCls('qbuilderBtnSelected');
 							this.next('button').addCls('qbuilderBtnDeselected');
 							
@@ -141,14 +134,31 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					iconCls : 'icon-btnAdd',
 					text : 'OR',
 					width : '6.5%',
-					handler : function() { 
+					handler : function(t) { 
 							var b = this.prev('hidden'); 
-							if (!this.up('container').nextNode() || !b.getValue() )
+							if (!this.up('container').nextNode() || !b.getValue() ) {
 								this.up('panel').add(Ext.create('SearchTool.view.main.component.QueryBuilderRow'));
+								t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').next('button').next('button').hide(); //prev row del btn
+							}
 							b.setValue(' OR ');
+							t.up('panel').items.items[t.up('panel').items.items.length-1].down('button').next('button').next('button').show(); 
 							this.prev('button').removeCls('qbuilderBtnSelected');
 							this.prev('button').addCls('qbuilderBtnDeselected');
 							this.addCls('qbuilderBtnSelected');
+					}
+				},
+				{
+					xtype : 'button',
+					itemId : 'btnDel', 
+					iconCls : 'icon-btnDelete',
+					text : 'DEL',
+					hidden : true,
+					width : '7%',
+					handler : function(t,e,o) { 
+							var l = t.up('panel').items.items.length; //length of the array of items
+							if (l > 2)
+								t.up('panel').items.items[l-2].down('button').next('button').next('button').show(); //prev row del btn
+							t.up('panel').remove(t.up('container'));
 					}
 				}
 			]
