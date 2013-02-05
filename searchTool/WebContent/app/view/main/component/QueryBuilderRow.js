@@ -6,14 +6,14 @@ var fieldStore = new Ext.data.SimpleStore({
 
 var operStore = new Ext.data.SimpleStore({
 			fields : ['opername', 'opervalue'],
-			data : [[' = ', '='], [' > ', '>'], [' < ', '<'], ['>=', '>='],
+			data : [['=', '='], ['>', '>'], ['<', '<'], ['>=', '>='],
 					['<=', '<='], ['NOT', 'NOT'], ['BETWEEN', 'BETWEEN'], ['IS NOT NULL', 'IS NOT NULL'],
 					['IS NULL', 'IS NULL']]
 		});
 
 var andorStore = new Ext.data.SimpleStore({
 			fields : ['opername', 'opervalue'],
-			data : [[' AND ', 'AND'], [' OR ', 'OR']]
+			data : [['AND', 'AND'], ['OR', 'OR']]
 		});
 
 Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
@@ -42,7 +42,8 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					queryMode : 'local',
 					width : '15%',
 					handler : {
-					    afterrender: function () {
+					    afterRender: function () {
+					    Ext.Msg.alert('hi');
 					    this.focus();	
 					    }
 					
@@ -67,7 +68,13 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					shrinkWrap:1,
 					selectOnFocus:false,
 					queryMode : 'local',
-					width : '15%'
+					width : '15%',
+					enableKeyEvents : true,
+					listeners : {
+						onkeyup : function(t,e,o){
+							Ext.Msg.alert('hi there');
+						}
+					}
 				}
 				, 
 				{
@@ -81,6 +88,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					itemId : 'cboxAndOr',
 					cls : 'cboxAndOr',
 					store : andorStore, 
+					minChars:1,
 //					hasfocus : true,
 					displayField : 'opername',
 					valueField : 'opervalue',
@@ -158,6 +166,10 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 							var l = t.up('panel').items.items.length; //length of the array of items
 							if (l > 2)
 								t.up('panel').items.items[l-2].down('button').next('button').next('button').show(); //prev row del btn
+							t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').next('button').removeCls('qbuilderBtnSelected'); //prev row del btn
+							t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').next('button').removeCls('qbuilderBtnDeselected');
+							t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').removeCls('qbuilderBtnSelected'); //prev row del btn
+							t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').removeCls('qbuilderBtnDeselected');
 							t.up('panel').remove(t.up('container'));
 					}
 				}
