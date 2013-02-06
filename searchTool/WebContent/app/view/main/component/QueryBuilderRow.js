@@ -89,14 +89,12 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					cls : 'cboxAndOr',
 					store : andorStore, 
 					minChars:1,
-//					hasfocus : true,
 					displayField : 'opername',
 					valueField : 'opervalue',
 					hiddenName : 'ccaction',
-//					disabled : true,
 					typeAhead : true,
 					emptyText : '(AND/OR)',
-					forceSelection : true,
+					allowBlank : true,
 					enforceMaxLength : true,
 					matchFieldWidth : true,
 					mode : 'local',
@@ -105,8 +103,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 				, 
 				{
 					xtype : 'textfield',
-					itemId : 'val2',
-//					disabled : true,
+					itemId : 'val2', 
 					width : '17%',
 					emptyText : '(Enter value...)'
 				}
