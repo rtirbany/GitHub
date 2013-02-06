@@ -3,8 +3,8 @@ Ext.define('SearchTool.view.Viewport', {
 			itemId : 'main',
 			requires : ['SearchTool.view.main.pnlSearchNav',
 					'SearchTool.view.main.SearchArea',
-					'SearchTool.view.main.ResultsGrid',
-					'SearchTool.view.main.component.PnlSave'],
+					//'SearchTool.view.main.ResultsGrid',
+					'SearchTool.view.main.component.WinSave'],
 			layout : 'border', 
 			items : [ 
 					 { //top banner panel 
@@ -19,21 +19,23 @@ Ext.define('SearchTool.view.Viewport', {
 							}, 
 						items : [
 						{ 
+							//TODO: use 'component' for logo
+							//width:, style:(bordering,padding,etc), html:(img src,style='w:X;h:Y') 
 							xtype : 'tbtext',
 							text : 'CHROME Search'
 						}, {
 							xtype : 'tbfill'
+						},{
+							xtype : 'button',
+							itemId : 'btnHome',
+							text : 'Home',
+							iconCls : 'icon-home'
 						},
 						{
 							xtype : 'button',
 							itemId : 'btnHelp',
 							text : 'Help',
 							iconCls : 'icon-help'
-						},{
-							xtype : 'button',
-							itemId : 'btnHome',
-							text : 'Home',
-							iconCls : 'icon-home'
 						}, {
 							xtype : 'button',
 							itemId : 'btnSupport',
@@ -55,11 +57,14 @@ Ext.define('SearchTool.view.Viewport', {
 					{ 		
 						region:'center',
 						xtype : 'tabpanel', 
-						items : [{// searchtab
+						items : [
+							{// searchtab
 							title : 'Search',
 							itemId : 'pnlMainTabSearch',
+							id:'searchMainTabPanel',
 							layout : 'border',
-							items : [{
+							items : [
+							{
 								region : 'north',
 								border : false,
 								items : [
@@ -97,22 +102,22 @@ Ext.define('SearchTool.view.Viewport', {
 								collapseDirection : 'left',
 								split : true, 
 								xtype: 'pnlSources',
-								flex : .2
+								flex : .18
 							}
 							
 							, {// center
 								region : 'center',
 								border : true,
-							    xtype:'resultsgrid',
+							  //  xtype:'resultsgrid',
 							    flex : .75
 							}]
 						}		// searchtab
-						, 
-						{//admin tab
-							title : 'Admin', 
-							html : '(Admin pages go here)',
-							tooltip : 'admin pages appear here'
-						}		// admin tab contents
+//						, 
+//						{//admin tab
+//							title : 'Admin', 
+//							html : '(Admin pages go here)',
+//							tooltip : 'admin pages appear here'
+//						}		// admin tab contents
 
 					]
 				}]
