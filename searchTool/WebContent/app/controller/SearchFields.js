@@ -1,4 +1,4 @@
-var errWin = Ext.create('Ext.window.Window',{title:'Errors found',height:250,width:270,hidden:true,layout:'fit',items:[{xtype:'grid',border:false, columns:[{header:'Line #'},{header:'Error'}]}],buttons:Ext.Msg.OKCANCEL})
+var errWin = Ext.create('Ext.window.Window',{title:'Errors found',height:250,width:270,hidden:true,layout:'fit',items:[{xtype:'grid',border:false, columns:[{header:'Line #',dataIndex:'line'},{header:'Error',dataIndex:'mssg'}]}],buttons:Ext.Msg.OKCANCEL})
 
 Ext.define('SearchTool.controller.SearchFields', {
 	extend : 'Ext.app.Controller',
@@ -19,7 +19,7 @@ Ext.define('SearchTool.controller.SearchFields', {
 	buildQuery : function(b) {
 		var dest = Ext.ComponentQuery.query('#txtSearchBoolean')[0]; 
 		var qbrows = b.up('panel').items.items;
-		var row, s, errArr = '', newval = '', tmpRow='', last = '', ln='',msg='';
+		var row, s = 2; errArr = [], newval = '', tmpRow='', last = '', ln='',msg='';
 		for (var i = 0; i < qbrows.length; i++) {
 			row = qbrows[i];
 			last = row.down('hidden').getValue();
@@ -30,18 +30,24 @@ Ext.define('SearchTool.controller.SearchFields', {
 //			if (tmpRow.indexOf('-- ERROR') > -1) {
 //				errEl = tmpRow.substring(15);
 //				ln = errEl.substring(0,errEl.indexOf(':'));
-//				msg = errEl.substring(errEl.indexOf(':')+1); 
-//				errArr += tmpRow + '\r\n';
+//				msg = errEl.substring(errEl.indexOf(':')+1);
+//				var x = new Object({'line':ln,'mssg':msg}); 
+//				errArr.push(x);
+////				errArr += tmpRow + '\r\n';
 //			}
-//			else
+////			else
 				newval  += tmpRow + '\r\n';
 			tmpRow = '';
+			last = '';
 		}
-		dest.setValue(newval.slice(0,-(last.length+2))); //always remove last 2 chars
+		s += (last == '' ? last.length : 0); 
+			dest.setValue(newval.slice(0,-(s))); //always remove last 2 chars
+		 
 		//TODO: Error msg popup? 2 of 2
 //		if (errArr != '') {
 //			//Ext.Msg.show({title:'Errors found',value:errArr,buttons:Ext.Msg.OKCANCEL,readOnly:true,multiline:true});
-//			errWin.items.items.data = errArr;
+//			debugger;
+//			errWin.items.data = errArr;
 //			errWin.center();
 //			errWin.show();
 //		}
