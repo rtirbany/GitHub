@@ -72,8 +72,30 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					width : '15%',
 					enableKeyEvents : true,
 					listeners : {
-						onkeyup : function(t,e,o){
-							Ext.Msg.alert('hi there');
+						'change' : function(t,n,o,opts){
+							var ao = t.next('textfield').next('combo');
+							var tf = t.next('textfield'); 
+							var tf2 = t.next('textfield').next('combo').next('textfield');
+							if (t.value == 'BETWEEN') {
+								ao.setValue('AND');
+								ao.disable();
+							} 
+							else if (t.value == 'IS NULL' || t.value == 'IS NOT NULL') {
+								tf.setValue(''); 
+								tf.disable();
+								ao.disable();
+								tf2.setValue('');
+								tf2.disable();
+							}
+							else {
+								if (t.value != 'BETWEEN') {
+									ao.setValue('');
+									ao.enable();
+									tf.enable();
+								}
+								tf2.enable();
+							}
+								
 						}
 					}
 				}
@@ -84,7 +106,21 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					width : '18%',
 					emptyText : '(Enter value...)',
 					regex: SearchTool.config.Config.qryBuilderTextFieldRegex,
-					regexText: SearchTool.config.Config.qryBuilderErrText
+					regexText: SearchTool.config.Config.qryBuilderErrText,
+					enableKeyEvents : true,
+					listeners:{ 
+						'keyup' : function (t,e,o){
+							var ao = t.next('combo');
+							if (t.prev('combo').value != 'BETWEEN' && t.value.trim() != '')
+							   ao.enable(); 
+						}
+						 
+					}
+//		'load' : 
+//			 //TODO: sort this by id..done?
+//			 function(store,records,success, operation){ 
+////			 	Ext.Msg.alert(store.getAt(0).getId()+''); 
+//			 	debugger;
 				}, 
 				{
 					xtype : 'combo',
@@ -92,6 +128,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					cls : 'cboxAndOr',
 					store : andorStore, 
 					minChars:1,
+					disabled : true,
 					displayField : 'opername',
 					valueField : 'opervalue',
 					hiddenName : 'ccaction',
@@ -166,6 +203,9 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 							var l = t.up('panel').items.items.length; //length of the array of items
 							if (l > 2)
 								t.up('panel').items.items[l-2].down('button').next('button').next('button').show(); //prev row del btn
+								
+							t.up('panel').items.items[t.up('panel').items.items.length-2].down('hidden').setValue(''); //prev row hidden
+							
 							t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').next('button').removeCls('qbuilderBtnSelected'); //prev row del btn
 							t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').next('button').removeCls('qbuilderBtnDeselected');
 							t.up('panel').items.items[t.up('panel').items.items.length-2].down('button').removeCls('qbuilderBtnSelected'); //prev row del btn
