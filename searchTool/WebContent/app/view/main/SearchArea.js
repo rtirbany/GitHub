@@ -10,8 +10,8 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					flex:1, 
 					url : '/simplesearch',  
 					border : false, 
-					layout:'vbox', 
-					margins : '8 8 8 5',  
+					layout:'vbox',
+					margins : '8 8 8 5',
 					defaults: {
 						width:'100%',
 						border:false},
@@ -55,8 +55,12 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					    }//cboxsearch
 					    ,
 						{ xtype : 'container', 
-							margin : '2px 5px 0px 5px',
-							layout : 'hbox',
+							margin : '2px 5px 16px 5px',
+							layout : 
+							{	type : 'hbox',
+								defaultMargins : '2px 5px 10px 5px',
+								padding : '0 4 0 4' 
+							}, 
 							defaults:{ 
 								flex:1
 							},
@@ -71,10 +75,10 @@ Ext.define('SearchTool.view.main.SearchArea', {
 									{  
 										xtype : 'button',
 										cls : 'frmSearchBtns', 
-										text : 'Clear',
-										scale : 'medium',
+										text : 'Clear', 
 										itemId : 'btnClear',
 										iconCls : 'icon-btnClear',
+										iconAlign : 'left',
 										tooltip : SearchTool.config.Config.searchBtnClearTtip,
 										handler : function() {
 											this.up('form').getForm().reset();
@@ -83,10 +87,10 @@ Ext.define('SearchTool.view.main.SearchArea', {
 									{
 										xtype : 'button',
 										cls : 'frmSearchBtns', 
-										text : 'Search',
-										scale : 'medium',
+										text : 'Search', 
 										itemId : 'btnSearch',
 										iconCls : 'icon-btnSearch',
+										iconAlign : 'left',
 										tooltip : SearchTool.config.Config.searchBtnSearchTtip,
 										scope : this 
 								}]//hbox container items array
@@ -94,20 +98,24 @@ Ext.define('SearchTool.view.main.SearchArea', {
 							,
 							{ 	//FROM, TO dates
 								xtype:'container', 
-								margins :' 8 5 8 5',
-					 			layout:'hbox',
+								margins :' 8 5 10 5',
+					 			layout:{
+					 				type:'hbox',
+					 				defaultMargins : '2px 8px 2px 5px'
+					 				
+					 			},
 					 			defaults: {
-					 				xtype:'datefield',
-					 				labelWidth:40,
-					 				width:150
+					 				xtype:'datefield'
 					 			},
 					 			items:[
-					  				{ name:'searchFromDate', fieldLabel:'From', value:Ext.Date.add(new Date(), Ext.Date.DAY,SearchTool.config.Config.defaultDatePeriod)},
-					  				{ name:'searchToDate', fieldLabel:'To', value:new Date()}
+					  				{ name:'searchFromDate', width:135, labelWidth:30, fieldLabel:'From', value:Ext.Date.add(new Date(), Ext.Date.DAY,SearchTool.config.Config.defaultDatePeriod)},
+					  				{ name:'searchToDate', width:123, labelWidth:18, fieldLabel:'To', value:new Date()},
+					  				//{ xtype:'checkbox', boxLabel:'Other Date range types', fieldLabel:'Other Date ranges', labelWidth:10},
+					  				{ xtype:'button', text:'Custom Date', cls:'btnDateRanges', tooltip:'Select a custom date range', enableToggle:true}
 								]
 							}//container
 							,
-							{   
+							{    
 								xtype : 'checkbox',
 								itemId : 'chkSaveQuery',
 								name: 'chkSaveQuery',
