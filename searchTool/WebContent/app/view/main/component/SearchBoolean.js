@@ -21,7 +21,7 @@
 							iconCls : 'icon-qbuilder',
 							tooltip : 'Launch Query Builder', 
 							handler : function(b){
-								var pnlQbuilder = this.up('panel').down('qbuilder'); 
+								var pnlQbuilder = this.up('panel').down('qbuilder');
 								pnlQbuilder.center();
 								pnlQbuilder.setHeight(Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getHeight()*2);
 								pnlQbuilder.setWidth(Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getWidth());
@@ -79,20 +79,7 @@
 							xtype : 'tbspacer',
 							width : 2
 						}
-						,
-						{
-							xtype : 'checkbox',
-							boxLabel:'Save Boolean',
-							labelStyle:'width:10px;'
-						}, {
-							xtype : 'tbspacer',
-							width : 2
-						}, {
-							xtype : 'tbseparator'
-						}, {
-							xtype : 'tbspacer',
-							width : 2
-						}, {
+						 , {
 							text : 'Search',
 							itemId : 'boolSearch',
 							iconCls : 'icon-btnSearch',
