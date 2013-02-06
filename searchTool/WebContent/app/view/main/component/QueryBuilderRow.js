@@ -19,6 +19,7 @@ var andorStore = new Ext.data.SimpleStore({
 Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 			extend:'Ext.container.Container',
 			alias:'widget.builderRow',
+			requires : ['SearchTool.config.Config'],
 			layout : 'hbox',
 			items : [	
 				{
@@ -81,7 +82,9 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					xtype : 'textfield',
 					itemId : 'val1',
 					width : '18%',
-					emptyText : '(Enter value...)'
+					emptyText : '(Enter value...)',
+					regex: SearchTool.config.Config.qryBuilderTextFieldRegex,
+					regexText: SearchTool.config.Config.qryBuilderErrText
 				}, 
 				{
 					xtype : 'combo',

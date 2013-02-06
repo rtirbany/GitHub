@@ -10,14 +10,16 @@ Ext.define('SearchTool.config.Config', {
     //captions & labels
     searchCboxCaptionLabel:'Enter search term(s)',
     searchCboxCaptionValue:'(* = wildcard; ? = single char wildcard)',
-    searchChkCaptionLabel: 'Summary Field Only',
+    searchChkCaptionLabel: 'Summary Only',
     searchSaveChkCaptionLabel : 'Save Query',
     qryBuilderCaptionLabel:'Advanced Query',
     SmthgCaptionLabel:'(Smthg - User Tools or ?)',
-    
+    defaultDatePeriod : -30, //in days
+    qryBuilderTextFieldRegex : /^[0-9a-zA-Z\-\,\.\%\$\?\*]$/,
+    qryBuilderErrText : 'bad info',
     //results
-    PageSizeOptions : [[2,2],[5,5],[12,12],[15,15]],
-    defaultPageSize : 5,
+    PageSizeOptions : [[5,5],[10,10],[25,25],[50,50]],
+    defaultPageSize : 25,
     warningExport : 5, //number of results to exceed for export warning to appear
     maxResults : 5, //maximum number of results to display
     rsDateColFormat : 'm-d-Y',//y=2 dig yr
