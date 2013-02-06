@@ -104,7 +104,7 @@ Ext.define('SearchTool.util.dom', {
 			tmp = "( {0} {1} {2} {3} {0} {1} {4} ) {5}";
 			errMsg = '-- ERROR - Line'+(i+1)+':';
 			if (f1 == '' || c1 == '')
-				return errMsg+'Missing required field - check Field and/or Operation';
+				return errMsg+'Missing a required field - Check Fieldname and/or Operator';
 			else if ((c1 == 'NOT' || c1 == 'IS NULL' || c1 == 'IS NOT NULL') && (t1 != '')) //for these comparators, t1 should be null/empty, but not t2
 				return Ext.String.format(tmp,f1,c1,t1,cb,t2,last);							//may need to adjust values of combo for and, or
 			else if (c1 == 'BETWEEN' ) {
@@ -115,13 +115,13 @@ Ext.define('SearchTool.util.dom', {
 				else if (t1 != '' && t2 !='') //BETWEEN needs 2 fields
 					return Ext.String.format(tmp,f1,c1,t1,t2,last);
 			}
-			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' ) && (t1 != '' && t2 != '')) //all other c1's
-				return Ext.String.format(tmp,f1,c1,t1,cb,t2,last); //should make sure cb has AND or OR chosen
-			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' ) && (t1 == '' && t2 != '')) //all other c1's
+			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN') && (t1 != '' && t2 != '')) //all other c1's
+				return (cb != '' ? Ext.String.format(tmp,f1,c1,t1,cb,t2,last) : 'Bad syntax - This query statement requires a connector - Select AND or OR from the dropdown box'); //should make sure cb has AND or OR chosen
+			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN') && (t1 == '' && t2 != '')) //all other c1's
 				{	tmp = "( {0} {1} {4} ) {5}"; //should ask they clear cb if it has data
 					return Ext.String.format(tmp,f1,c1,'','',t2,last);
 				}
-			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' ) && (t1 != '' && t2 == '')) //all other c1's
+			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN' ) && (t1 != '' && t2 == '')) //all other c1's
 				{	tmp = "( {0} {1} {2} ) {3}"; ////should ask they clear cb if it has data
 					return Ext.String.format(tmp,f1,c1,t1,last);
 				}
