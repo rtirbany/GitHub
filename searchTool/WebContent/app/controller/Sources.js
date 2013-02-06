@@ -25,8 +25,11 @@ Ext.define('SearchTool.controller.Sources', {
 				this.getSourcesStore().addListener('datachanged',this.availSources,this);
 				//sources are loaded
 				//this.getSourcesStore().addListener('load',this.addSources,this);
-				
+				//this.getSourcesStore().tpl.overwrite(this.getPnlSourcesView,this.getSourcesStore); 
 				this.control({
+					'fieldset > checkboxgroup[itemId=chkgrpProducts] > checkbox' : {
+						change : this.toggleSource
+					},
 					'checkbox[itemId=chkProdAll]' : {
 						change : this.toggleAllProducts
 					},
@@ -50,6 +53,10 @@ Ext.define('SearchTool.controller.Sources', {
 				});
 			}//init
 			,
+			toggleSource : function(p,d){
+				Ext.Msg.alert('changed product selection(s)...re-execute qry');
+			
+			},
 			panelCollapse : function(p,d){    
 				var n = this.getSearchPanel();
 				var s = this.getSourcesPanel();
