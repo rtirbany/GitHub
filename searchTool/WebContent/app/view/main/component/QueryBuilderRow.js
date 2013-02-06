@@ -7,7 +7,8 @@ var fieldStore = new Ext.data.SimpleStore({
 var operStore = new Ext.data.SimpleStore({
 			fields : ['opername', 'opervalue'],
 			data : [['=', '='], ['>', '>'], ['<', '<'], ['>=', '>='],
-					['<=', '<='], ['NOT', 'NOT'], ['BETWEEN', 'BETWEEN'], ['IS NOT NULL', 'IS NOT NULL'],
+					['<=', '<='], ['NOT', 'NOT'], ['BETWEEN', 'BETWEEN'], ['CONTAINS','CONTAINS'],
+					['DOES NOT CONTAIN','DOES NOT CONTAIN'],['IS NOT NULL', 'IS NOT NULL'],
 					['IS NULL', 'IS NULL']]
 		});
 
@@ -107,15 +108,16 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
 					emptyText : '(Enter value...)',
 					regex: SearchTool.config.Config.qryBuilderTextFieldRegex,
 					regexText: SearchTool.config.Config.qryBuilderErrText,
-					enableKeyEvents : true,
-					listeners:{ 
-						'keyup' : function (t,e,o){
-							var ao = t.next('combo');
-							if (t.prev('combo').value != 'BETWEEN' && t.value.trim() != '')
-							   ao.enable(); 
-						}
+					enableKeyEvents : true
+//					,
+//					listeners:{ 
+//						'keyup' : function (t,e,o){
+//							var ao = t.next('combo');
+//							if (t.prev('combo').value != 'BETWEEN' && t.value.trim() != '')
+//							   ao.enable(); 
+//						}
 						 
-					}
+//					}
 //		'load' : 
 //			 //TODO: sort this by id..done?
 //			 function(store,records,success, operation){ 
