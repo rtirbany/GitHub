@@ -105,23 +105,34 @@ Ext.define('SearchTool.util.dom', {
 			errMsg = '-- ERROR - Line'+(i+1)+':';
 			if (f1 == '' || c1 == '')
 				return errMsg+'Missing a required field - Check Fieldname and/or Operator';
-			else if ((c1 == 'NOT' || c1 == 'IS NULL' || c1 == 'IS NOT NULL') && (t1 != '')) //for these comparators, t1 should be null/empty, but not t2
-				return Ext.String.format(tmp,f1,c1,t1,cb,t2,last);							//may need to adjust values of combo for and, or
+				
+			//1 ARG ONLY
+			//CAN BE HAVE TWO RECEIVED
+			else if (c1 == 'IS NULL' || c1 == 'IS NOT NULL') {//for these comparators, t1 should be null/empty, but not t2
+				tmp = "( {0} {1} ) {2}";
+				return Ext.String.format(tmp,f1,c1,last);	
+			}
+			//2 ARGS ONLY
 			else if (c1 == 'BETWEEN' ) {
 				tmp = "( {0} {1} {2} AND {3} ) {4}";
 				last = last ? last : '';
+				//ONLY 0 OR 1 RECEIVED
 				if (t1 == '' || t2 =='') //BETWEEN needs 2 fields
 					return errMsg+'Bad syntax - This operation requires 2 arguments';
 				else if (t1 != '' && t2 !='') //BETWEEN needs 2 fields
 					return Ext.String.format(tmp,f1,c1,t1,t2,last);
 			}
-			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN') && (t1 != '' && t2 != '')) //all other c1's
-				return (cb != '' ? Ext.String.format(tmp,f1,c1,t1,cb,t2,last) : 'Bad syntax - This query statement requires a connector - Select AND or OR from the dropdown box'); //should make sure cb has AND or OR chosen
-			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN') && (t1 == '' && t2 != '')) //all other c1's
-				{	tmp = "( {0} {1} {4} ) {5}"; //should ask they clear cb if it has data
-					return Ext.String.format(tmp,f1,c1,'','',t2,last);
+			//1 OR 2 ARGS
+			//BOTH MISSING
+			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'NOT EQUAL TO' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN') && (t1 != '' && t2 != '')) //all other c1's
+				return (cb != '' ? Ext.String.format(tmp,f1,c1,t1,cb,t2,last) : errMsg+'Bad syntax - This query statement requires a connector - Select AND or OR from the dropdown box'); //should make sure cb has AND or OR chosen
+			//1ST MISSING, 2ND RECEIVED - OK
+			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'NOT EQUAL TO' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN') && (t1 == '' && t2 != '')) //all other c1's
+				{	tmp = "( {0} {1} {2} ) {3}"; //should ask they clear cb if it has data
+					return Ext.String.format(tmp,f1,c1,t2,last);
 				}
-			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN' ) && (t1 != '' && t2 == '')) //all other c1's
+			//1ST RECEIVED, 2ND RECEIVED - OK
+			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'NOT EQUAL TO' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN' ) && (t1 != '' && t2 == '')) //all other c1's
 				{	tmp = "( {0} {1} {2} ) {3}"; ////should ask they clear cb if it has data
 					return Ext.String.format(tmp,f1,c1,t1,last);
 				}
