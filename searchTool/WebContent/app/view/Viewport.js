@@ -3,7 +3,7 @@ Ext.define('SearchTool.view.Viewport', {
 			itemId : 'main',
 			requires : ['SearchTool.view.main.pnlSearchNav',
 					'SearchTool.view.main.SearchArea',
-					//'SearchTool.view.main.ResultsGrid',
+					'SearchTool.view.main.ResultsGrid',
 					'SearchTool.view.main.component.WinSave'],
 			layout : 'border', 
 			items : [ 
@@ -74,7 +74,24 @@ Ext.define('SearchTool.view.Viewport', {
 									
 									}
 								]
-							},{
+							},
+							{
+								region : 'west',
+								itemId : 'pnlSources',
+								title : 'Sources',
+								layout : {
+									type : 'fit',  
+									align : 'stretch'
+								},
+								collapsible : true,
+								animCollapse : true,
+								collapseDirection : 'left',
+								collapsed : true,
+								split : true, 
+								xtype: 'pnlSources',
+								flex : .18
+							},
+							{
 								region : 'west',
 								itemId : 'pnlSearch',
 								title : 'Filters',
@@ -89,35 +106,20 @@ Ext.define('SearchTool.view.Viewport', {
 								xtype: 'pnlSearch',
 								flex : .25
 							},
-							{
-								region : 'west',
-								itemId : 'pnlSources',
-								title : 'Sources',
-								layout : {
-									type : 'fit',  
-									align : 'stretch'
-								},
-								collapsible : true,
-								animCollapse : true,
-								collapseDirection : 'left',
-								split : true, 
-								xtype: 'pnlSources',
-								flex : .18
-							}
 							
-							, {// center
+							{// center
 								region : 'center',
 								border : true,
 							  //  xtype:'resultsgrid',
 							    flex : .75
 							}]
 						}		// searchtab
-//						, 
-//						{//admin tab
-//							title : 'Admin', 
-//							html : '(Admin pages go here)',
-//							tooltip : 'admin pages appear here'
-//						}		// admin tab contents
+						, 
+						{//admin tab
+							title : 'Admin', 
+							html : '(Admin pages go here)',
+							tooltip : 'admin pages appear here'
+						}// admin tab contents
 
 					]
 				}]
