@@ -44,7 +44,7 @@
 }
 
  .frmSearchBtns .x-btn-inner {
-	font-weight:bold; !important;
+	font-weight:bold !important;
 	width:90px; 
 }
 
@@ -105,8 +105,8 @@
 
 /* boolean search area */
 .searchBooleanTextArea {
-	border: 0px; !important;
-	border: none; !important;
+	border: 0px !important;
+	border: none !important;
 	background: #DFE8F5; 
 }
 
@@ -124,8 +124,13 @@
 .btnPagingToolbar .x-btn-inner{
 	white-space:normal;
 	line-height:normal;
-	height:auto;
-	
+	height:auto;	
+}
+
+.btnDateRanges .x-btn-inner{
+	white-space:normal !important;
+	line-height:normal !important;
+	padding-top :2px;
 }
 
  .childRow{
@@ -154,12 +159,16 @@
     
  .icon-qbuilder {
  	background-image: url(../images/bricks.png) !important;
- }
+}
  
  .icon-btnClear {
  	background-image: url(../images/cross.png) !important;
+}
+
+.icon-btnOk {
+ 	background-image: url(../images/tick.png) !important;
  }
- 
+  
 .icon-btnSearch {
 	background-image: url(../images/find.png) !important;
 }
