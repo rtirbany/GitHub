@@ -47,6 +47,7 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
 						},
 						{
 							text: 'Reset',
+							iconCls : 'icon-btnReset',
 							handler : function(){
 								this.up('form').getForm().reset();
 							}
@@ -145,9 +146,11 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
 										 date1 = Ext.Date.add(date1, Ext.Date.YEAR,-1); 
 									date1 = Ext.Date.add(date1, Ext.Date.YEAR,-c);
 								}
-    							Ext.Msg.alert(date1+''); //l
+								var z = Ext.ComponentQuery.query('#dtSearchFrom')[0].value;
+    							Ext.Msg.alert(date1+''); 
+								//Ext.ComponentQuery.query('#dtSearchFrom')[0].setValue(date1);
+								//Ext.ComponentQuery.query('#dtSearchTo')[0].setValue(date2);
 								//Ext.Msg.alert('whole'+w+'   fiscal:'+f+'   '+date1);
-								//Ext.ComponentQuery.query('#btnCustomDate')[0].toggle(true);
 							}
 						}, {
 							xtype : 'tbspacer',
