@@ -3,8 +3,13 @@ Ext.define('SearchTool.view.main.SearchArea', {
 			alias : 'widget.searchArea', 
 			layout:{type:'hbox'},
 			height : 120,
-			requires : ['SearchTool.view.main.component.SearchBoolean','SearchTool.config.Config'], 
+			constrain:true,
+			requires : ['SearchTool.view.main.component.SearchBoolean','SearchTool.config.Config','SearchTool.view.main.component.PnlDateRange'], 
 			items : [
+				{
+					xtype : 'pnlDateRange',
+					hidden : true
+				},
 				{ 
 					xtype : 'form',  
 					flex:1, 
@@ -108,10 +113,15 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					 				xtype:'datefield'
 					 			},
 					 			items:[
-					  				{ name:'searchFromDate', width:135, labelWidth:30, fieldLabel:'From', value:Ext.Date.add(new Date(), Ext.Date.DAY,SearchTool.config.Config.defaultDatePeriod)},
-					  				{ name:'searchToDate', width:123, labelWidth:18, fieldLabel:'To', value:new Date()},
+					  				{ name:'searchFromDate', width:133, labelWidth:30, fieldLabel:'From', value:Ext.Date.add(new Date(), SearchTool.config.Config.defaultDatePeriod,SearchTool.config.Config.defaultDateAmt)},
+					  				{ name:'searchToDate', width:121, labelWidth:18, fieldLabel:'To', value:new Date()},
 					  				//{ xtype:'checkbox', boxLabel:'Other Date range types', fieldLabel:'Other Date ranges', labelWidth:10},
-					  				{ xtype:'button', text:'Custom Date', cls:'btnDateRanges', tooltip:'Select a custom date range', enableToggle:true}
+					  				{ xtype:'button', text:'Custom', itemId:'btnCustomDate', boxLabel:'Custom Date', cls:'btnDateRanges', tooltip:'Select a custom date range'//, enableToggle:true
+					  				, 
+					  					handler : function(b,e,o){
+					  						b.up('form').up('container').down('pnlDateRange').show();
+					  					}
+					  				}
 								]
 							}//container
 							,
