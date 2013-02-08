@@ -16,7 +16,7 @@ Ext.define('SearchTool.config.Config', {
     SmthgCaptionLabel:'(Smthg - User Tools or ?)',
     defaultDatePeriod : Ext.Date.MONTH,
     defaultDateAmt : -1,
-    qryBuilderTextFieldRegex : /^[$]{0,1}[0-9]*[0-9a-zA-Z\-\,\.\%\ \?\*]*$/, //$# (only 1 '$',0-1 w/many#, '.' w/ 0-2 #), %#(only 1'.' w/ many #), a-zA-Z0-9 punctuation, large comma-delim numbers, wildcards
+    qryBuilderTextFieldRegex : /^[$]{0,1}[0-9]*[0-9a-zA-Z\-\,\.\'\%\ \?\*]*$/, //$# (only 1 '$',0-1 w/many#, '.' w/ 0-2 #), %#(only 1'.' w/ many #), a-zA-Z0-9 punctuation, large comma-delim numbers, wildcards
     qryBuilderErrText : 'Invalid field entry',
     //results
     PageSizeOptions : [[5,5],[10,10],[25,25],[50,50]],
