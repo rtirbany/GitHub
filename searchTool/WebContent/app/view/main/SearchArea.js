@@ -12,7 +12,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 				},
 				{ 
 					xtype : 'form',  
-					flex:1, 
+					flex:1.15, 
 					url : '/simplesearch',  
 					border : false, 
 					layout:'vbox',
@@ -102,19 +102,26 @@ Ext.define('SearchTool.view.main.SearchArea', {
 							} //container w/ summary only, search buttons
 							,
 							{ 	//FROM, TO dates
-								xtype:'container', 
-								margins :' 8 5 10 5',
+								xtype:'container',
+								width:'100%',
+								margins :' 8 1 8 3',
 					 			layout:{
 					 				type:'hbox',
-					 				defaultMargins : '2px 8px 2px 5px'
+					 				defaultMargins : '2px 3px 2px 3px'
 					 				
 					 			},
 					 			defaults: {
 					 				xtype:'datefield'
 					 			},
 					 			items:[
-					  				{ name:'searchFromDate', width:133, labelWidth:30, fieldLabel:'From', value:Ext.Date.add(new Date(), SearchTool.config.Config.defaultDatePeriod,SearchTool.config.Config.defaultDateAmt)},
-					  				{ name:'searchToDate', width:121, labelWidth:18, fieldLabel:'To', value:new Date()},
+					 				{ xtype:'hidden', ignore:true, itemId:'cd_chkFiscal' ,value:false},
+					 				{ xtype:'hidden', ignore:true, itemId:'cd_chkWhole' ,value:true},
+					 				{ xtype:'hidden', ignore:true, itemId:'cd_dtRangeEnd', value:'01-31-2013'},
+					 				{ xtype:'hidden', ignore:true, itemId:'cd_dtRangeStart', value:'01-01-2013'},
+					 				{ xtype:'hidden', ignore:true, itemId:'cd_txtCount', value:500},
+					 				{ xtype:'hidden', ignore:true, itemId:'cd_rdUnit', value:'6m'},
+					  				{ name:'searchFromDate', itemId:'dtSearchFrom', width:133, labelWidth:30, fieldLabel:'From', value:Ext.Date.add(new Date(), SearchTool.config.Config.defaultDatePeriod,SearchTool.config.Config.defaultDateAmt)},
+					  				{ name:'searchToDate', itemId:'dtSearchTo', width:121, labelWidth:18, fieldLabel:'To', value:new Date()},
 					  				//{ xtype:'checkbox', boxLabel:'Other Date range types', fieldLabel:'Other Date ranges', labelWidth:10},
 					  				{ xtype:'button', text:'Custom', itemId:'btnCustomDate', boxLabel:'Custom Date', cls:'btnDateRanges', tooltip:'Select a custom date range'//, enableToggle:true
 					  				, 
@@ -143,7 +150,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					collapsed : true,
 					overflowX : 'hidden', 
 					overflowY : 'auto',
-					flex : 2,
+					flex : 1.85,
 					border : false,
 					tooltip : 'Boolean query entry',
 					items:[
@@ -157,7 +164,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					title : SearchTool.config.Config.SmthgCaptionLabel, 
 					collapsible : true,
 					collapsed : true, 
-					flex : 1,
+					flex : .8,
 					border : false,
 					items : [ { 
 						html:'(area for shopping cart, subscriptions, or ?'
