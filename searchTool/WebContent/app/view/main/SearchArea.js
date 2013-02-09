@@ -12,7 +12,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 				},
 				{ 
 					xtype : 'form',  
-					flex:1.15, 
+					flex:1.1, 
 					url : '/simplesearch',  
 					border : false, 
 					layout:'vbox',
