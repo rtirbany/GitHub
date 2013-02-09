@@ -60,11 +60,11 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					    }//cboxsearch
 					    ,
 						{ xtype : 'container', 
-							margin : '2px 5px 16px 5px',
+							margin : '2px 3px 12px 3px',
 							layout : 
 							{	type : 'hbox',
 								defaultMargins : '2px 5px 10px 5px',
-								padding : '0 4 0 4' 
+								padding : '0 5 0 5' 
 							}, 
 							defaults:{ 
 								flex:1
@@ -104,7 +104,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
 							{ 	//FROM, TO dates
 								xtype:'container',
 								width:'100%',
-								margins :' 8 1 8 3',
+								margins :' 8 2 8 3',
 					 			layout:{
 					 				type:'hbox',
 					 				defaultMargins : '2px 3px 2px 3px'
@@ -120,8 +120,8 @@ Ext.define('SearchTool.view.main.SearchArea', {
 					 				{ xtype:'hidden', ignore:true, itemId:'cd_dtRangeStart', value:'01-01-2013'},
 					 				{ xtype:'hidden', ignore:true, itemId:'cd_txtCount', value:500},
 					 				{ xtype:'hidden', ignore:true, itemId:'cd_rdUnit', value:'6m'},
-					  				{ name:'searchFromDate', itemId:'dtSearchFrom', width:133, labelWidth:30, fieldLabel:'From', value:Ext.Date.add(new Date(), SearchTool.config.Config.defaultDatePeriod,SearchTool.config.Config.defaultDateAmt)},
-					  				{ name:'searchToDate', itemId:'dtSearchTo', width:121, labelWidth:18, fieldLabel:'To', value:new Date()},
+					  				{ name:'searchFromDate', itemId:'dtSearchFrom', width:135, labelWidth:30, fieldLabel:'From', value:Ext.Date.add(new Date(), SearchTool.config.Config.defaultDatePeriod,SearchTool.config.Config.defaultDateAmt)},
+					  				{ name:'searchToDate', itemId:'dtSearchTo', width:123, labelWidth:18, fieldLabel:'To', value:new Date()},
 					  				//{ xtype:'checkbox', boxLabel:'Other Date range types', fieldLabel:'Other Date ranges', labelWidth:10},
 					  				{ xtype:'button', text:'Custom', itemId:'btnCustomDate', boxLabel:'Custom Date', cls:'btnDateRanges', tooltip:'Select a custom date range'//, enableToggle:true
 					  				, 
