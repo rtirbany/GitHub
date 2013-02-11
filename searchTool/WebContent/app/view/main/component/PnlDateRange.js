@@ -2,8 +2,9 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
 			extend : 'Ext.form.Panel',
 			alias : 'widget.pnlDateRange',
 			itemId : 'customdate',
+			layout: 'fit',
 //			iconCls : 'icon-qbuilder',
-			title : 'Select a Custom Date Range',
+			title : 'Create a Custom Date Range',
 			bodyStyle : 'padding: 10px',
 			requires : ['SearchTool.config.Config'],
 			draggable : true,
@@ -77,82 +78,9 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
 						}, {
 							text : 'Apply',
 							iconCls : 'icon-btnOk',
-							itemId : 'btnCustomDateRange', 
-							handler : function(){  
-								//var t = this.up('panel').down('form').down('radiogroup').getValue().customdatetype
-								var r = this.up('panel').down('form').down('radiogroup').getValue().customdate;
-								var w = Ext.ComponentQuery.query('#cboxIncrement')[0].getValue();
-								var f = Ext.ComponentQuery.query('#cboxFiscal')[0].getValue(); 
-								var c = Ext.ComponentQuery.query('#txtCount')[0].getValue(); //count 
-								var date1 = Ext.ComponentQuery.query('#dtRangeEnd')[0].getValue();  
-								if (r=='d' || r=='w') {
-									c = (r=='w' ? c*7 : c);
-									if (w) { 
-										if (r=='d') { 
-											//date1 = Ext.Date.add(date1, Ext.Date.DAY,-1); 
-										}
-										else { //should get most recent Sunday, then back up 7 days - 
-											var offset = SearchTool.config.Config.customCalendarWeekstart; 
-											date1 = Ext.Date.add(date1, Ext.Date.DAY, -(Ext.Date.format(date1, 'w')));
-											if (offset >0)
-												date1 = Ext.Date.add(date1, Ext.Date.DAY,-(7-offset));
-										}
-									}
-									date1 = Ext.Date.add(date1, Ext.Date.DAY,-c); 
-								}
-								if (r=='m' || r=='6m') { 
-									c = (r=='6m' ? c*6 : c);  
-									var date2 = '';
-									if (!w) {
-										date2 = date1;
-										date1 = Ext.Date.add(date1, Ext.Date.MONTH,-c);
-									}
-									else {
-									    //var lastFullMonthStart = Date.today().add(-1).months().moveToFirstDayOfMonth().toString('yyyy-MM-dd');
-									    //get the month and subtract 1
-										date2 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date1, Ext.Date.MONTH,(-1)));
-										date1 = Ext.Date.add(date1, Ext.Date.MONTH,-c);
-										date1 = Ext.Date.getFirstDateOfMonth(date1);  
-									} 
-									date1 = Ext.Date.format(date1, 'm-d-Y') + '   to    '+Ext.Date.format(date2, 'm-d-Y');
-									    
-									}
-								if (r=='q'){
-									date1 = Ext.Date.add(date1, Ext.Date.MONTH,-c);
-									var m = Ext.Date.format(date1, 'm');
-									var q = Math.floor((m + 10 / 3)%4)+1;
-									var y = Ext.Date.format(date1, 'Y');  
-									var qm = (Math.floor(m/3)*3)+1;
-									if (w) {
-									var q = Math.floor(date1.getMonth() / 3)+1;
-									
-									var lastQuarter = (q > 1) ? q - 1 : lastQuarter = 4;
-									var lastQuarterYear = (lastQuarter > 1? y -1 : y);  
-									var lastFullQStart = ((((lastQuarter-1)*3)+1) < 10) ? lastQuarterYear+'-0'+(((lastQuarter-1)*3)+1) : lastQuarterYear+'-'+(((lastQuarter-1)*3)+1);
-									lastFullQStart = Ext.Date.getFirstDateOfMonth(Ext.Date.parse(lastFullQStart,'Y-m'));
-									var lastFullQEnd = Ext.Date.getLastDateOfMonth(Ext.Date.add(lastFullQStart,Ext.Date.MONTH,2));
-									date1 = (' last full qstart' +lastFullQStart+' - '+lastFullQEnd);//yyyy-mm-dd
-									
-									//var lastFullQEnd = Date.parse(lastFullQStart).add(2).months().moveToLastDayOfMonth().toString('yyyy-MM-dd');
-									}
-									else {
-										//q,y fo current
-										var qStartDate = (m < 10) ? y+'-0'+m+'-01' : y+'-'+m+'-01';
-
-									}
-								}
-								if (r=='yr') {
-									if (w)
-										 date1 = Ext.Date.add(date1, Ext.Date.YEAR,-1); 
-									date1 = Ext.Date.add(date1, Ext.Date.YEAR,-c);
-								}
-								var z = Ext.ComponentQuery.query('#dtSearchFrom')[0].value;
-    							Ext.Msg.alert(date1+''); 
-								//Ext.ComponentQuery.query('#dtSearchFrom')[0].setValue(date1);
-								//Ext.ComponentQuery.query('#dtSearchTo')[0].setValue(date2);
-								//Ext.Msg.alert('whole'+w+'   fiscal:'+f+'   '+date1);
-							}
-						}, {
+							itemId : 'btnCustomDateRange' 
+						} 
+						, {
 							xtype : 'tbspacer',
 							width : 3
 						}
@@ -161,13 +89,13 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
 			] //dockedItems
 			, 
 			items:  [ 
-				{  
-					xtype : 'form', 
+				{   
+					xtype : 'form',
 					border: 0,
 					layout:'vbox',
 					items:[
-						{xtype:'checkbox', boxLabel:'Use Fiscal Calendar', itemId: 'cboxFiscal', name:'fiscal'},  
-						{xtype:'checkbox', boxLabel:'Use whole units', itemId: 'cboxIncrement',name:'incr'},
+						{xtype:'checkbox', boxLabel:'Use Fiscal Calendar', itemId: 'chkFiscal', name:'fiscal'},  
+						{xtype:'checkbox', boxLabel:'Use whole units', itemId: 'chkWhole',name:'incr'},
 //						{xtype:'radiogroup', width:'100%', fieldLabel:'Range Type', columns:2,
 //							items:[
 //								{boxLabel:'Previous',name:'customdatetype',inputValue:'p'},
@@ -183,7 +111,7 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
                             return true;
                         }
 						},
-						{xtype:'radiogroup', width:'100%', fieldLabel:'Unit', columns:2, 
+						{xtype:'radiogroup', itemId:'rdUnit', width:'100%', fieldLabel:'Unit', columns:2, 
 							items:[	{boxLabel:'Year(s)',name:'customdate',inputValue:'yr'},
 									{boxLabel:'Month(s)',name:'customdate',inputValue:'m', checked:true},
 									{boxLabel:'6-month',name:'customdate',inputValue:'sm'},
@@ -194,9 +122,9 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
 						}    
 						
 					]
-					
 				}  
-			]  
-		}
+			]
+			
+	}
 
 );
