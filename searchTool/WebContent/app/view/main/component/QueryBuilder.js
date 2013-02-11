@@ -9,6 +9,8 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
 			floating : true,
 			titleCollapse : true,
 			collapsible: true,
+			resizable : true,
+			constrain : true,
 			centered : true,
 			hidden : true,
 			requires : ['SearchTool.view.main.component.QueryBuilderRow'],
