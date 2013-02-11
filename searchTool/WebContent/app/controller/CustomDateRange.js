@@ -67,59 +67,63 @@ Ext.define('SearchTool.controller.CustomDateRange',{
 		});//control function
 	}, //init
 	addToParentTab : function(b,e,o){
+			me = this;
 			var cdf = Ext.ComponentQuery.query('#customdate');
 			if (cdf.length == 0) {
+				var cdr = Ext.create('SearchTool.view.main.component.PnlDateRange');
+				me.getFromSearchArea();
 				var activeTab = b.up('tabpanel').getActiveTab(); 
-				activeTab.add(Ext.create('SearchTool.view.main.component.PnlDateRange')).show();
+				activeTab.add(cdr).show();
 			}
 			else {
+				me.getFromSearchArea();
 				cdf[0].center();
 				if (cdf[0].collapsed)
-				cdf[0].expand();
+					cdf[0].expand();
 				cdf[0].show();}
 	},	
 	processForm : function(b,e){
 			me = this;
 			//get values from SA 
-//			var date1 = me.getSa_dtRangeFrom().value;  
-//			var f = me.getSa_chkFiscal().value; 
-//			var w =  me.getSa_chkWhole().value; 
-//			var c =  me.getSa_txtCount().value; 
-//			var date2 = me.getSa_dtRangeEnd().value; 
-			me.assignToSearchArea(); 
-			return;
+			var f = me.getCdr_ChkFiscal().value; 
+			var w =  me.getCdr_ChkWhole().value; 
+			var c = me.getCdr_TxtCount().value; 
+			var u = me.getCdr_RdUnit().getValue().customdate; 
+			var date2 = me.getCdr_DtRangeEnd().value; 
+			
+			//assign info to hidden fields of Search Area for later retrieval
+			me.assignToSearchArea();
+			var date1;
 			if (u=='d' || u=='w') {
 				c = (u=='w' ? c*7 : c);
-				if (w) { 
+				if (w) {
 					if (u=='d') { 
 					//date1 = Ext.Date.add(date1, Ext.Date.DAY,-1); 
 					}
 					else { //should get most recent Sunday, then back up 7 days - 
 						var offset = SearchTool.config.Config.customCalendarWeekstart; 
-						date1 = Ext.Date.add(date1, Ext.Date.DAY, -(Ext.Date.format(date1, 'w')));
+						date2 = Ext.Date.add(date2, Ext.Date.DAY, -(Ext.Date.format(date2, 'w')));
 						if (offset >0)
-							date1 = Ext.Date.add(date1, Ext.Date.DAY,-(7-offset));
+							date2 = Ext.Date.add(date2, Ext.Date.DAY,-(7-offset));
 					}
-				}	
-				date1 = Ext.Date.add(date1, Ext.Date.DAY,-c); 
+				}
+				date1 = Ext.Date.add(date2, Ext.Date.DAY,-c);
 			}
-			if (u=='m' || u=='6m') { 
-				c = (u=='6m' ? c*6 : c);  
-				var date2 = '';
-				if (!w) {
-					date2 = date1;
-					date1 = Ext.Date.add(date1, Ext.Date.MONTH,-c);
+			else if (u=='m' || u=='6m') { 
+				c = (u=='6m' ? c*6 : c);
+				if (!w) { 
+					date1 = Ext.Date.add(date2, Ext.Date.MONTH,-c); 
 				}
 				else {
 					//var lastFullMonthStart = Date.today().add(-1).months().moveToFirstDayOfMonth().toString('yyyy-MM-dd');
 					//get the month and subtract 1
-					date2 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date1, Ext.Date.MONTH,(-1)));
-					date1 = Ext.Date.add(date1, Ext.Date.MONTH,-c);
-					date1 = Ext.Date.getFirstDateOfMonth(date1);  
-				} 
-				date1 = Ext.Date.format(date1, 'm-d-Y') + '   to    '+Ext.Date.format(date2, 'm-d-Y');
+					date2 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH,(-1))); 
+					c -= 1;
+					date1 = Ext.Date.add(date2, Ext.Date.MONTH,-c); 
+					date1 = Ext.Date.getFirstDateOfMonth(date1);
+				}  
 			}
-			if (u=='q'){
+			else if (u=='q'){
 				date1 = Ext.Date.add(date1, Ext.Date.MONTH,-c);
 				var m = Ext.Date.format(date1, 'm');
 				var q = Math.floor((m + 10 / 3)%4)+1;
@@ -140,14 +144,14 @@ Ext.define('SearchTool.controller.CustomDateRange',{
 					//q,y fo current
 					var qStartDate = (m < 10) ? y+'-0'+m+'-01' : y+'-'+m+'-01';
 				}
+				
 			}
-			if (u=='yr') {
+			else if (u=='yr') {
 				if (w)
 					date1 = Ext.Date.add(date1, Ext.Date.YEAR,-1); 
 				date1 = Ext.Date.add(date1, Ext.Date.YEAR,-c);
 			} 
-//    		Ext.Msg.alert(date1+''); 
-			assignToSearchArea();
+    		Ext.Msg.alert(Ext.Date.format(date1,'m-d-Y')+' - '+Ext.Date.format(date2,'m-d-Y'));
 			//Ext.ComponentQuery.query('#dtSearchFrom')[0].setValue(date1);
 			//Ext.ComponentQuery.query('#dtSearchTo')[0].setValue(date2);
 			//Ext.Msg.alert('whole'+w+'   fiscal:'+f+'   '+date1); 
@@ -162,10 +166,17 @@ Ext.define('SearchTool.controller.CustomDateRange',{
 		},
 		
 		getFromSearchArea : function(){
-			me.getCdr_ChkWhole().setValue(true);//getSa_chkWhole().value); 
-			me.getCdr_TxtCount().setValue(333);//me.getSa_txtCount().value); 
-			me.getCdr_RdUnit().setValue(me.getSa_rdUnit().value); 
-			me.getCdr_DtRangeEnd().setValue(me.getSa_dtRangeEnd().value);
+			var dtSa = me.getSa_dtRangeEnd().value;
+			var dtEndUser = Ext.ComponentQuery.query('#dtSearchTo')[0].value;
+			if (dtSa != dtEndUser) { //if user changes end date, all other info may need to change as well (inside else stmt)
+				me.getCdr_DtRangeEnd().setValue(dtEndUser);
+			}
+			else {
+				me.getCdr_ChkWhole().setValue(me.getSa_chkWhole().value); 
+				me.getCdr_ChkFiscal().setValue(me.getSa_chkFiscal().value); 
+				me.getCdr_TxtCount().setValue(me.getSa_txtCount().value); 
+				me.getCdr_RdUnit().setValue({customdate:me.getSa_rdUnit().getValue().customdate});
+			}
 		}
 	
 });
