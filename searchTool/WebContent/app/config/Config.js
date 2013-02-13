@@ -25,6 +25,8 @@ Ext.define('SearchTool.config.Config', {
     maxResults : 5, //maximum number of results to display
     rsDateColFormat : 'm-d-Y',//y=2 dig yr
     customCalendarWeekstart : 2, //0 = Sunday, 6 = Saturday
+    customCalendarSixMonthstart : 1, //1 = January, 12 = December
+    customCalendarSixMonthFromCurrent : 0, //0 = no; 1 = yes
     //tooltips
     searchBtnClearTtip:'Clears keyword search criteria',
     searchBtnSearchTtip:'Runs Search',
