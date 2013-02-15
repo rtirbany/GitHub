@@ -14,7 +14,7 @@ Ext.define('SearchTool.config.Config', {
     searchSaveChkCaptionLabel : 'Save Query',
     qryBuilderCaptionLabel:'Advanced Query',
     SmthgCaptionLabel:'(Smthg - User Tools or ?)',
-    defaultDatePeriod : Ext.Date.MONTH,
+    defaultDatePeriod : 'Ext.Date.MONTH',
     defaultDateAmt : -1,
     qryBuilderTextFieldRegex : /^[$]{0,1}[0-9]*[0-9a-zA-Z\-\,\.\'\"\%\ \?\*]*$/, //$# (only 1 '$',0-1 w/many#, '.' w/ 0-2 #), %#(only 1'.' w/ many #), a-zA-Z0-9 punctuation, large comma-delim numbers, wildcards
     qryBuilderErrText : 'Invalid field entry',
@@ -24,7 +24,7 @@ Ext.define('SearchTool.config.Config', {
     warningExport : 5, //number of results to exceed for export warning to appear
     maxResults : 5, //maximum number of results to display
     rsDateColFormat : 'm-d-Y',//y=2 dig yr
-    customCalendarWeekstart : 2, //0 = Sunday, 6 = Saturday
+    customCalendarWeekstart : 0, //0 = Sunday, 6 = Saturday
     customCalendarSixMonthstart : 1, //1 = January, 12 = December
     customCalendarSixMonthFromCurrent : 0, //0 = no; 1 = yes
     //tooltips

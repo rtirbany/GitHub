@@ -93,13 +93,12 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
             itemId: 'chkWhole',
             name: 'incr'
         },
-        // {xtype:'radiogroup', width:'100%',
-        // fieldLabel:'Range Type', columns:2,
-        // items:[
-        // {boxLabel:'Previous',name:'customdatetype',inputValue:'p'},
-        // {boxLabel:'Current (To
-        // Date)',name:'customdatetype',inputValue:'c'}
-        // ]} ,
+        {
+            xtype: 'hidden',
+            itemId: 'dtRangeStart',
+            name: 'dtRangeStart',
+            value: Ext.Date.add(new Date(),Ext.Date.MONTH,SearchTool.config.Config.defaultDateAmt)
+        },
         {
             xtype: 'datefield',
             itemId: 'dtRangeEnd',
@@ -116,7 +115,7 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
             width: 150,
             allowBlank: false,
             name: 'cnt',
-            value: '1',
+            value: -1*SearchTool.config.Config.defaultDateAmt,
             enableKeyEvents: true,
             enforceMaxLength: true,
             minValue: 1,
@@ -129,7 +128,8 @@ Ext.define('SearchTool.view.main.component.PnlDateRange', {
                 }
                 return true;
             }
-        }, {
+        }, 
+        {
             xtype: 'radiogroup',
             itemId: 'rdUnit',
             width: '100%',
