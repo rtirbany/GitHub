@@ -1,4 +1,5 @@
 Ext.define('SearchTool.view.help.Reference', {
+    extend: 'Ext.panel.Panel',
     title: 'Quick Reference',
     resizable: true,
     floating: true,
