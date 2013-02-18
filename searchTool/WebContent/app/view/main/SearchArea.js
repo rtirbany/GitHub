@@ -88,6 +88,9 @@ Ext.define('SearchTool.view.main.SearchArea', {
                 tooltip: SearchTool.config.Config.searchBtnClearTtip,
                 handler: function () {
                     this.up('form').getForm().reset();
+                    var field = this.up('form').down('datefield');
+                    field.setValue(Ext.Date.add(new Date(), Ext.Date.MONTH, SearchTool.config.Config.defaultDateAmt));
+                    Ext.form.field.VTypes.DateRange(field.value, field);
                 }
             }, {
                 xtype: 'button',
@@ -117,7 +120,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
             listeners: {
                 afterrender: function () {
                     var field = this.down('datefield');
-                    var newVal = field.setValue(Ext.Date.add(new Date(), Ext.Date.MONTH, SearchTool.config.Config.defaultDateAmt));
+                    field.setValue(Ext.Date.add(new Date(), Ext.Date.MONTH, SearchTool.config.Config.defaultDateAmt));
                     Ext.form.field.VTypes.DateRange(field.value, field);
                 }
             },
