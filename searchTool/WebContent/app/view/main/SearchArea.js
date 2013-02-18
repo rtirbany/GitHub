@@ -6,7 +6,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
     },
     height: 120,
     constrain: true,
-    requires: ['SearchTool.view.main.component.SearchBoolean', 'SearchTool.config.Config', 'SearchTool.view.main.component.PnlDateRange'],
+    requires: ['SearchTool.view.main.component.SearchBoolean', 'SearchTool.config.Config'],
     items: [{
         xtype: 'form',
         flex: 1.1,
@@ -114,15 +114,19 @@ Ext.define('SearchTool.view.main.SearchArea', {
                 xtype: 'datefield',
                 flex: 1
             },
-            //    beforeRender : function () { 
-            //        this.down('datefield').setValue(new Date());  
-            //    }
-            //    ,
+            listeners: {
+                afterrender: function () {
+                    var field = this.down('datefield');
+                    var newVal = field.setValue(Ext.Date.add(new Date(), Ext.Date.MONTH, SearchTool.config.Config.defaultDateAmt));
+                    Ext.form.field.VTypes.DateRange(field.value, field);
+                }
+            },
             items: [{
                 name: 'searchFromDate',
                 deferredRender: false,
                 itemId: 'dtUserSearchFrom',
                 emptyText: 'mm/dd/yyyy',
+                altFormats: 'mdY',
                 maxValue: new Date(),
                 flex: 1.02,
                 labelWidth: 30,
@@ -145,6 +149,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
                 flex: .98,
                 labelWidth: 18,
                 emptyText: 'mm/dd/yyyy',
+                altFormats: 'mdY',
                 maxValue: new Date(),
                 fieldLabel: 'To',
                 vfield: 'searchToDate',
