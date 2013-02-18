@@ -74,8 +74,15 @@ Ext.define('SearchTool.controller.SearchTool', {
     //          }//executeSearch
     //          ,
 
-    btnHelpHandler: function (b, e) {
-        Ext.create('SearchTool.view.help.Reference').show();
+    btnHelpHandler: function (b, e, o) {
+       var ref = Ext.ComponentQuery.query('#help_ref');
+       if (ref.length == 0) {
+          Ext.create('SearchTool.view.help.Reference').show();
+       }
+       else {
+        ref[0].center();
+        ref[0].show();
+       }
     },
     btnLogoutHandler: function (b, e) {
         Ext.Msg.confirm('Confirm Logout', 'Do you wish to log out of the system?');
