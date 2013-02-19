@@ -81,13 +81,15 @@ Ext.define('SearchTool.view.main.SearchArea', {
             }, {
                 xtype: 'button',
                 cls: 'frmSearchBtns',
-                text: 'Clear',
+                text: 'Reset',
                 itemId: 'btnClear',
                 iconCls: 'icon-btnClear',
                 iconAlign: 'left',
                 tooltip: SearchTool.config.Config.searchBtnClearTtip,
                 handler: function () {
                     this.up('form').getForm().reset();
+                    var field2 = this.up('form').down('datefield').next('datefield');
+                    Ext.form.field.VTypes.DateRange(field2.value, field2);
                     var field = this.up('form').down('datefield');
                     field.setValue(Ext.Date.add(new Date(), Ext.Date.MONTH, SearchTool.config.Config.defaultDateAmt));
                     Ext.form.field.VTypes.DateRange(field.value, field);
