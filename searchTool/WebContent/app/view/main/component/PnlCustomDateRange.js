@@ -2,7 +2,7 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
     extend: 'Ext.form.Panel',
     itemId: 'customdate',
     layout: 'fit',
-    title: 'Create a Custom Date Range',
+    title: 'Define a Custom Date Range',
     bodyStyle: 'padding: 10px',
     requires: ['SearchTool.config.Config'],
     draggable: true,
@@ -81,11 +81,27 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
         border: 0,
         layout: 'vbox',
         items: [{
+          xtype:'container',
+          layout:'hbox',
+          margin:'0 0 5 0',
+         items:[{
             xtype: 'checkbox',
             boxLabel: 'Use Fiscal Calendar',
             itemId: 'chkFiscal',
-            name: 'fiscal'
-        }, {
+            name: 'fiscal',
+            disabled:true
+        },{
+            xtype: 'numberfield',
+            itemId: 'numFiscalYear',
+            width: 80,
+            allowBlank: false,
+            name: 'fiscalyear',
+            minValue:2000,
+            maxValue:2014,
+            disabled:true
+        }]
+        }
+        , {
             xtype: 'checkbox',
             boxLabel: 'Use whole units',
             itemId: 'chkWhole',
@@ -116,19 +132,11 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
             width: 160,
             allowBlank: false,
             name: 'cnt',
-            value: -1*SearchTool.config.Config.defaultDateAmt,
-            enableKeyEvents: true,
+            value: -1*SearchTool.config.Config.defaultDateAmt, 
             enforceMaxLength: true,
             minValue: 1,
             maxValue: 9999,
-            maxLength: 4, 
-            regexText: 'Value must be a number greater than 0',
-            validator: function (v) {
-                if (v === "0") {
-                    return "Value must be greater than 0";
-                }
-                return true;
-            }
+            maxLength: 4
         }, 
         {
             xtype: 'radiogroup',
