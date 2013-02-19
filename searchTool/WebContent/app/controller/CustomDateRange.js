@@ -185,7 +185,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
                }
             }
             me.getCdr_chkFiscal().setValue(false);
-            me.getCdr_chkWhole().setValue(dtUserEnd != Ext.Date.parse(Ext.Date.format(new Date(), 'm-d-Y'),'m-d-Y'));
+            me.getCdr_chkWhole().setValue(Ext.Date.format(dtUserEnd,'m-d-Y') != Ext.Date.format(new Date(),'m-d-Y'));
             me.getCdr_rdUnit().setValue({
                 customdate: 'd'
             });
