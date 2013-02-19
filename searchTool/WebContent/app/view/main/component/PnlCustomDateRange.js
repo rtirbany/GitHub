@@ -103,6 +103,8 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
             name: 'dtRangeEnd',
             altFormats: 'mdY',
             allowBlank: false,
+            emptyText: 'mm/dd/yyyy',
+            maxValue: new Date(),
             width: 225,
             labelWidth: 100,
             fieldLabel: 'Prior To:',
