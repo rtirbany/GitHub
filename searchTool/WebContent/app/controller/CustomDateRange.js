@@ -151,8 +151,13 @@ Ext.define('SearchTool.controller.CustomDateRange', {
             } else date1 = Ext.Date.add(date2, Ext.Date.YEAR, -c);
 
         }
-        Ext.ComponentQuery.query('#dtUserSearchFrom')[0].setValue(date1);
-        Ext.ComponentQuery.query('#dtUserSearchTo')[0].setValue(date2);
+        var field = Ext.ComponentQuery.query('#dtUserSearchTo')[0];
+        field.setValue(date2);
+        Ext.form.field.VTypes.DateRange(field.value, field);
+        field = Ext.ComponentQuery.query('#dtUserSearchFrom')[0];
+        field.setValue(date1);
+        Ext.form.field.VTypes.DateRange(field.value, field);
+                    
         me.getCdr_dtRangeStart().setValue(date1);
     },
     updateCDR: function (c, e, o) {
