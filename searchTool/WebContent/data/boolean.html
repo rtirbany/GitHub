@@ -21,14 +21,6 @@ be included in the results.
 </p>
 <p><b>( ) Parentheses</b><br>
    &quot;( )&quot; are used to group boolean statements, affecting the order of query processing.  The statement within a set of parenthesis are treated as a single unit and get processed before any statements outside the parenthesis get processed.<br>
-   <p>Field1 = 'project' AND (Field2 = 'manager' OR Field2 = 'supervisor') </p>
-   <p>Retrieves documents with the word &quot;project&quot; in Field1 AND either of the words
-&quot;manager&quot; or &quot;supervisor&quot; in Field2.  The Field2 statement is processed first, then these results are compared to the Field1 statement</p>
-<p> (Field1 = 'project' AND Field2 = 'manager') OR Field2 = 'supervisor' </p>
-<p>Retrieves documents containing Field1 = &quot;project&quot; AND 
-Field2 = &quot;manager&quot; OR just those having the Field2 term &quot;supervisor&quot; (regardless of data in the other fields).  The statement within the
-parenthesis is processed first, and these results are then compared to the Field2 statement.
-</p>
 <br> 
 <p>
 <h4>Example 1</h4> 
