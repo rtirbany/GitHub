@@ -100,12 +100,11 @@ Ext.define('SearchTool.controller.CustomDateRange', {
                 date1 = Ext.Date.add(date2, Ext.Date.MONTH, -c);
             } else {
                 //var lastFullMonthStart = Date.today().add(-1).months().moveToFirstDayOfMonth().toString('yyyy-MM-dd');
-                //get the month and subtract 1
-                date2 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH, (-1)));
-                c -= 1;
-                if (u == '6m') c -= 5; //remove 5 more units
-                date1 = Ext.Date.add(date2, Ext.Date.MONTH, -c);
-                date1 = Ext.Date.getFirstDateOfMonth(date1);
+                //get the prev 6 month interval
+                var adj = (date2.getMonth() % 6)+1; 
+                date2 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH, (-adj)));
+                date1 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH, -c)); //11,12 yields 12/31-6/30
+                date1 = Ext.Date.add(date1, Ext.Date.DAY, 1);
             }
         } else if (u == 'q') {
             //Quarter calc - whole unit checkbox does not apply here
