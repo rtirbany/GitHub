@@ -1,67 +1,60 @@
 Ext.define('SearchTool.controller.CustomDateRange', {
     extend: 'Ext.app.Controller',
-    views: ['main.component.PnlDateRange', 'main.SearchArea'],
+    views: ['main.component.PnlCustomDateRange', 'main.SearchArea', 'SearchTool.config.Config'],
     refs: [{
-        ref: 'cdr_ChkFiscal',
+        ref: 'cdr_chkFiscal',
         selector: '#chkFiscal'
     }, {
-        ref: 'cdr_ChkWhole',
+        ref: 'cdr_chkWhole',
         selector: '#chkWhole'
     }, {
-        ref: 'cdr_DtRangeEnd',
+        ref: 'cdr_dtRangeEnd',
         selector: '#dtRangeEnd'
     }, {
-        ref: 'cdr_TxtCount',
+        ref: 'cdr_dtRangeStart',
+        selector: '#dtRangeStart'
+    }, {
+        ref: 'cdr_txtCount',
         selector: '#txtCount'
     }, {
-        ref: 'cdr_Customdate',
-        selector: '#customdate'
-    }, {
-        ref: 'cdr_RdUnit',
+        ref: 'cdr_rdUnit',
         selector: '#rdUnit'
-    }, {
-        ref: 'sa_chkFiscal',
-        selector: '#cd_chkFiscal'
-    }, {
-        ref: 'sa_chkWhole',
-        selector: '#cd_chkWhole'
     }, {
         ref: 'sa_dtRangeEnd',
         selector: '#cd_dtRangeEnd'
     }, {
-        ref: 'sa_dtRangeFrom',
+        ref: 'sa_dtRangeStart',
         selector: '#cd_dtRangeStart'
-    }, {
-        ref: 'sa_txtCount',
-        selector: '#cd_txtCount'
-    }, {
-        ref: 'sa_rdUnit',
-        selector: '#cd_rdUnit'
     }],
     init: function () {
         var me = this;
-        me.getFromSearchArea;
         me.control({
             'button[itemId=btnCustomDateRange]': {
                 click: me.processForm
             },
             'button[itemId=btnCustomDate]': {
-                click: me.addToParentTab
+                click: me.showComponentWithinTab
+            },
+            'datefield[itemId^=dtUser]': {
+                select: me.updateCDR
             }
 
         }); //control function
     }, //init
-    addToParentTab: function (b, e, o) {
+    showComponentWithinTab: function (b, e, o) {
         me = this;
         var cdf = Ext.ComponentQuery.query('#customdate');
+        //if first time/not avail, add the component to current tab.  Apply def start date using datefield widgets.
         if (cdf.length == 0) {
-            var cdr = Ext.create('SearchTool.view.main.component.PnlDateRange');
-            me.getFromSearchArea();
+            var cdr = Ext.create('SearchTool.view.main.component.PnlCustomDateRange');
             var activeTab = b.up('tabpanel').getActiveTab();
+            me.fillCDRForm();
             activeTab.add(cdr).show();
-        } else {
-            me.getFromSearchArea();
+        }
+        //if avail, center, expand and show
+        else {
             cdf[0].center();
+            me.fillCDRForm();
             if (cdf[0].collapsed) cdf[0].expand();
             cdf[0].show();
         }
@@ -69,14 +62,13 @@ Ext.define('SearchTool.controller.CustomDateRange', {
     processForm: function (b, e) {
         me = this;
         //get values from SA 
-        var f = me.getCdr_ChkFiscal().value;
-        var w = me.getCdr_ChkWhole().value;
-        var c = me.getCdr_TxtCount().value;
-        var u = me.getCdr_RdUnit().getValue().customdate;
-        var date2 = me.getCdr_DtRangeEnd().value;
+        var f = me.getCdr_chkFiscal().value;
+        var w = me.getCdr_chkWhole().value;
+        var c = me.getCdr_txtCount().value;
+        var u = me.getCdr_rdUnit().getValue().customdate;
+        var date2 = me.getCdr_dtRangeEnd().value;
         //assign info to hidden fields of Search Area for later retrieval
-        me.assignToSearchArea();
-        var date1;
+        var date1 = me.getCdr_dtRangeStart().value;
         //               switch (u){
         //               case 'd' : 
         //               
@@ -85,7 +77,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
             c = (u == 'w' ? c * 7 : c);
             if (w) {
                 if (u == 'd') {
-                    //date1 = Ext.Date.add(date1, Ext.Date.DAY,-1); 
+                    date2 = Ext.Date.add(date2, Ext.Date.DAY, -1);
                 } else { //should get most recent Sunday, then back up 7 days - 
                     var offset = SearchTool.config.Config.customCalendarWeekstart;
                     date2 = Ext.Date.add(date2, Ext.Date.DAY, -(Ext.Date.format(date2, 'w')));
@@ -116,24 +108,37 @@ Ext.define('SearchTool.controller.CustomDateRange', {
                 date1 = Ext.Date.getFirstDateOfMonth(date1);
             }
         } else if (u == 'q') {
+            //Quarter calc - whole unit checkbox does not apply here
             date1 = date2;
             var m = parseInt(Ext.Date.format(date1, 'm'));
-            var y = parseInt(Ext.Date.format(date1, 'Y'));
-            var currentQuarter = Math.floor((m - 1) / 3) + 1;
-            y -= parseInt(c / 4); //adjusts year
-            currentQuarter -= c % 4;
-            if (currentQuarter > 4) {
-                currentQuarter -= 4;
-                y += 1;
-            } else if (currentQuarter < 1) {
-                currentQuarter += 4;
-                y -= 1;
+            var y1 = parseInt(Ext.Date.format(date1, 'Y'));
+            var y2 = y1;
+            var firstFullQuarter = Math.floor((m - 1) / 3) + 1;
+            var prevQuarter = firstFullQuarter - 1
+            if (prevQuarter < 1) {
+                prevQuarter = 4;
+                y2 -= 1;
             }
-            var lastFullQStart = ((((currentQuarter - 1) * 3) + 1) < 10) ? y + '-0' + (((currentQuarter - 1) * 3) + 1) : y + '-' + (((currentQuarter - 1) * 3) + 1);
+
+            y1 -= parseInt(c / 4); //adjusts year
+            firstFullQuarter -= c % 4;
+            if (firstFullQuarter > 4) {
+                firstFullQuarter -= 4;
+                y1 += 1;
+            } else if (firstFullQuarter < 1) {
+                firstFullQuarter += 4;
+                y1 -= 1;
+            }
+            //determine date1 start of quarter
+            var lastFullQStart = ((((firstFullQuarter - 1) * 3) + 1) < 10) ? y1 + '-0' + (((firstFullQuarter - 1) * 3) + 1) : y1 + '-' + (((firstFullQuarter - 1) * 3) + 1);
             lastFullQStart = Ext.Date.getFirstDateOfMonth(Ext.Date.parse(lastFullQStart, 'Y-m'));
-            var lastFullQEnd = Ext.Date.getLastDateOfMonth(Ext.Date.add(lastFullQStart, Ext.Date.MONTH, 2));
-            date1 = Ext.Date.format(lastFullQStart, 'm-d-Y');
-            date2 = Ext.Date.format(lastFullQEnd, 'm-d-Y');
+
+            //get date2 previous quarter end
+            var prevQStart = ((((prevQuarter - 1) * 3) + 1) < 10) ? y2 + '-0' + (((prevQuarter - 1) * 3) + 1) : y2 + '-' + (((prevQuarter - 1) * 3) + 1);
+            var prevQEnd = Ext.Date.getLastDateOfMonth(Ext.Date.add(Ext.Date.parse(prevQStart, 'Y-m'), Ext.Date.MONTH, 2));
+            //populate the calendar widget
+            date1 = lastFullQStart;
+            date2 = prevQEnd;
 
         } else if (u == 'yr') {
             var adjustMonth = 12 - parseInt(Ext.Date.format(date2, 'm')); //need to get to last day of year as endpoint
@@ -147,29 +152,40 @@ Ext.define('SearchTool.controller.CustomDateRange', {
             } else date1 = Ext.Date.add(date2, Ext.Date.YEAR, -c);
 
         }
-        Ext.ComponentQuery.query('#dtSearchFrom')[0].setValue(date1);
-        Ext.ComponentQuery.query('#dtSearchTo')[0].setValue(date2);
+        Ext.ComponentQuery.query('#dtUserSearchFrom')[0].setValue(date1);
+        Ext.ComponentQuery.query('#dtUserSearchTo')[0].setValue(date2);
+        me.getCdr_dtRangeStart().setValue(date1);
     },
-    assignToSearchArea: function () {
-        me.getSa_chkFiscal().setValue(me.getCdr_ChkFiscal().value);
-        me.getSa_chkWhole().setValue(me.getCdr_ChkWhole().value);
-        me.getSa_txtCount().setValue(me.getCdr_TxtCount().value);
-        me.getSa_rdUnit().setValue(me.getCdr_RdUnit().getValue().customdate);
-        me.getSa_dtRangeEnd().setValue(me.getCdr_DtRangeEnd().value);
+    updateCDR: function (c, e, o) {
+        debugger;
+        //me.getCdr_dtRangeStart().setValue()
     },
-
-    getFromSearchArea: function () {
-        var dtSa = me.getSa_dtRangeEnd().value;
-        var dtEndUser = Ext.ComponentQuery.query('#dtSearchTo')[0].value;
-        if (dtSa != dtEndUser) { //if user changes end date, all other info may need to change as well (inside else stmt)
-            me.getCdr_DtRangeEnd().setValue(dtEndUser);
-        } else {
-            me.getCdr_ChkWhole().setValue(me.getSa_chkWhole().value);
-            me.getCdr_ChkFiscal().setValue(me.getSa_chkFiscal().value);
-            me.getCdr_TxtCount().setValue(me.getSa_txtCount().value);
-            me.getCdr_RdUnit().setValue({
-                customdate: me.getSa_rdUnit().getValue().customdate
+    fillCDRForm: function () {
+        var me = this, elapsed;
+        //retrieve values from calendar widget
+        var dtUserStart = Ext.Date.format(Ext.ComponentQuery.query('#dtUserSearchFrom')[0].value, 'm-d-Y');
+        var dtUserEnd = Ext.Date.format(Ext.ComponentQuery.query('#dtUserSearchTo')[0].value, 'm-d-Y');
+        var dtCdrStart = Ext.Date.format(me.getCdr_dtRangeStart().value, 'm-d-Y');
+        var dtCdrEnd = Ext.Date.format(me.getCdr_dtRangeEnd().value, 'm-d-Y');
+        if (dtCdrEnd != dtUserEnd || dtCdrStart != dtUserStart) { //if user changes end date, all other info may need to change as well (inside else stmt)
+            //2/15/13 will change end date, change to count of days & 'days', uncheck both checkboxes
+            var val, elapsed = 0;
+            dtUserStart = dtUserStart ? Ext.Date.parseDate(dtUserStart,'m-d-Y') : '';
+            dtUserEnd =  Ext.Date.parseDate((dtUserEnd ? dtUserEnd : Ext.Date.format(new Date(),'m-d-Y')),'m-d-Y');
+            me.getCdr_dtRangeEnd().setValue(dtUserEnd);
+              
+            if (dtUserStart != dtCdrStart) { //start passed in, it is new
+               if (dtUserStart != '') {
+                    me.getCdr_dtRangeStart().setValue(dtUserStart); 
+                    elapsed = parseInt(Ext.Date.getElapsed(dtUserEnd,dtUserStart) / (1000 * 60 * 60 * 24)); //ms converted to days
+               }
+            }
+            me.getCdr_chkFiscal().setValue(false);
+            me.getCdr_chkWhole().setValue(dtUserEnd != Ext.Date.parse(Ext.Date.format(new Date(), 'm-d-Y'),'m-d-Y'));
+            me.getCdr_rdUnit().setValue({
+                customdate: 'd'
             });
+            me.getCdr_txtCount().setValue(elapsed);
         }
     }
 
