@@ -129,11 +129,14 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         text: 'AND',
         width: '7%',
         handler: function (t) {
-            var n = Ext.create('SearchTool.view.main.component.QueryBuilderRow');
-            t.up('panel').add(n);
-            t.up('panel').items.items[t.up('panel').items.items.length - 2].down('button').next('button').next('button').hide(); //prev row del btn
-            t.prev('hidden').setValue(' AND ');
+            var i,h = t.prev('hidden');
+            if (!t.up('container').nextNode() || !h.getValue()) {
+               t.up('panel').add({xtype:'builderRow'});;
+               i = t.up('panel').items.items;
+               i[i.length - 2].down('button').next('button').next('button').hide(); //prev row del btn
+            }
             t.addCls('qbuilderBtnSelected').next('button').removeCls('qbuilderBtnSelected').addCls('qbuilderBtnDeselected');
+            h.setValue(' AND ');
         }
     }, {
         xtype: 'button',
@@ -141,11 +144,14 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         text: 'OR',
         width: '6.5%',
         handler: function (t) {
-            var n = Ext.create('SearchTool.view.main.component.QueryBuilderRow');
-            t.up('panel').add(n); //add new
-            t.up('panel').items.items[t.up('panel').items.items.length - 2].down('button').next('button').next('button').hide(); //prev row del btn
-            t.prev('hidden').setValue(' OR ');
-            t.addCls('qbuilderBtnSelected').prev('button').removeCls('qbuilderBtnSelected').addCls('qbuilderBtnDeselected');
+           var i,h = t.prev('hidden');
+           if (!t.up('container').nextNode() || !h.getValue()) {
+               t.up('panel').add({xtype:'builderRow'}); //add new
+               i = t.up('panel').items.items;
+               i[i.length - 2].down('button').next('button').next('button').hide(); //prev row del btn
+           }
+           h.setValue(' OR ');
+           t.addCls('qbuilderBtnSelected').prev('button').removeCls('qbuilderBtnSelected').addCls('qbuilderBtnDeselected');
         }
     }, {
         xtype: 'button',
@@ -155,13 +161,11 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         handler: function (t, e, o) {
             var i = t.up('panel').items.items;
             var l = i.length; //length of the array of items
-            if (l > 2) i[l - 2].down('button').next('button').next('button').show(); //prev row del btn
-
-            i[t.up('panel').items.items.length - 2].down('hidden').setValue(''); //prev row hidden reset
-
-            i[l - 2].down('button').next('button').removeCls('qbuilderBtnSelected').removeCls('qbuilderBtnDeselected');
-            i[l - 2].down('button').removeCls('qbuilderBtnSelected').removeCls('qbuilderBtnDeselected');
-            t.up('panel').remove(t.up('container'));
+            if (l > 2) i[l - 2].down('button').next('button').next('button').show(); //prev row del btn 
+            i[t.up('panel').items.items.length - 2].down('hidden').setValue(''); //prev row hidden field value reset to '' 
+            i[l - 2].down('button').next('button').removeCls('qbuilderBtnSelected').removeCls('qbuilderBtnDeselected'); //prev row css adjustments - 2nd button
+            i[l - 2].down('button').removeCls('qbuilderBtnSelected').removeCls('qbuilderBtnDeselected'); //prev row css adjustments for 1st button
+            t.up('panel').remove(t.up('container')); //finally, remove this row
         }
     }]
 });
