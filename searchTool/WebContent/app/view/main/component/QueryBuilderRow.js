@@ -38,6 +38,18 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
     alias: 'widget.builderRow',
     requires: ['SearchTool.config.Config'],
     layout: 'hbox',
+    clearCache : function(ctx){
+      debugger;
+       ctx = ctx.down('combo')
+       delete ctx.lastQuery;
+       ctx.store.clearFilter();
+       ctx = ctx.next('combo');
+               delete ctx.lastQuery;
+               ctx.store.clearFilter();
+               ctx = ctx.next('combo');
+               delete ctx.lastQuery;
+               ctx.store.clearFilter();
+    },
     items: [{
         xtype: 'combo',
         cls: 'cboxFields',
@@ -128,14 +140,15 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         iconCls: 'icon-btnAdd',
         text: 'AND',
         width: '7%',
-        handler: function (t) {
-            var i,h = t.prev('hidden');
-            if (!t.up('container').nextNode() || !h.getValue()) {
-               t.up('panel').add({xtype:'builderRow'});;
-               i = t.up('panel').items.items;
+        handler: function (b) {
+            var i,h = b.prev('hidden');
+            if (!b.up('container').nextNode() || !h.getValue()) {
+               b.up('container').clearCache(b.up('container'));
+               b.up('panel').add({xtype:'builderRow'});;
+               i = b.up('panel').items.items;
                i[i.length - 2].down('button').next('button').next('button').hide(); //prev row del btn
             }
-            t.addCls('qbuilderBtnSelected').next('button').removeCls('qbuilderBtnSelected').addCls('qbuilderBtnDeselected');
+            b.addCls('qbuilderBtnSelected').next('button').removeCls('qbuilderBtnSelected').addCls('qbuilderBtnDeselected');
             h.setValue(' AND ');
         }
     }, {
@@ -143,29 +156,30 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         iconCls: 'icon-btnAdd',
         text: 'OR',
         width: '6.5%',
-        handler: function (t) {
-           var i,h = t.prev('hidden');
-           if (!t.up('container').nextNode() || !h.getValue()) {
-               t.up('panel').add({xtype:'builderRow'}); //add new
-               i = t.up('panel').items.items;
+        handler: function (b) {
+           var i,h = b.prev('hidden');
+           if (!b.up('container').nextNode() || !h.getValue()) {
+               b.up('container').clearCache(b.up('container'));
+               b.up('panel').add({xtype:'builderRow'}); //add new
+               i = b.up('panel').items.items;
                i[i.length - 2].down('button').next('button').next('button').hide(); //prev row del btn
            }
            h.setValue(' OR ');
-           t.addCls('qbuilderBtnSelected').prev('button').removeCls('qbuilderBtnSelected').addCls('qbuilderBtnDeselected');
+           b.addCls('qbuilderBtnSelected').prev('button').removeCls('qbuilderBtnSelected').addCls('qbuilderBtnDeselected');
         }
     }, {
         xtype: 'button',
         iconCls: 'icon-btnDelete',
         text: 'DEL',
         width: '7%',
-        handler: function (t, e, o) {
-            var i = t.up('panel').items.items;
+        handler: function (b) {
+            var i = b.up('panel').items.items;
             var l = i.length; //length of the array of items
             if (l > 2) i[l - 2].down('button').next('button').next('button').show(); //prev row del btn 
-            i[t.up('panel').items.items.length - 2].down('hidden').setValue(''); //prev row hidden field value reset to '' 
+            i[b.up('panel').items.items.length - 2].down('hidden').setValue(''); //prev row hidden field value reset to '' 
             i[l - 2].down('button').next('button').removeCls('qbuilderBtnSelected').removeCls('qbuilderBtnDeselected'); //prev row css adjustments - 2nd button
             i[l - 2].down('button').removeCls('qbuilderBtnSelected').removeCls('qbuilderBtnDeselected'); //prev row css adjustments for 1st button
-            t.up('panel').remove(t.up('container')); //finally, remove this row
+            b.up('panel').remove(b.up('container')); //finally, remove this row
         }
     }]
 });
