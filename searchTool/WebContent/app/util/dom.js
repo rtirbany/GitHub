@@ -5,18 +5,14 @@ Ext.define('SearchTool.util.dom', {
 		highlightTimer : 700,
 		
 		executeSearch : function(btn,e){ 
-				var val = null, boolSaveQuery = null, boolRestrictedQuery = null;
-				if (btn.itemId = 'btnSearch') {
-		   			val = Ext.ComponentQuery.query('#cboxSearch')[0].getValue().trim();
+				var valKeyword = null, valBool = null, boolSaveQuery = null, boolRestrictedQuery = null;
+                    valKeyword = Ext.ComponentQuery.query('#cboxSearch')[0].getValue().trim();
+		   			valBool = Ext.ComponentQuery.query('#txtSearchBoolean')[0].getValue().trim();
 		   			boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
-		   		 	boolRestrictedQuery = Ext.ComponentQuery.query('#chkSummaryOnlySearch')[0].getValue(); 
-				}
-		   		else if (btn.itemId = 'boolSearch') {
-		   			val = Ext.ComponentQuery.query('#txtSearchBoolean')[0].getValue().trim(); 
-		   			boolSaveQuery = Ext.ComponentQuery.query('#boolSaveBoolQuery')[0].getValue();
-		   		} 
-		   		if (val && val.length > 0) {
-		   			var k = val;
+		   		 	boolRestrictQuery = Ext.ComponentQuery.query('#chkSummaryOnlySearch')[0].getValue();  
+                         
+		   		if ((valKeyword && valKeyword.length > 0) || (valBool && valBool.length > 0)) {
+		   			var k = 'kw='+valKeyword+';bool='+valBool+';';
 					var t = 'title\ntest'
 					//var b = Ext.create('SearchTool.view.linkbutton',{ itemId:'itemId="1-btnWrap"', text:'Search', url:k, tooltip:'hi\ntest'});
 					var b = Ext.create('SearchTool.view.linkbutton',{ text:'Query', url:k, tooltip:t}); 
@@ -53,7 +49,6 @@ Ext.define('SearchTool.util.dom', {
 			if (boolHighlight) { //only run if !null, <> 0, <> false 
 				parent.items.items[pos].addCls('tabHighlight');
 				parent.tab.addCls('tabHighlight');
-				
 				Ext.Function.defer(function(){
 						//clear out all highlighting...
 						//TODO: Ext.select not grabbing right, should use Ext.fly by itemId
@@ -103,9 +98,12 @@ Ext.define('SearchTool.util.dom', {
 				
 			tmp = "( {0} {1} {2} {3} {0} {1} {4} ) {5}";
 			errMsg = '-- ERROR - Line'+(i+1)+':';
+			
+			//CHECK INPUTS
 			if (f1 == '' || c1 == '')
-				return errMsg+'Missing a required field - Check Fieldname and/or Operator';
-				
+				return errMsg+'Missing a required field - Check Fieldname and/or Operator fields';
+			if (c1 != 'BETWEEN' && cb!='' && (t1=='' || t2==''))
+				return errMsg+'Missing a required field - Use of connector requires 2 arguments/values';
 			//1 ARG ONLY
 			//CAN BE HAVE TWO RECEIVED
 			else if (c1 == 'IS NULL' || c1 == 'IS NOT NULL') {//for these comparators, t1 should be null/empty, but not t2
@@ -118,14 +116,14 @@ Ext.define('SearchTool.util.dom', {
 				last = last ? last : '';
 				//ONLY 0 OR 1 RECEIVED
 				if (t1 == '' || t2 =='') //BETWEEN needs 2 fields
-					return errMsg+'Bad syntax - This operation requires 2 arguments';
+					return errMsg+'Bad syntax - This operation requires 2 arguments/values';
 				else if (t1 != '' && t2 !='') //BETWEEN needs 2 fields
 					return Ext.String.format(tmp,f1,c1,t1,t2,last);
 			}
 			//1 OR 2 ARGS
 			//BOTH MISSING
 			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'NOT EQUAL TO' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN') && (t1 != '' && t2 != '')) //all other c1's
-				return (cb != '' ? Ext.String.format(tmp,f1,c1,t1,cb,t2,last) : errMsg+'Bad syntax - This query statement requires a connector - Select AND or OR from the dropdown box'); //should make sure cb has AND or OR chosen
+				return (cb != '' ? Ext.String.format(tmp,f1,c1,t1,cb,t2,last) : errMsg+'Bad syntax - This query statement requires a Connector - Select AND or OR from the dropdown box'); //should make sure cb has AND or OR chosen
 			//1ST MISSING, 2ND RECEIVED - OK
 			else if ((c1 == '=' || c1 == '<' || c1 == '>' || c1 == '>=' || c1 == '<=' || c1 == 'NOT EQUAL TO' || c1 == 'CONTAINS' || c1 == 'DOES NOT CONTAIN') && (t1 == '' && t2 != '')) //all other c1's
 				{	tmp = "( {0} {1} {2} ) {3}"; //should ask they clear cb if it has data

@@ -26,7 +26,7 @@ Ext.define('SearchTool.view.main.SearchArea', {
             value: SearchTool.config.Config.searchCboxCaptionValue
         }, {
             xtype: 'combo',
-            id: 'cboxSearch',
+            itemId: 'cboxSearch',
             name: 'search',
             store: 'Keywords',
             valueField: 'id',
