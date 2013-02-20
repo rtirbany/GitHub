@@ -13,7 +13,7 @@ Ext.define('SearchTool.controller.SearchTool', {
     views: ['Viewport'],
     models: ['Product'],
     stores: ['Sources', 'Keywords', 'Results'],
-    requires: ['SearchTool.util.dom', 'SearchTool.view.help.Reference'],
+    requires: ['SearchTool.util.dom', 'SearchTool.view.help.Reference','SearchTool.view.linkbutton'],
     refs: [{
         ref: 'history',
         selector: 'container[itemId=tbHistory]'
