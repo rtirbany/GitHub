@@ -39,7 +39,6 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
     requires: ['SearchTool.config.Config'],
     layout: 'hbox',
     clearCache : function(ctx){
-      debugger;
        ctx = ctx.down('combo')
        delete ctx.lastQuery;
        ctx.store.clearFilter();
