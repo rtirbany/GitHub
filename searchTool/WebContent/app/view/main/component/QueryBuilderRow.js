@@ -38,16 +38,11 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
     alias: 'widget.builderRow',
     requires: ['SearchTool.config.Config'],
     layout: 'hbox',
-    clearCache : function(ctx){
-       ctx = ctx.down('combo')
-       delete ctx.lastQuery;
-       ctx.store.clearFilter();
-       ctx = ctx.next('combo');
-               delete ctx.lastQuery;
-               ctx.store.clearFilter();
-               ctx = ctx.next('combo');
-               delete ctx.lastQuery;
-               ctx.store.clearFilter();
+    clearCache : function(){
+       Ext.Array.forEach(Ext.ComponentQuery.query('panel > container > combo'),function(cbox){
+          delete cbox.lastQuery;
+          cbox.store.clearFilter();
+       }); 
     },
     items: [{
         xtype: 'combo',
@@ -60,6 +55,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         valueField: 'fieldvalue',
         emptyText: '(Select Field)',
         typeAhead: true,
+        queryDelay: 10,
         value: '',
         triggerAction: 'query',
         queryMode: 'local',
@@ -73,6 +69,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         emptyText: '(Select Oper)',
         forceSelection: true,
         typeAhead: true,
+        queryDelay: 10,
         triggerAction: 'query',
         shrinkWrap: 1,
         selectOnFocus: false,
@@ -111,26 +108,31 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         emptyText: '(Enter value...)',
         regex: SearchTool.config.Config.qryBuilderTextFieldRegex,
         regexText: SearchTool.config.Config.qryBuilderErrText,
-        enableKeyEvents: true
+        maxLength: 25,
+        enforceMaxLength: true
     }, {
         xtype: 'combo',
         cls: 'cboxAndOr',
         store: andorStore,
-        minChars: 1,
         disabled: true,
         displayField: 'opername',
         valueField: 'opervalue',
         typeAhead: true,
+        queryDelay: 10,
         emptyText: '(AND/OR)',
         allowBlank: true,
+        maxLength: 3,
         enforceMaxLength: true,
-        matchFieldWidth: true,
+        minChars: 1,
+        forceSelection: true,
         mode: 'local',
         width: '12%'
     }, {
         xtype: 'textfield',
         width: '17%',
-        emptyText: '(Enter value...)'
+        emptyText: '(Enter value...)',
+        maxLength: 25,
+        enforceMaxLength: true
     }, {
         xtype: 'hidden',
         value: ''
@@ -142,7 +144,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         handler: function (b) {
             var i,h = b.prev('hidden');
             if (!b.up('container').nextNode() || !h.getValue()) {
-               b.up('container').clearCache(b.up('container'));
+               b.up('container').clearCache();
                b.up('panel').add({xtype:'builderRow'});;
                i = b.up('panel').items.items;
                i[i.length - 2].down('button').next('button').next('button').hide(); //prev row del btn
@@ -158,7 +160,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         handler: function (b) {
            var i,h = b.prev('hidden');
            if (!b.up('container').nextNode() || !h.getValue()) {
-               b.up('container').clearCache(b.up('container'));
+               b.up('container').clearCache();
                b.up('panel').add({xtype:'builderRow'}); //add new
                i = b.up('panel').items.items;
                i[i.length - 2].down('button').next('button').next('button').hide(); //prev row del btn
