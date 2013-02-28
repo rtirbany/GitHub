@@ -81,50 +81,88 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
         border: 0,
         layout: 'vbox',
         items: [{
-          xtype:'container',
-          layout:'hbox',
-          margin:'0 0 5 0',
-         items:[{
-            xtype: 'checkbox',
-            boxLabel: 'Use Fiscal Calendar',
-            itemId: 'chkFiscal',
-            name: 'fiscal',
-            disabled:true
-        },{
-            xtype: 'numberfield',
-            itemId: 'numFiscalYear',
-            width: 80,
-            allowBlank: false,
-            name: 'fiscalyear',
-            minValue:2000,
-            maxValue:2014,
-            disabled:true
-        }]
-        }
-        , {
+            xtype: 'radiogroup',
+            itemId: 'rdCalendar',
+            width: '100%',
+            columns: 2,
+            items: [{
+                boxLabel: 'Annual Calendar',
+                name: 'calType',
+                inputValue: 'cal',
+                checked: true,
+                listeners: {
+                    change: function (cb, nv, ov) {
+                        if (nv) {
+                            Ext.ComponentQuery.query('#numFiscalYear')[0].hide();
+                            Ext.ComponentQuery.query('#dtRangeEnd')[0].show();
+                        }
+                    }
+                }
+            }, {
+                boxLabel: 'Fiscal Calendar',
+                name: 'calType',
+                inputValue: 'fisc',
+                listeners: {
+                    change: function (cb, nv, ov) {
+                        if (nv) {
+                            Ext.ComponentQuery.query('#numFiscalYear')[0].show();
+                            Ext.ComponentQuery.query('#dtRangeEnd')[0].hide();
+                        }
+                    }
+                }
+            }]
+        }, {
+            xtype: 'container',
+            layout: 'hbox',
+            itemId: 'calDisplay',
+            items: [{
+                xtype: 'combo',
+                itemId: 'cboxPeriod',
+                width: 65,
+                value: 'B',
+                allowBlank: false,
+                forceSelection: true,
+                margins: '0 5 0 5',
+                store: [
+                    ['B', 'Before']
+//                  ,['A', 'After']
+                    ]
+
+            }, {
+                xtype: 'datefield',
+                itemId: 'dtRangeEnd',
+
+                name: 'dtRangeEnd',
+                altFormats: 'mdY',
+                allowBlank: false,
+                emptyText: 'mm/dd/yyyy',
+                maxValue: new Date(),
+                width: 100,
+                value: new Date(),
+                margins: '0 5 0 5'
+            }, {
+                xtype: 'numberfield',
+                itemId: 'numFiscalYear',
+                width: 65,
+                allowBlank: false,
+                name: 'fiscalyear',
+                minValue: 1990,
+                maxValue: Ext.Date.format(Ext.Date.add(new Date(), Ext.Date.YEAR, 1), 'Y'),
+                value: Ext.Date.format(new Date(), 'Y'),
+                margins: '0 5 0 5',
+                hidden: true
+            }]
+        }, {
             xtype: 'checkbox',
             boxLabel: 'Use whole units',
             itemId: 'chkWhole',
+            margins: '5 5 5 5',
             name: 'incr'
-        },
-        {
+        }, {
             xtype: 'hidden',
             itemId: 'dtRangeStart',
             name: 'dtRangeStart',
-            value: Ext.Date.add(new Date(),Ext.Date.MONTH,SearchTool.config.Config.defaultDateAmt)
-        },
-        {
-            xtype: 'datefield',
-            itemId: 'dtRangeEnd',
-            name: 'dtRangeEnd',
-            altFormats: 'mdY',
-            allowBlank: false,
-            emptyText: 'mm/dd/yyyy',
-            maxValue: new Date(),
-            width: 225,
-            labelWidth: 100,
-            fieldLabel: 'Prior To:',
-            value: new Date()
+            value: Ext.Date.add(new Date(), Ext.Date.MONTH, SearchTool.config.Config.defaultDateAmt)
         }, {
             xtype: 'numberfield',
             fieldLabel: 'Count:',
@@ -132,13 +170,12 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
             width: 160,
             allowBlank: false,
             name: 'cnt',
-            value: -1*SearchTool.config.Config.defaultDateAmt, 
+            value: -1 * SearchTool.config.Config.defaultDateAmt,
             enforceMaxLength: true,
             minValue: 1,
             maxValue: 9999,
             maxLength: 4
-        }, 
-        {
+        }, {
             xtype: 'radiogroup',
             itemId: 'rdUnit',
             width: '100%',
@@ -170,6 +207,6 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
                 name: 'customdate',
                 inputValue: 'd'
             }] //radiogroup
-        }]//form vbox
-    }]//panel items
+        }] //form vbox
+    }] //panel items
 });
