@@ -44,7 +44,24 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
           cbox.store.clearFilter();
        }); 
     },
-    items: [{
+    items: [
+    {
+        xtype: 'combo',
+        cls: 'cboxProducts',
+        store: fieldStore,
+        editable: true,
+        selectOnFocus: false,
+        forceSelection: true,
+        displayField: 'fieldname',
+        valueField: 'fieldvalue',
+        emptyText: '(Select Product)',
+        typeAhead: true,
+        queryDelay: 10,
+        value: '',
+        triggerAction: 'query',
+        queryMode: 'local',
+        width: '11%'
+    } ,{
         xtype: 'combo',
         cls: 'cboxFields',
         store: fieldStore,
@@ -59,7 +76,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         value: '',
         triggerAction: 'query',
         queryMode: 'local',
-        width: '15%'
+        width: '10%'
     }, {
         xtype: 'combo',
         cls: 'cboxOpers',
@@ -74,7 +91,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         shrinkWrap: 1,
         selectOnFocus: false,
         queryMode: 'local',
-        width: '15%',
+        width: '10%',
         enableKeyEvents: true,
         listeners: {
             'change': function (t, n, o, opts) {
@@ -118,7 +135,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilderRow', {
         displayField: 'opername',
         valueField: 'opervalue',
         typeAhead: true,
-        queryDelay: 10,
+       
         emptyText: '(AND/OR)',
         allowBlank: true,
         maxLength: 3,
