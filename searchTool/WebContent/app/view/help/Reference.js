@@ -43,6 +43,7 @@ Ext.define('SearchTool.view.help.Reference', {
     width: 550,
     height: 600,
     frame: true,
+    layout:'fit',
     overflowY: 'auto',
     overflowX: 'hidden'
     //    ,
@@ -54,7 +55,7 @@ Ext.define('SearchTool.view.help.Reference', {
         xtype: 'tool',
         type: 'close',
         handler: function (e, target, p, tool) {
-            this.up('panel').close();
+            this.up('panel').hide();
         }
     }],
     tbar: {
@@ -80,7 +81,7 @@ Ext.define('SearchTool.view.help.Reference', {
         }]
     },
     rbar: {
-        items: alphabeticalTbar(myStore, 25),
+        items: alphabeticalTbar(25),
         overflowY: 'auto',
         overflowX: 'hidden'
     },
@@ -154,16 +155,16 @@ Ext.define('SearchTool.view.help.Reference', {
                 style: 'padding: 10px;'
                 //                    ,
                 //                    html: Ext.example.shortBogusMarkup          
-            }],
+            }]
+        }],
             listeners: {
                 groupchange: function (gtp, n, o, opts) {
                     Ext.Msg.alert('grp change? - activated')
                 },
-                tabchange: function (gtp, n, o, opts) {
+                tabchange: function (gtp, n, o) {
                     Ext.Msg.alert('de-activated')
                 }
             }
-        }]
 
     }]
 
