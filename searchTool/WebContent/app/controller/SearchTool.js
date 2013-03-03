@@ -50,7 +50,7 @@ Ext.define('SearchTool.controller.SearchTool', {
         Ext.ComponentQuery.query('#cboxSearch')[0].setValue(valKeyword);
         boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
         boolRestrictQuery = Ext.ComponentQuery.query('#chkSummaryOnlySearch')[0].getValue();
-
+        var form = btn.up('container').prev('tabpanel').down('form');
         if ((valKeyword && valKeyword.length > 0) || (valBool && valBool.length > 0)) {
             var k = 'kw=' + valKeyword + ';bool=' + valBool + ';';
 
@@ -67,9 +67,9 @@ Ext.define('SearchTool.controller.SearchTool', {
             //                       SearchTool.util.dom.addTabChild(target,0,b,true);//,tooltip:"Ext.Date.format(new Date(),'F d g:i a')"},true);
 
             //                       Ajax request
-            var form = btn.up('form');
             if (form.getForm().isValid()) {
                 var params = form.getValues();
+                Ext.apply(params,{'boolSaveQuery':boolSaveQuery});
                 form.up('tabpanel').el.mask(SearchTool.config.Config.msgQuery, 'x-mask-loading');
                 this.getStore('Results').clearFilter(true);
                 this.getStore('Results').filter(Ext.JSON.encode(params));
