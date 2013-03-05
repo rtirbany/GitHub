@@ -7,7 +7,7 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
     requires: ['SearchTool.config.Config'],
     draggable: true,
     floating: true,
-    height: 250,
+    height: 260,
     width: 295,
     titleCollapse: true,
     collapsible: true,
@@ -153,12 +153,6 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
                 hidden: true
             }]
         }, {
-            xtype: 'checkbox',
-            boxLabel: 'Use whole units',
-            itemId: 'chkWhole',
-            margins: '5 5 5 5',
-            name: 'incr'
-        }, {
             xtype: 'hidden',
             itemId: 'dtRangeStart',
             name: 'dtRangeStart',
@@ -166,6 +160,7 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
         }, {
             xtype: 'numberfield',
             fieldLabel: 'Count:',
+            margins: '10 5 5 5',
             itemId: 'txtCount',
             width: 160,
             allowBlank: false,
@@ -179,8 +174,10 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
             xtype: 'radiogroup',
             itemId: 'rdUnit',
             width: '100%',
+            margins: '0 5 0 5',
             fieldLabel: 'Unit',
-            columns: 2,
+            labelWidth: 75,
+            columns: [.5,.5],
             items: [{
                 boxLabel: 'Year(s)',
                 name: 'customdate',
@@ -207,6 +204,13 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
                 name: 'customdate',
                 inputValue: 'd'
             }] //radiogroup
+        },
+        {
+            xtype: 'checkbox',
+            boxLabel: 'Use whole units',
+            itemId: 'chkWhole',
+            margins: '0 5 5 5',
+            name: 'incr'
         }] //form vbox
     }] //panel items
 });
