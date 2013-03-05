@@ -1,6 +1,11 @@
 Ext.define('SearchTool.config.Config', {
   statics: {
+    ajaxTimout: 10000,
+    urlSearch: '/services/search',
     loadMsg: 'Loading Application raj.  Please wait...', 
+    msgQuery: 'Querying data.  Please wait...',
+    msgErrorQueryTitle: 'Communication error (Query Service)',
+    msgErrorQueryText: 'Error communicating with Query Service..please try again shortly',
   	keywords: 'data/keywords.json',
     products: 'data/products.json',
     sources:  'data/sources.json',
@@ -10,9 +15,10 @@ Ext.define('SearchTool.config.Config', {
     //captions & labels
     searchCboxCaptionLabel:'Enter search term(s)',
     searchCboxCaptionValue:'(* = wildcard; ? = single char wildcard)',
-    searchChkCaptionLabel: 'Summary Only',
-    searchSaveChkCaptionLabel : 'Save Query',
-    qryBuilderCaptionLabel:'Advanced Query',
+    searchChkCaptionLabel: 'Summary Field Only',
+    searchSaveChkCaptionLabel : 'Save this Search',
+    qryBuilderCaptionLabel:'Advanced (Boolean)',
+    titlePnlFilters:    'Narrow Results',
     SmthgCaptionLabel:'(Smthg - User Tools or ?)',
     defaultDatePeriod : 'Ext.Date.MONTH',
     defaultDateAmt : -1,
@@ -27,6 +33,7 @@ Ext.define('SearchTool.config.Config', {
     customCalendarWeekstart : 0, //0 = Sunday, 6 = Saturday
     customCalendarSixMonthstart : 1, //1 = January, 12 = December
     customCalendarSixMonthFromCurrent : 0, //0 = no; 1 = yes
+    customCalendarFiscalMonthDay: '10/01/',
     //tooltips
     searchBtnClearTtip:'Clears keyword search criteria',
     searchBtnSearchTtip:'Runs Search',
