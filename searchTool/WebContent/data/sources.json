@@ -11,7 +11,7 @@
 				'products' : [
 					{'id' : 1 , 'boxLabel': 'Src1Prod1', 'name' : 'prod1', 'tooltip' : 'Src1 - Prod1'},
 					{'id' : 2 , 'boxLabel': 'Src1Prod2', 'name' : 'prod2', 'tooltip' : 'Src1 - Prod2'},
-					{'id' : 3 , 'boxLabel': 'Src1Prod3', 'name' : 'prod3', 'tooltip' : 'Src1 - Prod3'},
+					{'id' : 3 , 'boxLabel': 'Src1Prod3', 'name' : 'prod3', 'tooltip' : 'Src1 - Prod3'}
 				]
 			}, {
 				'id' : 2,
@@ -23,7 +23,7 @@
 				'products' : [
 					{'id' : 1 , 'boxLabel': 'Src2Prod1', 'name' : 'prod1', 'tooltip' : 'Src2 - Prod1'},
 					{'id' : 2 , 'boxLabel': 'Src2Prod2', 'name' : 'prod2', 'tooltip' : 'Src2 - Prod2'},
-					{'id' : 3 , 'boxLabel': 'Src2Prod3', 'name' : 'prod3', 'tooltip' : 'Src2 - Prod3'},
+					{'id' : 3 , 'boxLabel': 'Src2Prod3', 'name' : 'prod3', 'tooltip' : 'Src2 - Prod3'}
 				]
 			}, {
 				'id' : 3,
@@ -35,7 +35,7 @@
 				'products' : [
 					{'id' : 1 , 'boxLabel': 'Src3Prod1', 'name' : 'prod1', 'tooltip' : 'Src3 - Prod1'},
 					{'id' : 2 , 'boxLabel': 'Src3Prod2', 'name' : 'prod2', 'tooltip' : 'Src3 - Prod2'},
-					{'id' : 3 , 'boxLabel': 'Src3Prod3', 'name' : 'prod3', 'tooltip' : 'Src3 - Prod3'},
+					{'id' : 3 , 'boxLabel': 'Src3Prod3', 'name' : 'prod3', 'tooltip' : 'Src3 - Prod3'}
 				]
 			}]
 }
