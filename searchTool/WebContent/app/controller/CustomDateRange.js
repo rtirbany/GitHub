@@ -2,8 +2,14 @@ Ext.define('SearchTool.controller.CustomDateRange', {
     extend: 'Ext.app.Controller',
     views: ['main.component.PnlCustomDateRange', 'main.SearchArea', 'SearchTool.config.Config'],
     refs: [{
-        ref: 'cdr_chkFiscal',
-        selector: '#chkFiscal'
+        ref: 'cdr_rdCalType',
+        selector: '#rdCalendar'
+    }, {
+        ref: 'cdr_numFiscal',
+        selector: '#numFiscalYear'
+    }, {
+        ref: 'cdr_cboxPeriod',
+        selector: '#cboxPeriod'
     }, {
         ref: 'cdr_chkWhole',
         selector: '#chkWhole'
@@ -61,18 +67,23 @@ Ext.define('SearchTool.controller.CustomDateRange', {
     },
     processForm: function (b, e) {
         me = this;
-        //get values from SA 
-        var f = me.getCdr_chkFiscal().value;
+        //get values from CDR 
+        var calType = me.getCdr_rdCalType().getValue().calType; //cal, fisc
         var w = me.getCdr_chkWhole().value;
         var c = me.getCdr_txtCount().value;
         var u = me.getCdr_rdUnit().getValue().customdate;
-        var date2 = me.getCdr_dtRangeEnd().value;
-        //assign info to hidden fields of Search Area for later retrieval
-        var date1 = me.getCdr_dtRangeStart().value;
-        //               switch (u){
-        //               case 'd' : 
-        //               
-        //               }
+        var date1, date2;
+        switch(calType){
+          case 'cal' :   date2 = me.getCdr_dtRangeEnd().value;
+                         date1 = me.getCdr_dtRangeStart().value;
+                         break;
+          //fisc is only other value
+          default :      date2 = parseInt(me.getCdr_numFiscal().value);
+                         var m = SearchTool.config.Config.customCalendarFiscalMonthDay+(date2-1);
+                         date2 = Ext.Date.parseDate(m,'m/d/Y'); 
+                         date1 = date2;
+        }
+        //TODO: refactor all of this
         if (u == 'd' || u == 'w') {
             c = (u == 'w' ? c * 7 : c);
             if (w) {
@@ -94,15 +105,14 @@ Ext.define('SearchTool.controller.CustomDateRange', {
             var fromCurrent = SearchTool.config.Config.customCalendarSixMonthFromCurrent;
             if (fromCurrent == 0) { //not based off current
                 var currHalf = (parseInt(Ext.Date.format(date2, 'm')) > 6 ? 2 : 1);
-
             }
             if (!w) {
                 date1 = Ext.Date.add(date2, Ext.Date.MONTH, -c);
             } else {
                 //var lastFullMonthStart = Date.today().add(-1).months().moveToFirstDayOfMonth().toString('yyyy-MM-dd');
-                //get the prev 6 month interval
-                var adj = (date2.getMonth() % 6)+1; 
-                date2 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH, (-adj)));
+                //get the prev 6 month interval 
+                var adj = (u == 'sm' ? (date2.getMonth() % 6)+1 : 1);
+                date2 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH,-adj));
                 date1 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH, -c)); //11,12 yields 12/31-6/30
                 date1 = Ext.Date.add(date1, Ext.Date.DAY, 1);
             }
@@ -157,12 +167,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
         field = Ext.ComponentQuery.query('#dtUserSearchFrom')[0];
         field.setValue(date1);
         Ext.form.field.VTypes.DateRange(field.value, field);
-                    
         me.getCdr_dtRangeStart().setValue(date1);
-    },
-    updateCDR: function (c, e, o) {
-        debugger;
-        //me.getCdr_dtRangeStart().setValue()
     },
     fillCDRForm: function () {
         var me = this, elapsed;
