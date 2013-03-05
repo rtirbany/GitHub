@@ -169,6 +169,8 @@ Ext.define('SearchTool.controller.CustomDateRange', {
         Ext.form.field.VTypes.DateRange(field.value, field);
         me.getCdr_dtRangeStart().setValue(date1);
     },
+    updateCDR: function (c, e, o) { 
+    },
     fillCDRForm: function () {
         var me = this, elapsed;
         //retrieve values from calendar widget
