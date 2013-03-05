@@ -148,7 +148,7 @@ Ext.define('SearchTool.view.main.component.PnlCustomDateRange', {
                 name: 'fiscalyear',
                 minValue: 1990,
                 maxValue: Ext.Date.format(Ext.Date.add(new Date(), Ext.Date.YEAR, 1), 'Y'),
-                value: Ext.Date.format(new Date(), 'Y'),
+                value: Ext.Date.format(new Date(), 'm') <= 9 ? Ext.Date.format(new Date(),'Y') : Ext.Date.format(Ext.Date.add(new Date(),Ext.Date.YEAR,1),'Y'),
                 margins: '0 5 0 5',
                 hidden: true
             }]
