@@ -1,7 +1,7 @@
 Ext.define('SearchTool.view.Viewport', {
     extend: 'Ext.container.Viewport',
     itemId: 'main',
-    requires: ['SearchTool.view.main.pnlSearchNav',
+    requires: ['SearchTool.view.main.component.PnlFilters',
         'SearchTool.view.main.SearchArea',
         'SearchTool.view.main.ResultsGrid',
         'SearchTool.view.main.component.WinSave'],
@@ -20,7 +20,7 @@ Ext.define('SearchTool.view.Viewport', {
             //TODO: use 'component' for logo
             //width:, style:(bordering,padding,etc), html:(img src,style='w:X;h:Y') 
             xtype: 'tbtext',
-            text: 'CHROME Search'
+            text: 'Classic Auto Parts Search Tool'
         }, {
             xtype: 'tbfill'
         }, {
@@ -60,51 +60,50 @@ Ext.define('SearchTool.view.Viewport', {
             layout: 'border',
             items: [{
                 region: 'north',
+                weight: -2,
                 border: false,
                 items: [{
                     xtype: 'searchArea',
                     height: 160
 
                 }]
-            }
-            //                            ,
-            //                               {
-            //                                    region : 'west',
-            //                                    itemId : 'pnlSources',
-            //                                    title : 'Sources',
-            //                                    layout : {
-            //                                         type : 'fit',  
-            //                                         align : 'stretch'
-            //                                    },
-            //                                    collapsible : true,
-            //                                    animCollapse : true,
-            //                                    collapseDirection : 'left',
-            //                                    collapsed : true,
-            //                                    split : true, 
-            //                                    xtype: 'pnlSources',
-            //                                    flex : .18
-            //                               },
-            //                               {
-            //                                    region : 'west',
-            //                                    itemId : 'pnlSearch',
-            //                                    title : 'Filters',
-            //                                    layout : {
-            //                                         type : 'fit',  
-            //                                         align : 'stretch'
-            //                                    },
-            //                                    collapsible : true,
-            //                                    animCollapse : true,
-            //                                    collapseDirection : 'left',
-            //                                    split : true,
-            //                                    xtype: 'pnlSearch',
-            //                                    flex : .25
-            //                               }
-            ,
+            },
+//            		{
+//								region : 'west',
+//								itemId : 'pnlSources',
+//								title : 'Sources',
+//								layout : {
+//									type : 'fit',  
+//									align : 'stretch'
+//								},
+//								collapsible : true,
+//								animCollapse : true,
+//								collapseDirection : 'left',
+//								collapsed : true,
+//								split : true, 
+//								xtype: 'pnlSources',
+//								flex : .18
+//							},
+							{
+								region : 'west',
+                                weight: -1,
+								itemId : 'pnlFilters',
+								title : SearchTool.config.Config.titlePnlFilters,
+								layout : {
+									type : 'fit'
+								},
+								collapsible : true,
+								animCollapse : true,
+								collapseDirection : 'left',
+								split : true,
+								xtype: 'pnlFilters',
+								flex : .25
+							}, 
 
             { // center
                 region: 'center',
                 border: true,
-                //xtype:'resultsgrid',
+                xtype:'resultsgrid',
                 flex: .75
             }]
         } // searchtab
