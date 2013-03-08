@@ -7,13 +7,23 @@
 		<meta name="author" content="raj" />
 		<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
 		<link rel="stylesheet" type="text/css" href="extjs/resources/css/search.css">
+		<link rel="stylesheet" type="text/css" href="extjs/resources/css/GroupTabPanel.css" />
 	    <script type="text/javascript" src="extjs/ext-all-dev.js"></script>
+	    <script type="text/javascript" src="app/util/DateValidation.js"></script> 
+    <script type="text/javascript" src="app/Portlet.js"></script>
+    <script type="text/javascript" src="app/PortalColumn.js"></script>
+    <script type="text/javascript" src="app/PortalPanel.js"></script>
+    <script type="text/javascript" src="app/GridPortlet.js"></script>
+    <script type="text/javascript" src="app/ChartPortlet.js"></script>
 	    <script type="text/javascript" src="app.js"></script>
 	</head>
 	<body> 
 		<div id="divSearchTool">
-			
 		</div>
+		<iframe id="exportframe" name="exportframe" class="x-hidden"></iframe>
+		<form id="exportform" method="post" target="exportframe">
+			<input type="hidden" id="excelconfig" name="config" value=""/>
+		</form>
 		
 	</body>
 </html>
