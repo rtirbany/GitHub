@@ -47,7 +47,7 @@ Ext.define('SearchTool.view.help.Reference', {
     floating: true,
     draggable: true,
     width: 425,
-    height: 550,
+    height: 500,
     frame: true,
     layout: 'fit',
     tools: [{
