@@ -91,13 +91,14 @@ Ext.define('SearchTool.controller.CustomDateRange', {
                           break;
                case 'w' : var offset = SearchTool.config.Config.customCalendarWeekstart; //0
                           if (w)
-                              date2 = Ext.Date.add(date2, Ext.Date.DAY, -(Ext.Date.format(date2, 'w'))); //go to week start
+                              date2 = Ext.Date.add(date2,Ext.Date.DAY,-1*(parseInt(Ext.Date.format(date2,'w'))+1)); //end of prev week
+                              //Ext.Date.add(date2, Ext.Date.DAY, -(Ext.Date.format(date2, 'w'))); //go to week start
                           c = c * 7;
                           if (offset > 0) 
                              date2 = Ext.Date.add(date2, Ext.Date.DAY, -(7 - offset));
                           break;
             }//switch
-            date1 = Ext.Date.add(date2, Ext.Date.DAY, -c+1);
+            date1 = Ext.Date.add(date2, Ext.Date.DAY, -c+1); 
 //            c = (u == 'w' ? c * 7 : c);
 //            if (w) {
 //                if (u == 'd') {
@@ -123,14 +124,12 @@ Ext.define('SearchTool.controller.CustomDateRange', {
                 date1 = Ext.Date.add(date2, Ext.Date.MONTH, -c);
             } else {
                 //var lastFullMonthStart = Date.today().add(-1).months().moveToFirstDayOfMonth().toString('yyyy-MM-dd');
-                //get the prev 6 month interval 
-                var adj = (u == 'sm' ? (date2.getMonth() % 6)+1 : 1);
+                //get the prev 6 month interval
+                var adj = (calType == 'fisc' ? 0 : 1);
+                adj = (u == 'sm' ? (date2.getMonth() % 6)+1 : adj);
                 date2 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH,-adj));
                 date1 = Ext.Date.getLastDateOfMonth(Ext.Date.add(date2, Ext.Date.MONTH, -c)); //11,12 yields 12/31-6/30
                 date1 = Ext.Date.add(date1, Ext.Date.DAY, 1);
-            }
-            if (calType == 'fisc') {
-               
             }
         } else if (u == 'q') {
             //Quarter calc - whole unit checkbox does not apply here
