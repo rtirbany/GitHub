@@ -1,0 +1,32 @@
+{
+	'rows' : [{
+				'city' : { 
+					'_type' : 'terms',
+					'missing' : 2,
+					'total' : 15,
+					'other' : 4,
+					'terms' : [
+						{'term':'DC',count:2},
+						{'term':'Nashville',count:2},
+						{'term':'NYC',count:5},
+					]
+				 } 
+			  },
+			  {
+				'beaches' : {
+					'_type' : 'terms',
+					'missing' : 2,
+					'total' : 9,
+					'other' : 0,
+					'terms' : [
+						{'term':'obx',count:1},
+						{'term':'ocean city',count:2},
+						{'term':'myrtle',count:4},
+					]
+				 } 
+			  }
+			  
+			],
+	'success' : true,
+	'results' : 3
+}

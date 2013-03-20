@@ -1,6 +1,7 @@
 // TODO: tabpanel tabs should be equal-sized and fit/stretched
 // TODO: plain = true
-// TODO: make this more lightweight
+// TODO: make this more lightweight 
+
 Ext.define('SearchTool.view.main.component.PnlFilters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.pnlFilters',
@@ -10,65 +11,49 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
     titleCollapse: true,
     overflowY: 'auto',
     overflowX: 'hidden',
+    title : SearchTool.config.Config.titlePnlFilters,
     defaults: {
-        border: true, // required to display border around qrylink
+        xtype:'container',
         width: '100%'
-
     },
+    requires: ['SearchTool.config.Config','SearchTool.view.main.component.FilterMgmt'],
     items: [ // contents of west panel within main Search page tab 
-//    { //search panel top area
+    { //search panel top area
 //        //scrollbar working as it should
-//        //height working as it should 
-//        xtype: 'container',
-//        height: '15%',
+//        //height working as it should  
+        height: '35%',
 //        overflowX: 'hidden',
 //        overflowY: 'auto',
 //        margin: '5 10 5 5',
 //        items: [{
-//            xtype: 'container',
+            xtype: 'filtermgmt' 
 //            height:'100%',
-//            layout: 'hbox',
-//            defaults: {
-//                margin: '5 20 5 5'
-//            },
-//            items: [{
-//                xtype: 'displayfield',
-//                value: 'Filters Options:',
-//                width: 100
-//            }, {
-//                xtype: 'checkbox',
-//                labelWidth: 65,
-//                width: 85,
-//                fieldLabel: 'Remove All'
-//            }, {
-//                xtype: 'checkbox',
-//                labelWidth: 50,
-//                width: 70,
-//                fieldLabel: 'Relax All'
-//            }]
+//            layout: 'hbox'
+//             
+//                //margin: '5 25 5 5' 
 //        }]
-//    } //search panel top area
-//    ,
-    {
-        xtype:'container',
+    } //search panel top area
+    ,
+    { 
         layout: 'accordion',
         items: [{
             title: 'Auto Parts Sources',
             items: [{
                 width: '100%',
                 defaults: {
-                    labelStyle: 'width:10px;font-size:12px'
+                    labelStyle: 'width:10px;font-size:12px',
+                    margin: '5 30 5 5'
                 },
                 items: [{
                     xtype: 'checkboxgroup',
                     itemId: 'chkgrpDataSource',
                     fieldLabel: 'Data Sources',
+                    labelWidth: 75,
                     // Distribute controls across 3 even columns, filling
                     // each column from top to bottom before starting the next
                     // column
-                    columns: [150],
-                    vertical: true,
-                    store: 'Sources',
+                    columns: [100,100],
+                    vertical: true, 
                     renderer: function (b, e) {}
                     //TODO: 2/6 Use 'add' b/c items only examined at initiatialzation
                     //                  ,
@@ -94,11 +79,11 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
                     xtype: 'checkboxgroup',
                     itemId: 'chkgrpProducts',
                     fieldLabel: 'Products',
-                    labelWidth: 85,
+                    labelWidth: 75,
                     // Distribute controls across 3 even columns, filling
                     // each column from top to bottom before starting the next
                     // column
-                    columns: [.5, .5],
+                    columns: [100,100],
                     vertical: true,
                     items: [
                     // this.getDataUrl()

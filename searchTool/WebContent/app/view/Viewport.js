@@ -1,7 +1,8 @@
 Ext.define('SearchTool.view.Viewport', {
     extend: 'Ext.container.Viewport',
     itemId: 'main',
-    requires: ['SearchTool.view.main.component.PnlFilters',
+    requires: [
+        'SearchTool.view.main.component.PnlFilters',
         'SearchTool.view.main.SearchArea',
         'SearchTool.view.main.ResultsGrid',
         'SearchTool.view.main.component.WinSave'],
@@ -85,19 +86,14 @@ Ext.define('SearchTool.view.Viewport', {
 //								flex : .18
 //							},
 							{
+                                xtype:'pnlFilters',
 								region : 'west',
                                 weight: -1,
-								itemId : 'pnlFilters',
-								title : SearchTool.config.Config.titlePnlFilters,
-								layout : {
-									type : 'fit'
-								},
 								collapsible : true,
-								animCollapse : true,
 								collapseDirection : 'left',
+								animCollapse : true,
 								split : true,
-								xtype: 'pnlFilters',
-								flex : .25
+   								flex : .25
 							}, 
 
             { // center
