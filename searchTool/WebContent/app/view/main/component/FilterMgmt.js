@@ -1,22 +1,21 @@
 var tplData = new Ext.XTemplate(
      '<tpl for=".">',
-          '<tr><td class="facetitem" title="{tip}">{key}&nbsp;=&nbsp;{value}</td></tr></tpl>'   //use array index to autonumber (starts at 1)
+          '<tr><td><div style="width:100%; overflow:hidden;"><input type="button" title="remove this filter" name="remove_{#}" class="facetitemremovebutton"/><label class="facetitem" title="{tip}">{key}&nbsp;=&nbsp;{value}</label></div></td></tr></tpl>'   //use array index to autonumber (starts at 1)
       
 );
-
-var tplDate = new Ext.XTemplate(
-      '<tpl for=".">',
-          '<tr><td class="facetitem">{key}&nbsp;=&nbsp;{term}</td></tr>'
-);
-
+//
+//var tplDate = new Ext.XTemplate(
+//      '<tpl for=".">',
+//          '<tr><td><div class="facetitem">{key}&nbsp;=&nbsp;{term}</div></td></tr>'
+//);
+//
 var mainTpl = new Ext.XTemplate(
      '<table class="facetgroup">',
           '<tpl for=".">',
              '{[this.renderItem(values)]}',
      '</tpl></table>',
      {
-          renderItem : function(val) {
-                 debugger;
+          renderItem : function(val) { 
 //               if (val.data.value instanceof Ext.Date) {
                     var x = tplData.apply(val);
 //                    console.log(x);
@@ -44,31 +43,66 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
                     items:[{
 						xtype : 'displayfield',
 						value : 'Filters Options:',
-						width : 100
+                        cls: 'filterdisplayfield',
+                        margin: 5,
+						width : 85
 					}, {
-						xtype : 'checkbox',
-						labelWidth : 65,
-						width : 85,
-						fieldLabel : 'Remove All'
+						xtype : 'button',
+//						labelWidth : 65,
+						width : 80,
+                        margin:5,
+                        enableToggle: true,
+						text : 'Remove All'
 					}, {
-						xtype : 'checkbox',
-						labelWidth : 50,
-						width : 70,
-						fieldLabel : 'Relax All'
+						xtype : 'button',
+//						labelWidth : 50,
+						width : 65,
+                         margin:5,
+                        enableToggle: true,
+						text : 'Relax All'
                     }]//container hbox
 				}
                     , 
                 {
 			        xtype: 'dataview',
-                    itemSelector : 'td.facetitem',
-                    store:'FacetSelections',
-                    tpl: mainTpl
+                    store:'FacetSelections', 
+                    tpl:mainTpl,
+                    autoSync:true,
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    width:'100%',
+                    itemSelector : 'input.facetitemremovebutton',
+                    //overItemCls: 'facetitem-over',
+                    //iconCls: 'icon-btnClear',
+                    emptyText: '(no filters selected)',
+                    listeners:{
+                         itemclick: function(t, r, item, index, e, eOpts){
+                              t.store.data.removeAt(index,1);
+                              //Ext.StoreManager.lookup('FacetSelections').data.removeAt(r.index,1);
+                              //Ext.StoreManager.lookup('FacetSelections').load();
+                              t.refresh();
+                         }
+                    }
+                    }//dataview
+                    
+//                    working panel..too heavy
+//                     xtype: 'grid',
+//                    store:'FacetSelections',
+//                    hideHeaders: true,
+//                    columns : [
+//                       {xtype:'templatecolumn', tpl: '<input type="checkbox" value={key} class="approveCheckbox"/>', width:'40'},
+//                       {xtype:'templatecolumn', tpl: mainTpl, flex:1}
+//                    ],
+//                    overflowY: 'auto',
+//                    overflowX: 'hidden',
+//                    width:'100%'
+                    //tpl: mainTpl
 				//	'<tpl for="tools">', '<div class="appTool">{name}</div>',
 				//	'</tpl>', '</tpl>']
 //                    new Ext.XTemplate('<tpl for=".">', '<div class="filtermgmt"">{group}</div>',
 //                       '<tpl for="tools">', '<div class="appTool">{name}</div>',
 //                        '</tpl>', '</tpl>'),
-                }
+                
                 ]//container vbox
 
 		});

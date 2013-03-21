@@ -37,15 +37,14 @@
 	background: #FFEEAA;
 }
 
-.breadcrumbstyle {
-	color:blue;
+.filterdisplayfield {
 	font-weight: bold;
-	font-size: 11px;
+	font-size: 13px;
 }
 
  .frmSearchBtns .x-btn-inner {
 	font-weight:bold !important;
-	width:90px; 
+	width:70px; 
 }
 
 .dfLabel{
@@ -63,9 +62,14 @@
 
 .align-top { vertical-align:top; }
 
+.searchTab .x-panel-body-default {
+	border-width: 0px;
+}
+
 /* sizing of main search buttons */
 .frmSearchBtns {
 	padding-left:25px;
+	height:30px;
 }
 
 /* link button settings - normal, mouseover settings */
@@ -82,19 +86,39 @@
 	padding: 2px 9px 2px 9px;
 }
 
-.qryLinkbutton{
+.facetitem {
 	background: #D4D4EE;
 	text-decoration: none;
-	width:55px;
-	margin: 2px 5px 1px 5px; 
-	border: 1px solid #888888;
-	padding: 2px 9px 2px 9px;
+	margin: 2px 0px 1px 0px;
+	padding: 3px 20px 3px 8px;
+	height: 21px; 
 	font-size: 11px;
-	font-weight: bold;  
+	font-weight: bold;
+	border-top: 1px;
+	border-bottom: 0px;
+	border-color: #D4D4EE;
+	border-style: solid;
 	font-color: #333333; 
+}
+
+.facetitemremovebutton {
+	background: #FFFFFF;
+	width: 21px;
+	height: 21px; 
+	background-image: url(../images/filter_erase.png) !important;
+	background-repeat:no-repeat;
+	background-position:center;
+	
 	
 }
 
+.facetitem-over {
+	border: 2px solid #FF0000; 
+	font-color: #333333;
+	text-decoration:underline;
+	font-size: 13px;
+	font-weight: bold;
+}
 .overQryLinkbutton {
 	border: 2px solid #FF0000; 
 	font-color: #333333;
@@ -117,7 +141,9 @@
 
 .qbuilderBtnSelected {
 	border: 2px solid #009911;
-	background: #009933; 
+	background: #009933;
+	background-color: #009933;
+	color: #009933;
 	font-weight: bold;
 }
 
@@ -134,58 +160,74 @@
 }
 
 .childRow{
-        background-color: #C0C0C0;
+    background-color: #C0C0C0;
 }
 
 .parentRow{
 	background-color: 009911;
 }
  
+.alphaTbarBtn{
+	font-weight: bold;
+	font-size: 9px;
+	height: 20px;
+}
 
+/* Center accordion titles - otherwise left hand side 
+.x-accordion-hd .x-panel-header-text-container {
+	text-align:center !important;
+} 
+*/
+
+/* Grid cells in the selected row */ 
+.custom-grid .x-grid-row-selected .x-grid-cell { 
+    background-color: #ff0 !important; 
+    border-bottom-color: #999; 
+    border-bottom-style: solid; 
+    border-top-color: #999; 
+    border-top-style: solid; 
+}
+
+/* icons */
 .icon-contact { 
 	background-image: url(../images/book_open.png) !important;
 }
-
 .icon-help { 
-	background-image: url(../images/help.png) !important;
+	background-image: url(../images/help_2_rt.png) !important;
 }
-
 .icon-home { 
-	background-image: url(../images/house.png) !important;
+	background-image: url(../images/house2_16.png) !important;
 }
 .icon-logout { 
 	background-image: url(../images/door_in.png) !important;
 }
-    
 .icon-qbuilder {
  	background-image: url(../images/bricks.png) !important;
 }
- 
 .icon-btnAdd {
  	background-image: url(../images/add.png) !important;
 }
-
 .icon-btnCartAdd {
  	background-image: url(../images/cart_add.png) !important;
 }
-
 .icon-btnClear {
  	background-image: url(../images/cross.png) !important;
 }
-
+.icon-btnClearBlue {
+	background-image: url(../images/fileclose.png) !important;
+}
+.icon-btnClearSolid {
+ 	background-image: url(../images/clear_red16.png) !important;
+}
 .icon-btnDelete {
  	background-image: url(../images/delete.png) !important;
 }
-
 .icon-btnExport {
 	background-image: url(../images/table_go.png) !important;
 }
-
 .icon-btnReset {
 	background-image: url(../images/arrow_undo.png) !important;
 }
-
-
 .icon-mnuExcel { 
 	background-image: url(../images/page_white_excel.png) !important;
 }
@@ -194,8 +236,7 @@
 }
 .icon-btnOk {
  	background-image: url(../images/tick.png) !important;
- }
-  
+}
 .icon-btnPrint {
 	background-image: url(../images/printer.png) !important;
 }
