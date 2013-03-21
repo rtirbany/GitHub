@@ -48,14 +48,19 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
                     //                            labelWidth : 65,
                     width: 80,
                     margin: 5,
-                    text: 'Remove All'
+                    text: 'Remove All',
+                    handler: function(){
+                         Ext.Msg.confirm('Confirm - Remove all filters','Are you sure you want to remove all filters?');
+                    }
                 }, {
                     xtype: 'button',
-                    //                            labelWidth : 50,
                     width: 65,
                     margin: 5,
                     enableToggle: true,
-                    text: 'Relax All'
+                    text: 'Relax All',
+                    handler: function(){
+                         this.setText(this.pressed ? 'Enforce All' : 'Relax All');
+                    }
                 }
             ] //container hbox
         }, {
