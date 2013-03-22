@@ -90,36 +90,31 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
                     {
                         boxLabel: 'Prod1',
                         xtype: 'checkbox',
-                        itemId: 'cboxProd1',
-                        checked: true,
+                        itemId: 'cboxSrc1Prod1', 
                         tooltip: 'Prod1 tooltip',
                         cls: 'cboxProducts'
                     }, {
                         boxLabel: 'Prod2',
                         xtype: 'checkbox',
-                        itemId: 'cboxProd2',
-                        checked: true,
+                        itemId: 'cboxSrc1Prod2', 
                         tooltip: 'Prod2 tooltip',
                         cls: 'cboxProducts'
                     }, {
                         boxLabel: 'Prod3',
                         xtype: 'checkbox',
-                        itemId: 'cboxProd3',
-                        checked: true,
+                        itemId: 'cboxSrc1Prod3', 
                         tooltip: 'Prod3 tooltip',
                         cls: 'cboxProducts'
                     }, {
                         boxLabel: 'Prod4',
                         xtype: 'checkbox',
-                        itemId: 'cboxProd4',
-                        checked: true,
+                        itemId: 'cboxSrcProd4', 
                         tooltip: 'Prod4 tooltip',
                         cls: 'cboxProducts'
                     }, {
                         boxLabel: 'Prod5',
                         xtype: 'checkbox',
-                        itemId: 'cboxProd5',
-                        checked: true,
+                        itemId: 'cboxSrcProd5',
                         tooltip: 'Prod5 tooltip',
                         cls: 'cboxProducts'
                     }]

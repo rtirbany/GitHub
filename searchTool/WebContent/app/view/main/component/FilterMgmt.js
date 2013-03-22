@@ -65,6 +65,7 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
             ] //container hbox
         }, {
             xtype: 'dataview',
+            itemId: 'dvFacetSelections',
             store: 'FacetSelections',
             tpl: mainTpl,
             autoSync: true,
@@ -74,36 +75,13 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
             itemSelector: 'input.facetitemremovebutton',
             //overItemCls: 'facetitem-over',
             //iconCls: 'icon-btnClear',
-            emptyText: '(no filters selected)',
-            listeners: {
-                itemclick: function (t, r, item, index, e, eOpts) {
-                    t.store.data.removeAt(index, 1);
-                    t.store.fireEvent('datachanged','removed');
-                    t.refresh();
-                }
-            }
-        } //dataview
-
-        //                    working panel..too heavy
-        //                     xtype: 'grid',
-        //                    store:'FacetSelections',
-        //                    hideHeaders: true,
-        //                    columns : [
-        //                       {xtype:'templatecolumn', tpl: '<input type="checkbox" value={key} class="approveCheckbox"/>', width:'40'},
-        //                       {xtype:'templatecolumn', tpl: mainTpl, flex:1}
-        //                    ],
-        //                    overflowY: 'auto',
-        //                    overflowX: 'hidden',
-        //                    width:'100%'
-        //tpl: mainTpl
-        //     '<tpl for="tools">', '<div class="appTool">{name}</div>',
-        //     '</tpl>', '</tpl>']
-        //                    new Ext.XTemplate('<tpl for=".">', '<div class="filtermgmt"">{group}</div>',
-        //                       '<tpl for="tools">', '<div class="appTool">{name}</div>',
-        //                        '</tpl>', '</tpl>'),
+            emptyText: '(no filters selected)'
+             
+        } //dataview 
 
     ] //container vbox
 
 });
 
 // stackoverflow.com/questions/9141918
+13342593

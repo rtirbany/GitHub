@@ -7,6 +7,7 @@ Ext.define('SearchTool.store.FacetSelections',{
      proxy:{
           type:'ajax',
           url:'data/facetselections.json',
+//          filterParam:'facet',
 //        afterRequest:function(req,res){ 
 //        },
           reader:{ 
@@ -18,13 +19,12 @@ Ext.define('SearchTool.store.FacetSelections',{
      },
      listeners:{
           'datachanged' : 
-                //TODO: sort this by id..done? 
-                function(store,records,success, operation){  
+                //TODO: re-send the query!
+                function(store,records,success, operation){
 //                  var allChkbox =  Ext.create('SearchTool.model.Source',{'id': 0, 'boxLabel': 'All', 'itemId': 'chkSrcAll', 'name':'chkSrcAll', 'checked':true, 'tooltip':'Srcall tooltip'});
 //                  store.add(allChkbox);
-//                    store.sort('id','ASC');
-                    if (store == 'removed')
-                         Ext.Msg.alert('facet selection changed');
+//                    store.sort('id','ASC'); 
+                         console.log('facet selection changed'+this.data.items.length);
                     }
            //load listener
      }//listeners
