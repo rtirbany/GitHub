@@ -65,7 +65,7 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
             width: 650,
             overflowY: 'hidden',
             overflowX: 'hidden',
-            itemSelector: 'input.searchkeyworditem_remove13',
+            itemSelector: 'input.btn_searchitem_remove13',
             //overItemCls: 'facetitem-over',
             //iconCls: 'icon-btnClear',
             emptyText: '(no search params entered)'
