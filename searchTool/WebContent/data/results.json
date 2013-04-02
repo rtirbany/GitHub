@@ -57,6 +57,23 @@
 				'serial' : '1-3'
 			}
 			],
+    'coreFacets' : [
+          {'facetName':'cities',
+           'entries':[
+               {'value':'DC', 'count':5 },
+               {'value':'SF', 'count':2 },
+               {'value':'NYC', 'count':4 },
+               {'value':'Nashville', 'count':4 } 
+           ]
+          },
+             {'facetName':'beaches',
+              'entries':[
+               {'value':'obx','count':1},
+               {'value':'ocean city','count':2},
+               {'value':'myrtle','count':4},
+           ]
+          }
+     ],
 	'success' : true, 
 	'results' : 7
 }
