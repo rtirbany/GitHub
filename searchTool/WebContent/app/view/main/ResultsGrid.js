@@ -60,7 +60,6 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
             itemId: 'dvResultsParams',
             store: 'QueryFilters',
             tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
-            autoSync: true,
             height: 40,
             width: 650,
             overflowY: 'hidden',

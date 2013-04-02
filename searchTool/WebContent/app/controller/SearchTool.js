@@ -6,10 +6,10 @@
 //TODO: center/shrink to fit west side panel history and saved containers --too wide
 Ext.define('SearchTool.controller.SearchTool', {
     extend: 'Ext.app.Controller',
-    views: ['Viewport'],
+    views: ['Viewport', 'SearchTool.view.help.Reference'],
     models: ['Product'],
-    stores: ['Sources', 'Keywords', 'Results'],
-    requires: ['SearchTool.util.dom', 'SearchTool.view.help.Reference', 'SearchTool.view.linkbutton'],
+    stores: ['Sources', 'Keywords', 'Results','Acros','QueryFilters'],
+    requires: ['SearchTool.util.dom'],
     refs: [{
         ref: 'history',
         selector: 'container[itemId=tbHistory]'
@@ -37,42 +37,33 @@ Ext.define('SearchTool.controller.SearchTool', {
             }
         }); //control function
     },
-    searchHandler: function (btn, e) {
-        var valKeyword = null,
-            valBool = null,
-            boolSaveQuery = null,
-            boolRestrictQuery = null;
-        var tmp = Ext.ComponentQuery.query('#cboxSearch')[0];
-        valKeyword = tmp.getValue() ? tmp.getValue().trim() : '';
-        tmp = Ext.ComponentQuery.query('#txtSearchBoolean')[0];
-        valBool = tmp.getValue() ? tmp.getValue().trim() : '';
-        Ext.ComponentQuery.query('#hdnBool')[0].setValue(valBool);
-        Ext.ComponentQuery.query('#cboxSearch')[0].setValue(valKeyword);
-        boolSaveQuery = Ext.ComponentQuery.query('#chkSaveQuery')[0].getValue();
-        boolRestrictQuery = Ext.ComponentQuery.query('#chkSummaryOnlySearch')[0].getValue();
-        var form = btn.up('container').prev('tabpanel').down('form');
-        if ((valKeyword && valKeyword.length > 0) || (valBool && valBool.length > 0)) {
-            var k = 'kw=' + valKeyword + ';bool=' + valBool + ';';
-
-            var t = 'title\ntest'
-            //var b = Ext.create('SearchTool.view.linkbutton',{ itemId:'itemId="1-btnWrap"', text:'Search', url:k, tooltip:'hi\ntest'});
-            var b = Ext.create('SearchTool.view.linkbutton', {
-                text: 'Query',
-                url: k,
-                tooltip: t
-            });
-            if (boolSaveQuery) {
-                target = '#tbSaved'
-            } else target = '#tbHistory'
-            //                       SearchTool.util.dom.addTabChild(target,0,b,true);//,tooltip:"Ext.Date.format(new Date(),'F d g:i a')"},true);
-
-            //                       Ajax request
-            if (form.getForm().isValid()) {
-                var params = form.getValues();
-                Ext.apply(params,{'boolSaveQuery':boolSaveQuery});
-                form.up('tabpanel').el.mask(SearchTool.config.Config.msgQuery, 'x-mask-loading');
-                this.getStore('Results').clearFilter(true);
-                this.getStore('Results').filter(Ext.JSON.encode(params));
+    searchHandler: function (btn, e) { 
+        var form = btn.up('form');
+        if (form.getForm().isValid()) {
+                var params = form.getValues(),
+                k = '',// + valKeyword + ';bool=' + valBool + ';'; 
+                t = '',
+                idx = -1,
+                m = null; 
+                form.up('tabpanel').el.mask(SearchTool.config.Config.msgQuery, 'x-mask-loading'); 
+                var filters = this.getQueryFiltersStore(),i,
+                    arrParams = [{type:'searchkeyword',key:'keywordString',value:params.keywordString.trim()},
+                         {type:'searchboolean',key:'booleanString',value:params.txtSearchBoolean.trim()},
+                         {type:'startdate',key:'startdate',value:params.startDate},
+                         {type:'enddate',key:'enddate',value:params.endDate}
+                    ];
+                for (i=0;i<arrParams.length;i++){
+                    t = arrParams[i];
+                    idx = Ext.Array.indexOf(Ext.Array.pluck(Ext.Array.pluck(filters.data.items,'data'),'type'),t.type);
+                    if (t.value.length >0) {
+                        m = Ext.create('SearchTool.model.QueryFilter',{type:t.type,key:t.key,tip:t.value,value:t.value}); 
+                        idx > -1 ? Ext.Array.splice(filters.data.items,idx,1,m) : filters.add(m);//replace if it exists, otherwise add 
+                    }
+                    else {
+                         filters.removeAt(idx);
+                    }
+                }
+                Ext.ComponentQuery.query('#dvResultsParams')[0].refresh();
                 form.up('tabpanel').el.unmask();
                 //                              form.getForm().submit({
                 //                                   method: 'POST',
@@ -96,7 +87,6 @@ Ext.define('SearchTool.controller.SearchTool', {
                 //                                        Ext.Msg.alert('Title',r.responseText);
                 //                                   }
                 //                               });
-            }
         } //if
     },
     btnHelpHandler: function (b, e, o) {
@@ -104,8 +94,7 @@ Ext.define('SearchTool.controller.SearchTool', {
         if (ref.length == 0) {
             Ext.create('SearchTool.view.help.Reference').show();
         } else {
-            ref[0].center();
-            ref[0].show();
+            ref[0].center().show();
         }
     },
     btnLogoutHandler: function (b, e) {

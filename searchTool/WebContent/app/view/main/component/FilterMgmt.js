@@ -1,7 +1,19 @@
 var tplData = new Ext.XTemplate(
     '<tpl for=".">',
-    '<tr><td><div style="width:100%; overflow:hidden;"><input type="button" title="remove this filter" name="remove_{#}" class="facetitemremovebutton"/><label class="facetitem" title="{tip}">{key}&nbsp;=&nbsp;{value}</label></div></td></tr></tpl>' //use array index to autonumber (starts at 1)
+          '<tr><td class="facetitem_remove"><div style="width:100%;">',
+          '<input type="button" title="remove this filter" class="btn_facetitemremove"/>',
+          '<label class="facetselection_item" title="{tip}">{key}&nbsp;=&nbsp;{value}</label>',
+          '</div></td></tr></tpl>' //use array index to autonumber (starts at 1)
+);
 
+var tplSrc = new Ext.XTemplate(
+    '<tpl for=".">',
+    '<tr><td class="facetsrc_remove">',
+          '<div style="width:100%;">',
+          '<input type="button" title="remove this product" class="btn_facetitemremove"/>',
+          '<label class="facetselection_product" title="{tip}">{key}&nbsp;=&nbsp;{value}</label>',
+          '</div></td></tr>',
+          '</tpl>' //use array index to autonumber (starts at 1)
 );
 //
 //var tplDate = new Ext.XTemplate(
@@ -15,15 +27,12 @@ var mainTpl = new Ext.XTemplate(
     '{[this.renderItem(values)]}',
     '</tpl></table>', {
     renderItem: function (val) {
-        //               if (val.data.value instanceof Ext.Date) {
-        var x = tplData.apply(val);
-        //                    console.log(x);
+        switch (val.type) {
+          case 'source' : x = tplSrc.apply(val); break;
+          case 'facet' :  x = tplData.apply(val); break;
+          default : x = '';
+        }
         return x;
-        //               }
-        //               else {
-        //                  debugger;
-        //                  return tplData.apply(val.data);
-        //                  }
     }
 });
 
@@ -39,21 +48,18 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
             layout: 'hbox',
             items: [{
                     xtype: 'displayfield',
-                    value: 'Filters Options:',
-                    cls: 'filterdisplayfield',
+                    value: 'Filter Options:',
                     margin: 5,
-                    width: 85
+                    width: 95
                 }, {
                     xtype: 'button',
-                    //                            labelWidth : 65,
+                    itemId: 'btnRemoveAll', 
                     width: 80,
                     margin: 5,
-                    text: 'Remove All',
-                    handler: function(){
-                         Ext.Msg.confirm('Confirm - Remove all filters','Are you sure you want to remove all filters?');
-                    }
+                    text: 'Remove All'
                 }, {
                     xtype: 'button',
+                    itemId: 'btnRelaxAll', 
                     width: 65,
                     margin: 5,
                     enableToggle: true,
@@ -66,13 +72,16 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
         }, {
             xtype: 'dataview',
             itemId: 'dvFacetSelections',
-            store: 'FacetSelections',
+//            store: Ext.StoreManager.lookup('QueryFilters').filter(new Ext.util.Filter({
+//               filterFn:function(item){
+//                    return item.data.type == 'source' ? true : false;
+//               }
+//            })),
             tpl: mainTpl,
-            autoSync: true,
             overflowY: 'auto',
             overflowX: 'hidden',
             width: '100%',
-            itemSelector: 'input.facetitemremovebutton',
+            itemSelector: 'input.btn_facetitemremove',
             //overItemCls: 'facetitem-over',
             //iconCls: 'icon-btnClear',
             emptyText: '(no filters selected)'

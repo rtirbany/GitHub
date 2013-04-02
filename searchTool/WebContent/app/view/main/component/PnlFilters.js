@@ -122,37 +122,23 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
 
                 ]
             }]
-        }, {
-            title: 'facetCategory2',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory3',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory4',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory5',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory6',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory7',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory8',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory9',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory10',
-            html: 'some filter options<BR>more options<BR>more options'
-        }, {
-            title: 'facetCategory11',
-            html: 'some filter options<BR>more options<BR>more options'
-        }]
+        }
+//        , 
+//          {
+//            xtype: 'dataview',
+//            itemId: 'dvFacets',
+//            store: 'Facets',
+//            tpl: SearchTool.util.TplFilter.loaderXTemplateFacet,
+//            height: 40,
+//            width: 650,
+//            overflowY: 'hidden',
+//            overflowX: 'hidden',
+//            itemSelector: 'label.facet',
+//            //overItemCls: 'facetitem-over',
+//            //iconCls: 'icon-btnClear',
+//            emptyText: '(no search params entered)'
+//        }
+        ]
     }
 
     ]

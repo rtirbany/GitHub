@@ -1,21 +1,27 @@
 var tplSearch = new Ext.XTemplate(
     '<tpl for=".">',
-          '<tr><td><div style="width:100%;">',
-     //     '<input type="button" title="remove this filter" class="facetitem_remove"/>',
+          '<tr><td class="searchitem_remove"><div style="width:100%; height:14px;">',                 
+          '<input type="button" title="remove keyword search criteria" name={type} class="btn_searchitem_remove13"/>',
           '<label class="keyword_item" title="{tip}">{key}&nbsp;=&nbsp;{value}</label>',
           '</div></td></tr></tpl>' //use array index to autonumber (starts at 1)
 );
 
 var tplBool = new Ext.XTemplate(
     '<tpl for=".">',
-          '<tr><td><div style="width:100%;">',
-    //      '<input type="button" title="remove this filter" class="facetitem_remove"/>',
+          '<tr><td class="boolitem_remove"><div style="width:100%; height:14px;">',
+          '<input type="button" title="remove boolean search criteria" name={type} class="btn_searchitem_remove13"/>',
           '<label class="bool_item" style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" title="{tip}">{key}&nbsp;=&nbsp;{value}</label>',
           '</div></td></tr></tpl>' //use array index to autonumber (starts at 1)
 );
 
+//var tplFacet = new Ext.XTemplate(
+//    '<tpl for=".">',
+//          '<tr><td><div style="width:100%; height:21px;">',
+//          '<label class="facet" style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" title="{value}">{value}=&nbsp;({count})</label>',
+//          '</div></td></tr></tpl>' //use array index to autonumber (starts at 1)
+//);
 
-
+ 
 Ext.define('SearchTool.util.TplFilter',{
      singleton: true,
      loaderXTemplateRenderer: new Ext.XTemplate('<table class="facetgroup">',
@@ -24,14 +30,19 @@ Ext.define('SearchTool.util.TplFilter',{
                '</tpl></table>', 
                     {
                     renderItem: function (val) {
-                         switch (val.type) {
-                              case 'searchKeyword' : return tplSearch.apply(val);
-                              case 'searchBoolean' : return tplBool.apply(val);
+//                         switch (val.type) {
+//                              case 'searchkeyword' : return tplSearch.apply(val);
+//                              case 'searchboolean' : return tplBool.apply(val); 
+                         switch (val.key) {
+                              case 'keywordString' : return tplSearch.apply(val);
+                              case 'booleanString' : return tplBool.apply(val);
                               default : return '';
                          } 
                     }
           })
         //return tpl;
-    })
+       
+      
+    });
          
  
