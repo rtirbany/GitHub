@@ -86,20 +86,28 @@
 	padding: 2px 9px 2px 9px;
 }
  
-
-.facetselection_item {
-	/* background: #D4D4EE;
+ .facetgroup {
+	width:100%;
+} 
+.facet_field {
+	background: #A4D2AA;
+	font-weight: bold;
+}
+.facet_item {
+	background: #D4D2AA;
+	/* width:100%; turned this off*/  
 	text-decoration: none;
 	margin: 2px 0px 1px 0px;
 	padding: 3px 20px 3px 8px;
 	height: 21px; 
+	color: black;
 	font-size: 11px;
 	font-weight: normal;
 	border-top: 5px;
 	border-bottom: 0px;
-	border-color: #D4D4EE;
+	border-color: #D4D2AA;
 	border-style: solid;
-	font-color: #333333;  */
+	font-color: #333333; 
 }
 
 /* facet remove button */

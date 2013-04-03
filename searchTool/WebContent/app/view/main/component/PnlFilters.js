@@ -1,6 +1,6 @@
 // TODO: tabpanel tabs should be equal-sized and fit/stretched
 // TODO: plain = true
-// TODO: make this more lightweight 
+// TODO: make this more lightweight  
 
 Ext.define('SearchTool.view.main.component.PnlFilters', {
     extend: 'Ext.form.Panel',
@@ -9,7 +9,7 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
     animCollapse: true,
     collapseDirection: 'left',
     titleCollapse: true,
-    overflowY: 'auto',
+    overflowY: 'hidden',
     overflowX: 'hidden',
     title : SearchTool.config.Config.titlePnlFilters,
     defaults: {
@@ -22,8 +22,8 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
 //        //scrollbar working as it should
 //        //height working as it should  
         height: '35%',
-//        overflowX: 'hidden',
-//        overflowY: 'auto',
+        overflowX: 'hidden',
+        overflowY: 'auto',
 //        margin: '5 10 5 5',
 //        items: [{
             xtype: 'filtermgmt' 
@@ -36,7 +36,8 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
     ,
     { 
         layout: 'accordion',
-        items: [{
+        items: [
+          { //accordion item1
             title: 'Auto Parts Sources',
             items: [{
                 width: '100%',
@@ -122,22 +123,24 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
 
                 ]
             }]
+        } //accordion item1
+        , 
+        { //accordian item2
+         title:'Filters',
+         width:'100%',
+         overflowY: 'auto',
+         overflowX: 'hidden',
+         items:[  {
+            xtype: 'dataview',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            itemId: 'dvFacets',
+            store: 'Facets',
+            tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer, 
+            itemSelector: 'facet_item', //tr
+            emptyText: '(no search params entered)'
+        }]
         }
-//        , 
-//          {
-//            xtype: 'dataview',
-//            itemId: 'dvFacets',
-//            store: 'Facets',
-//            tpl: SearchTool.util.TplFilter.loaderXTemplateFacet,
-//            height: 40,
-//            width: 650,
-//            overflowY: 'hidden',
-//            overflowX: 'hidden',
-//            itemSelector: 'label.facet',
-//            //overItemCls: 'facetitem-over',
-//            //iconCls: 'icon-btnClear',
-//            emptyText: '(no search params entered)'
-//        }
         ]
     }
 

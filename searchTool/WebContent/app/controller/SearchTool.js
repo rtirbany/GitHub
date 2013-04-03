@@ -8,7 +8,7 @@ Ext.define('SearchTool.controller.SearchTool', {
     extend: 'Ext.app.Controller',
     views: ['Viewport', 'SearchTool.view.help.Reference'],
     models: ['Product'],
-    stores: ['Sources', 'Keywords', 'Results','Acros','QueryFilters'],
+    stores: [ 'Acros'],
     requires: ['SearchTool.util.dom'],
     refs: [{
         ref: 'history',
@@ -23,12 +23,9 @@ Ext.define('SearchTool.controller.SearchTool', {
                 }
             },
             searchKeyword: 'Keywords may only contain letters and numbers.'
-        });
-
-        me.control({
-            'button[itemId=btnSearch]': {
-                click: me.searchHandler
-            },
+        }); 
+       
+       me.control({ 
             'button[itemId=btnHelp]': {
                 click: me.btnHelpHandler
             },
@@ -36,59 +33,7 @@ Ext.define('SearchTool.controller.SearchTool', {
                 click: me.btnLogoutHandler
             }
         }); //control function
-    },
-    searchHandler: function (btn, e) { 
-        var form = btn.up('form');
-        if (form.getForm().isValid()) {
-                var params = form.getValues(),
-                k = '',// + valKeyword + ';bool=' + valBool + ';'; 
-                t = '',
-                idx = -1,
-                m = null; 
-                form.up('tabpanel').el.mask(SearchTool.config.Config.msgQuery, 'x-mask-loading'); 
-                var filters = this.getQueryFiltersStore(),i,
-                    arrParams = [{type:'searchkeyword',key:'keywordString',value:params.keywordString.trim()},
-                         {type:'searchboolean',key:'booleanString',value:params.txtSearchBoolean.trim()},
-                         {type:'startdate',key:'startdate',value:params.startDate},
-                         {type:'enddate',key:'enddate',value:params.endDate}
-                    ];
-                for (i=0;i<arrParams.length;i++){
-                    t = arrParams[i];
-                    idx = Ext.Array.indexOf(Ext.Array.pluck(Ext.Array.pluck(filters.data.items,'data'),'type'),t.type);
-                    if (t.value.length >0) {
-                        m = Ext.create('SearchTool.model.QueryFilter',{type:t.type,key:t.key,tip:t.value,value:t.value}); 
-                        idx > -1 ? Ext.Array.splice(filters.data.items,idx,1,m) : filters.add(m);//replace if it exists, otherwise add 
-                    }
-                    else {
-                         filters.removeAt(idx);
-                    }
-                }
-                Ext.ComponentQuery.query('#dvResultsParams')[0].refresh();
-                form.up('tabpanel').el.unmask();
-                //                              form.getForm().submit({
-                //                                   method: 'POST',
-                //                                   url: 'someurl',
-                //                                   success: onQuerySuccess,
-                //                                   failure: onQueryFailure
-                //                              });
-
-                //                              Ext.Ajax.request({
-                //                                   url:SearchTool.config.Config.sources,
-                //                                   jsonData : Ext.JSON.encode(params),
-                //                                   success: function(resp,opts){  
-                //                                        
-                //                                   },
-                //                                   failure: function(resp,opts){//: 'Communication error (Query Service)', 
-                //                                        Ext.Msg.alert(SearchTool.config.Config.msgErrorQueryTitle,SearchTool.config.Config.msgErrorQueryText+'\r\n'+
-                //                                        resp.statusText);
-                //                                   },
-                //                                   callback: function(o,s,r){
-                //                                        form.up('viewport').el.unmask();
-                //                                        Ext.Msg.alert('Title',r.responseText);
-                //                                   }
-                //                               });
-        } //if
-    },
+    }, 
     btnHelpHandler: function (b, e, o) {
         var ref = Ext.ComponentQuery.query('#help_ref');
         if (ref.length == 0) {

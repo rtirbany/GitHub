@@ -59,7 +59,7 @@
 			],
     'coreFacets' : [
           {'facetName':'cities',
-           'entries':[
+           'facetEntries':[
                {'value':'DC', 'count':5 },
                {'value':'SF', 'count':2 },
                {'value':'NYC', 'count':4 },
@@ -67,10 +67,22 @@
            ]
           },
              {'facetName':'beaches',
-              'entries':[
+              'facetEntries':[
                {'value':'obx','count':1},
                {'value':'ocean city','count':2},
                {'value':'myrtle','count':4},
+           ]
+          },
+          {'facetName':'planets',
+              'facetEntries':[
+               {'value':'mercury','count':1},
+               {'value':'venus','count':2},
+               {'value':'earth','count':4},
+               {'value':'mars','count':1},
+               {'value':'jupiter','count':2},
+               {'value':'uranus','count':4},
+               {'value':'neptune','count':1},
+               {'value':'pluto','count':1}
            ]
           }
      ],

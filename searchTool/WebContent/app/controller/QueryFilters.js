@@ -1,9 +1,9 @@
 
 Ext.define('SearchTool.controller.QueryFilters', {
     extend: 'Ext.app.Controller',
-    views: ['Viewport','SearchTool.view.main.component.FilterMgmt','SearchTool.view.main.ResultsGrid'],
-    models: ['QueryFilter'],
-    stores: ['Sources','Results','QueryFilters','Facets'],
+    models: ['FacetGroup','QueryFilter'],
+    views: ['Viewport','SearchTool.view.main.component.FilterMgmt','SearchTool.view.main.component.PnlFilters','SearchTool.view.main.ResultsGrid'],
+    stores: ['Facets','Sources','Keywords','Results','QueryFilters'], 
     requires: ['SearchTool.util.dom'],
     refs: [{
                ref: 'pnlSources',
@@ -12,7 +12,7 @@ Ext.define('SearchTool.controller.QueryFilters', {
                ref: 'gridResults',
                selector: 'resultsgrid'
           },{
-               ref: 'dvFacets',
+               ref: 'dvFilters',
                selector: 'dataview[itemId=dvFacetSelections]'
           },{
                ref: 'dvParams',
@@ -33,6 +33,9 @@ Ext.define('SearchTool.controller.QueryFilters', {
           }
         );
         me.control({ 
+            'button[itemId=btnSearch]': {
+                click: me.searchHandler
+            },
             'panel > checkboxgroup[itemId=chkgrpProducts] > checkbox': {
                 change: me.filterToggleProducts
             },
@@ -42,6 +45,9 @@ Ext.define('SearchTool.controller.QueryFilters', {
             'dataview[itemId=dvResultsParams]': {
                 itemclick: me.filterRemoveSearchParam
             },
+            'dataview[itemId=dvFacets]': {
+                itemclick: me.facetSelect
+            },
             'button[itemId=btnRemoveAll]': {
                 click: me.filterRemoveAll
             },
@@ -49,6 +55,58 @@ Ext.define('SearchTool.controller.QueryFilters', {
                click: me.filterRelaxAll
             }
         }); //control function
+    },
+    searchHandler: function (btn, e) {
+        var form = btn.up('form');
+        if (form.getForm().isValid()) {
+                var params = form.getValues(),
+                k = '',// + valKeyword + ';bool=' + valBool + ';'; 
+                t = '',
+                idx = -1,
+                m = null; 
+                form.up('tabpanel').el.mask(SearchTool.config.Config.msgQuery, 'x-mask-loading'); 
+                var filters = this.getQueryFiltersStore(),i,
+                    arrParams = [{type:'searchkeyword',key:'keywordString',value:params.keywordString.trim()},
+                         {type:'searchboolean',key:'booleanString',value:params.txtSearchBoolean.trim()},
+                         {type:'startdate',key:'startdate',value:params.startDate},
+                         {type:'enddate',key:'enddate',value:params.endDate}
+                    ];
+                for (i=0;i<arrParams.length;i++){
+                    t = arrParams[i];
+                    idx = Ext.Array.indexOf(Ext.Array.pluck(Ext.Array.pluck(filters.data.items,'data'),'type'),t.type);
+                    if (t.value.length >0) {
+                        m = Ext.create('SearchTool.model.QueryFilter',{type:t.type,key:t.key,tip:t.value,value:t.value}); 
+                        idx > -1 ? Ext.Array.splice(filters.data.items,idx,1,m) : filters.add(m);//replace if it exists, otherwise add 
+                    }
+                    else {
+                         filters.removeAt(idx);
+                    }
+                }
+                Ext.ComponentQuery.query('#dvResultsParams')[0].refresh();
+                form.up('tabpanel').el.unmask();
+                //                              form.getForm().submit({
+                //                                   method: 'POST',
+                //                                   url: 'someurl',
+                //                                   success: onQuerySuccess,
+                //                                   failure: onQueryFailure
+                //                              });
+
+                //                              Ext.Ajax.request({
+                //                                   url:SearchTool.config.Config.sources,
+                //                                   jsonData : Ext.JSON.encode(params),
+                //                                   success: function(resp,opts){  
+                //                                        
+                //                                   },
+                //                                   failure: function(resp,opts){//: 'Communication error (Query Service)', 
+                //                                        Ext.Msg.alert(SearchTool.config.Config.msgErrorQueryTitle,SearchTool.config.Config.msgErrorQueryText+'\r\n'+
+                //                                        resp.statusText);
+                //                                   },
+                //                                   callback: function(o,s,r){
+                //                                        form.up('viewport').el.unmask();
+                //                                        Ext.Msg.alert('Title',r.responseText);
+                //                                   }
+                //                               });
+        } //if
     },
     
     updateResultsGrid: function(store, eOpts){ 
@@ -103,16 +161,19 @@ Ext.define('SearchTool.controller.QueryFilters', {
           //sort & insert both fire datachange event from store
           this.getQueryFiltersStore().sort({property:'type',direction:'DESC'});
           this.getQueryFiltersStore().insert(0,arr);
-         
         }
         else {
           var idx = this.getQueryFiltersStore().indexOf(m);
           if (idx > -1) {
-             this.getQueryFiltersStore().removeAt(idx); 
+             this.getQueryFiltersStore().removeAt(idx);
              }
         }
         this.getDvParams().refresh();
-        this.getDvFacets().refresh();
+        this.getDvFilters().refresh();
+    },
+    
+    facetSelect: function(t, r, item, index, e){
+        Ext.Msg.alert('facet chosen');
     },
     
     filterRemoveSingle: function (t, r, item, index, e) { 
@@ -124,20 +185,21 @@ Ext.define('SearchTool.controller.QueryFilters', {
               this.getPnlSources().items.get(idx).setValue(false);
         }
         this.getDvParams().refresh();
-        this.getDvFacets().refresh();
+        this.getDvFilters().refresh();
     },
      filterRemoveSearchParam: function (t, r, item, index, e) { 
         //fires datachange event 
         var idx = Ext.Array.pluck(Ext.Array.pluck(this.getQueryFiltersStore().data.items,'data'),'type').indexOf(item.name)
         t.store.removeAt(idx);
         if (item.nextElementSibling && item.nextElementSibling.innerText) {
+        var z = item.nextElementSibling.innerText
         switch (item.name){
-            case 'searchkeyword': if (item.nextElementSibling != null && this.getTxtKeyword().rawValue == item.nextElementSibling.innerText.slice(item.nextElementSibling.innerText.indexOf('=')+2)) this.getTxtKeyword().reset();break;
-            case 'searchboolean': if (item.nextElementSibling != null && this.getTxtBoolean().rawValue == item.nextElementSibling.innerText.slice(item.nextElementSibling.innerText.indexOf('=')+2)) this.getTxtBoolean().reset();break;
+            case 'searchkeyword': if (item.nextElementSibling != null && this.getTxtKeyword().rawValue.trim() == z.slice(z.indexOf('=')+2)) this.getTxtKeyword().reset();break;
+            case 'searchboolean': if (item.nextElementSibling != null && this.getTxtBoolean().rawValue.trim() == z.slice(z.indexOf('=')+2)) this.getTxtBoolean().reset();break;
         } 
         }
         
-        this.getDvFacets().refresh();
+        this.getDvFilters().refresh();
         this.getDvParams().refresh();
 //        fires too many events
 //        t.store.filter('type',item.name);

@@ -13,13 +13,16 @@ var tplBool = new Ext.XTemplate(
           '<label class="bool_item" style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" title="{tip}">{key}&nbsp;=&nbsp;{value}</label>',
           '</div></td></tr></tpl>' //use array index to autonumber (starts at 1)
 );
-
-//var tplFacet = new Ext.XTemplate(
-//    '<tpl for=".">',
-//          '<tr><td><div style="width:100%; height:21px;">',
-//          '<label class="facet" style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;" title="{value}">{value}=&nbsp;({count})</label>',
-//          '</div></td></tr></tpl>' //use array index to autonumber (starts at 1)
-//);
+ 
+var tplFacet = new Ext.XTemplate(
+    '<tpl for=".">',
+          '<tr  style="width:100%;"><td class="facet_field">',
+          '<label class="facet" style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">{facetName}</label></td></tr>',
+               '<tpl for="facetEntries">',
+                '<tr class="facetitem"><td class="facet_item">{value}&nbsp;&nbsp;({count})</td></tr>',
+               '</tpl>',
+          '</tpl>' //use array index to autonumber (starts at 1)
+);
 
  
 Ext.define('SearchTool.util.TplFilter',{
@@ -30,14 +33,16 @@ Ext.define('SearchTool.util.TplFilter',{
                '</tpl></table>', 
                     {
                     renderItem: function (val) {
-//                         switch (val.type) {
-//                              case 'searchkeyword' : return tplSearch.apply(val);
-//                              case 'searchboolean' : return tplBool.apply(val); 
-                         switch (val.key) {
-                              case 'keywordString' : return tplSearch.apply(val);
-                              case 'booleanString' : return tplBool.apply(val);
-                              default : return '';
-                         } 
+                         if (!val.key) {
+                            return tplFacet.apply(val);
+                         }
+                          else {
+                            switch (val.key) {
+                               case 'keywordString' : return tplSearch.apply(val);
+                               case 'booleanString' : return tplBool.apply(val); 
+                               default : return '';
+                             } 
+                         }
                     }
           })
         //return tpl;
