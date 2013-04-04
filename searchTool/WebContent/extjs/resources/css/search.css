@@ -86,8 +86,9 @@
 	padding: 2px 9px 2px 9px;
 }
  
- .facetgroup {
+ .facet {
 	width:100%;
+	background: #A4D2AA;
 } 
 .facet_field {
 	background: #A4D2AA;
