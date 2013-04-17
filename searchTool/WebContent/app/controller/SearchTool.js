@@ -31,6 +31,9 @@ Ext.define('SearchTool.controller.SearchTool', {
             },
             'button[itemId=btnLogout]': {
                 click: me.btnLogoutHandler
+            },
+            'button[itemId=btnVisualize]':{
+                click: LaunchViz
             }
         }); //control function
     }, 
