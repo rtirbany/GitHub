@@ -52,7 +52,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
             xtype: 'tbfill'
         }, {
             text: 'Clear All',
-            iconCls: 'icon-btnClear',
+            iconCls: 'icon-btnClearBlue',
             handler: function () {
                 var p = this.up('panel');
                 p.removeAll();

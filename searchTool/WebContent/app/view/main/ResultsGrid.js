@@ -5,7 +5,7 @@ var sm = Ext.create('Ext.selection.CheckboxModel', {
             var btn = Ext.ComponentQuery.query('#btnAddToCart')[0];
             var cnt = this.getCount();
             btn.setDisabled(cnt == 0);
-            btn.setText('Save Selected Results (' + cnt + ')');
+            btn.setText('Save (' + cnt + ')');
         }
     }
 });
@@ -14,54 +14,60 @@ var sm = Ext.create('Ext.selection.CheckboxModel', {
 Ext.define('SearchTool.view.main.ResultsGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.resultsgrid',
-    cls: 'mygrid',
+    cls: 'gridResults',
     requires: ['SearchTool.config.Config', 'SearchTool.view.main.component.WinSave', 'SearchTool.util.TplFilter'],
     title: 'Results',
     tools: [{
             xtype: 'tbspacer',
-            width: 20
-        }, {
-            xtype: 'displayfield',
-            value: 'Display style:',
-            width: 85,
-            cls: 'resultsgridtitle'
-        }, {
-            xtype: 'radiogroup',
-            width: 100,
-            columns: [.47, .52],
-            cls: 'rdo_displaystype',
-            items: [{
-                    boxLabel: 'Grid',
-                    width: 55,
-                    checked: true,
-                    cls: 'resultsgridvalue'
-                }, {
-                    boxLabel: 'Search',
-                    width: 60,
-                    disabled: true,
-                    cls: 'resultsgridvalue'
-                }
-            ]
-        }, {
-            xtype: 'tbseparator',
-            width: 30
-        }, {
-            xtype: 'button',
-            name: 'chkSaveQuery',
-            itemId: 'chkSaveQuery',
-            cls: 'chkSaveQuery',
-            text: 'Save Search',
-            tip: SearchTool.config.Config.searchSaveChkCaptionLabel
+            width: '2%'
+        }, 
+//        {
+//            xtype: 'displayfield',
+//            value: 'Display style:',
+//            width: '10%',
+//            cls: 'resultsgridtitle'
+//        }, {
+//            xtype: 'radiogroup',
+//            width: '11%',
+//            columns: [.47, .52],
+//            cls: 'rdo_displaystype',
+//            items: [{
+//                    boxLabel: 'Grid', 
+//                    checked: true,
+//                    cls: 'resultsgridvalue'
+//                }, {
+//                    boxLabel: 'Search', 
+//                    disabled: true,
+//                    cls: 'resultsgridvalue'
+//                }
+//            ]
+//        }
+        {
+          xtype:'combo',
+          maxWidth:120,
+          minWidth:120,
+          fieldLabel:'Style',
+          labelWidth:40,
+          labelAlign:'right',
+          disabled:true,
+          store: SearchTool.config.Config.ResultsDisplayOptions,
+          value: SearchTool.config.Config.defaultResultsDisplayUser,
+          editable: false,
+          autoSelect: true,
+          forceSelection: true
         }, {
             xtype: 'tbspacer',
-            width: 20
+            width: '2%',
+            maxWidth: 6,
+            minWidth: 4
         }, {
             xtype: 'dataview',
             itemId: 'dvResultsParams',
+            cls: 'dvParams',
             store: 'QueryFilters',
             tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
             height: 40,
-            width: 650,
+            flex: 1,
             overflowY: 'hidden',
             overflowX: 'hidden',
             itemSelector: 'input.btn_searchitem_remove13',
@@ -70,13 +76,51 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
             emptyText: '(no search params entered)'
         }, {
             xtype: 'tbspacer',
-            width: 20
+            width: '2%',
+            maxWidth: 6,
+            minWidth: 4
 
-        }
+        },
+         {
+                    xtype: 'button',
+                    itemId: 'btnSaveQuery',
+                    cls: 'chkSaveQuery',
+                    text: 'Save Query',
+                    disabled: true,
+                    width: '9%',
+                    maxWidth: 70,
+                    minWidth: 55,
+                    tip: SearchTool.config.Config.searchSaveChkCaptionLabel
+         },
+         {
+            xtype: 'tbspacer',
+            width: '2%',
+            maxWidth:10,
+            minWidth:6
+         }, {
+                    xtype: 'button',
+                    name: 'btnVisualize',
+                    itemId: 'btnVisualize',
+                    cls: 'chkSaveQuery',
+                    text: 'Visualize',
+                    width:'7%',
+                    maxWidth: 55,
+                    minWidth: 45,
+                    tip: SearchTool.config.Config.searchSaveChkCaptionLabel
+         }, {
+            xtype: 'tbspacer',
+            width: '2%',
+            maxWidth:6,
+            minWidth:4
+           
+         }
 
         , {
             type: 'help',
             tooltip: 'Help page for Results area',
+            width:'3%',
+            maxWidth:13,
+            minWidth:10,
             handler: function (ev, el, p) {}
         }
     ],
@@ -97,15 +141,15 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
     autoScroll: true,
     selModel: sm,
     dockedItems: [{
-            xtype: 'toolbar',
-            //        xtype: 'pagingtoolbar',
+//            xtype: 'toolbar',
+            xtype: 'pagingtoolbar',
             store: 'Results',
-            cls: 'mytbar',
+            cls: 'tbarResults',
             hideRefresh: true,
             displayMsg: 'Results {0} - {1} of {2}',
             dock: 'top',
             displayInfo: true,
-            emptyMsg: 'No items to display',
+            emptyMsg: '(no records)',
             prependButtons: true,
             items: [{
                     xtype: 'tbspacer',
@@ -119,8 +163,10 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                     text: 'Save (-)',
                     cls: 'btnPagingToolbar',
                     disabled: true,
-                    width: 90,
-                    scale: 'medium', //'large', // medium works well in IE, FFox
+                    width: '9%',
+                    maxWidth: 70,
+                    minWidth: 55,
+                    //scale: 'medium', //'large', // medium works well in IE, FFox
 
                     handler: function () {
                         //                var ws = Ext.create('SearchTool.view.main.component.WinSave');
@@ -141,9 +187,7 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                         // scope : this
                         //             });
                     }
-                }, {
-                    xtype: 'tbseparator'
-                },
+                }
 
                 //          {
                 //            xtype: 'tbseparator'
@@ -179,8 +223,45 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                 //        }
                 , {
                     xtype: 'tbseparator'
-                }, {
+                },
+                {
+                    xtype: 'combo',
+                    width: 45,
+                    itemId: 'cbPageSize',
+                    fields: ['pagesize','pagesizeval'],
+                    store: SearchTool.config.Config.PageSizeOptions,
+                    queryMode: 'local',
+                    value: SearchTool.config.Config.defaultPageSizeUser, //prefComboPageSize..SearchTool.util.dom.getUserSettings('pagesize')
+                    editable: false,
+                    typeAhead: false,
+                    displayField: 'pagesize',
+                    valueField: 'pagesizeval',
+                    matchFieldWidth: true,
+                    forceSelection: true,
+                    allowBlank: false,
+                    selectOnFocus: false,
+                    listeners: {
+                         'change' : function(){
+                              this.up('pagingtoolbar').store.load({
+                                   start:0,limit:this.value
+                              });
+                              
+                         }
+                         
+                    }
+                },
+                {
+                    xtype:'displayfield',
+                    value:'Per Page'
+                }        
+                ,
+                {
                     xtype: 'tbfill'
+                },
+               
+                {
+                    xtype: 'tbspacer',
+                    width: 2
                 }
                 //          {
                 //            xtype: 'tbfill'
