@@ -48,8 +48,8 @@ Ext.define('SearchTool.controller.CustomDateRange', {
         }); //control function
     }, //init
     showComponentWithinTab: function (b, e, o) {
-        me = this;
-        var cdf = Ext.ComponentQuery.query('#customdate');
+        var me = this,
+            cdf = Ext.ComponentQuery.query('#customdate');
         //if first time/not avail, add the component to current tab.  Apply def start date using datefield widgets.
         if (cdf.length == 0) {
             var cdr = Ext.create('SearchTool.view.main.component.PnlCustomDateRange'),
@@ -66,9 +66,9 @@ Ext.define('SearchTool.controller.CustomDateRange', {
         }
     },
     processForm: function (b, e) {
-        me = this;
+        var me = this,
         //get values from CDR 
-        var calType = me.getCdr_rdCalType().getValue().calType, //cal, fisc
+            calType = me.getCdr_rdCalType().getValue().calType, //cal, fisc
             w = me.getCdr_chkWhole().value,
             c = me.getCdr_txtCount().value,
             u = me.getCdr_rdUnit().getValue().customdate,
@@ -138,7 +138,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
                 y1 = parseInt(Ext.Date.format(date1, 'Y')),
                 y2 = y1,
                 firstFullQuarter = Math.floor((m - 1) / 3) + 1,
-                prevQuarter = firstFullQuarter - 1
+                prevQuarter = firstFullQuarter - 1;
             if (prevQuarter < 1) {
                 prevQuarter = 4;
                 y2 -= 1;
