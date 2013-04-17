@@ -1,18 +1,7 @@
 Ext.define('SearchTool.store.Sources',{
 	extend:'Ext.data.Store', 
 	model:'SearchTool.model.Source',
-	autoLoad:true, 
-	//TODO: convert to REST 
-	proxy:{
-		type:'ajax',
-		url:'data/sources.json', 
-		reader:{
-			type:'json',
-			root:'repoDefinitions',
-			totalProperty:'results',
-			successProperty:'success' 
-		}
-	} 
+	autoLoad:true
 //	,
 //	listeners:{
 ////		'load' : 

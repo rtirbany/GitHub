@@ -10,7 +10,18 @@ Ext.define('SearchTool.model.Source',{
 	        //{name:'itemId'},
             {name:'productDefinitions',type:'auto'} 
            ],
-    hasMany: [{model: 'SearchTool.model.Product',name:'productDefinitions',associationKey:'productDefinitions'}]
+    hasMany: [{model: 'SearchTool.model.Product',name:'productDefinitions',associationKey:'productDefinitions'}],
+    //TODO: convert to REST 
+    proxy:{
+          type:'ajax',
+          url:'data/sources.json', 
+          reader:{
+               type:'json',
+               root:'repoDefinitions',
+               totalProperty:'results',
+               successProperty:'success' 
+          }
+     } 
 });
 
 //        {
