@@ -8,20 +8,22 @@ Ext.define('SearchTool.store.Sources',{
 		url:'data/sources.json', 
 		reader:{
 			type:'json',
-			root:'rows',
+			root:'repoDefinitions',
 			totalProperty:'results',
-			successProperty:'success'
+			successProperty:'success' 
 		}
-	}
-	,
-	listeners:{
-		'load' : 
-			 //TODO: sort this by id..
-			 function(store,records,success, operation){ 
-			 	Ext.Msg.alert(store.getAt(0).getId()+''); 
-				var allChkbox =  Ext.create('SearchTool.model.Source',{'id': 0, 'boxLabel': 'All', 'itemId': 'chkSrcAll', 'name':'chkSrcAll', 'checked':true, 'tooltip':'Srcall tooltip'});
-				store.add(allChkbox);
-			} 
-		 //load listener
-	}//listeners
+	} 
+//	,
+//	listeners:{
+////		'load' : 
+//			 //TODO: sort this by id..done? 
+////			 function(store,records,success, operation){  
+////                debugger;
+////				var allChkbox =  Ext.create('SearchTool.model.Source',{'id': 0, 'boxLabel': 'All', 'itemId': 'chkSrcAll', 'name':'chkSrcAll', 'checked':true, 'tooltip':'Srcall tooltip'});
+////				store.add(allChkbox);
+////				store.sort('id','ASC');  
+////				}
+//		 //load listener
+//	}//listeners
+	
 });
