@@ -2,16 +2,26 @@
 
 Ext.define('SearchTool.model.Source',{
 	extend:'Ext.data.Model',
-//	associations:[{
-//		type:'hasMany',
-//		model:'Product',
-//		name:'products',
-//		associationKey:'products'
-//	}
-//	],
-	fields:[{name:'boxLabel',type:'string'},
-			{name:'xtype', type:'string'},
-	        {name:'itemId',type:'string'},
-	        {name:'checked',type:'boolean'},
-	        {name:'tooltip',type:'string'}]
+	fields:[
+            //{name:'id',type:'int',convert:null},
+		    //{name:'label'},
+			{name:'repoName'},
+	        //{name:'tooltip'},
+	        //{name:'itemId'},
+            {name:'productDefinitions',type:'auto'} 
+           ],
+    hasMany: [{model: 'SearchTool.model.Product',name:'productDefinitions',associationKey:'productDefinitions'}]
 });
+
+//        {
+//            'id': 1,
+//            'label': 'Src1',
+//            'name': 'src1',
+//            'tip': 'Src 1',
+//            'products': [{
+//                    'id': 1,
+//                    'label': 'Prod1',
+//                    'name': 'src1prod1',
+//                    'tip': 'src1prod1',
+//                    'fields': []
+//                }]}
