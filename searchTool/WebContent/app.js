@@ -16,15 +16,23 @@ Ext.onReady(function() {
     });*/
 });
 
+function LaunchViz(){
+     Ext.Msg.alert('launching viz');
+     // if Ozone.util.isRunningInOWF(){}...
+}
 Ext.application({
 	name : 'SearchTool',
 	paths : {'Ext.ux':'extjs/ux'},
 	appFolder : 'app',
-	controllers:['SearchTool','Sources','SearchFields'],
-	requires:['SearchTool.config.Config'],
+	controllers:['SearchTool','SearchFields','CustomDateRange','QueryFilters'],
+	requires:['SearchTool.config.Config','SearchTool.util.TplFilter'],
 	autoCreateViewport: true,
 	launch : function() {  
-    	Ext.tip.QuickTipManager.init(); 
+    	Ext.tip.QuickTipManager.init();
+        //Ext.Ajax.timeout= SearchTool.config.Config.ajaxTimout; 
+        //Ext.override(Ext.form.Basic, {timeout:Ext.Ajax.timeout/1000});
+        //Ext.override(Ext.data.proxy.Server,{timeout:Ext.Ajax.timeout});
+        //Ext.override(Ext.data.Connection,{timeout:Ext.Ajax.timeout});
     	if(typeof String.prototype.trim !== 'function') {
   					String.prototype.trim = function() {
     					return this.replace(/^\s+|\s+$/g, ''); 
