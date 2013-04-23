@@ -32,18 +32,20 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
             overflowY: 'auto',
             border: false,
             items: [
-                 { //accordion item1
+                 { //tab1
                     title: 'Sources',
                     itemId: 'pnlSources',
                     deferredRender: false,
                     width: '100%',
                     defaults: {
-                         labelStyle: 'width:10px;font-size:12px',
+                         width: '100%',
                          margin: '5 30 5 5'
                     }
-                    }//accordion item1
+                 }//tab1
+                   
                , { //tab2
                             xtype: 'panel',
+                            //TODO: add title to config file - sourceTabTitle and filterTabTitle
                             title: 'Filters',
                             itemId: 'pnlFacets',
                             deferredRender: false,
@@ -55,9 +57,11 @@ Ext.define('SearchTool.view.main.component.PnlFilters', {
                             },
                             layoutConfig: {
                                 titleCollape: true,
-                                animate: true,
-                                activeOnTop: true
-                            } 
+                                animate: true
+                            },
+                            items:[
+                              {hidden:true}
+                            ]
                     }//tab2
                     ]
             }
