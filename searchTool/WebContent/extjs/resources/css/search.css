@@ -47,12 +47,12 @@
 	width:70px; 
 }
 
-.dfLabel{
-	font-size: 10px;
+.dfKeywordPrompt{
+	font-size: 9px;
 }
 
 .dfWildcard{
-	font-size: 9px;
+	font-size: 10px;
 }
 
 .chkTitles{
@@ -63,7 +63,7 @@
 .align-top { vertical-align:top; }
 
 .searchTab .x-panel-body-default {
-	border-width: 0px;
+	border-width: 0;
 }
 
 /* sizing of main search buttons */
@@ -98,14 +98,14 @@
 	background: #D4D2AA;
 	/* width:100%; turned this off*/  
 	text-decoration: none;
-	margin: 2px 0px 1px 0px;
+	margin: 2px 0 1px 0;
 	padding: 3px 20px 3px 8px;
 	height: 21px; 
 	color: black;
 	font-size: 11px;
 	font-weight: normal;
 	border-top: 5px;
-	border-bottom: 0px;
+	border-bottom: 0;
 	border-color: #D4D2AA;
 	border-style: solid;
 	font-color: #333333; 
@@ -157,14 +157,7 @@
 	margin-right:5px;
 }
 
-.searchitem_remove {
-	background: #FF0000;
-	border-style: solid;
-	border-width:1px;  
-	margin-left:1px; 
-	height: 16px;
-}
-
+/* btn for removing keyword n boolean */
 .btn_searchitem_remove13 {
 	background: #FFFFFF;
 	width: 13px;
@@ -173,37 +166,41 @@
 	background-repeat:no-repeat;
 	background-position:center; 
 	background-size:100%;
+	vertical-align: text-top;
 }
+/* div area containing btn + keyword */
+.searchitem_remove {
+	background: #FF0000;
+	border-style: solid;
+	border-width:1px;  
+	margin-left:1px;
+} 
 
 .keyword_item {
 	margin-left:5px;
 	margin-right:5px; 
-	font-size: 10px; 
+	font-size: 10px;
+	vertical-align: text-top;
 }
 
-.mygrid .x-panel-header {
-    height: 50px;
-}
-
-.mytbar {
-	top: 48px !important;
-}
 
 .boolitem_remove {
 	background: green;
 	border-style: solid;
 	border-width:1px;  
-	margin-left:1px; 
-	height: 16px;
+	margin-left:1px;
 }
 .bool_item {
 	margin-left:5px;
 	margin-right:5px; 
-	font-size: 10px; 
+	font-size: 10px;
+	vertical-align: text-top;
 }
-
  
-
+.mygrid .x-panel-header {
+    height: 30px;
+} 
+ 
 .facetitem-over {
 	border: 2px solid #FF0000; 
 	font-color: #333333;
@@ -280,6 +277,20 @@
     border-top-style: solid; 
 }
 /* resultsgrid title */
+.resultsgridtitle {
+	margin-top:8px;
+	color: #04408c !important; 
+	font-weight: bold;
+	font-family: tahoma,arial,verdana,sans-serif;
+}
+
+.resultsgridbtn {
+	margin-top:4px;
+}
+
+.resultsgridcombo {
+	margin-top:4px;
+}
 
 .x-form-display-field{
 	font-weight: bold;
@@ -288,15 +299,6 @@
 }
 
 /* Display style */
-.rdo_displaystype {
-	top: 7px !important;
-}
-.resultsgridtitle {  
-	font-size: 11px !important;
-	font-weight: normal !important;
-	font-family: tahoma,arial,verdana,sans-serif;
-}
-
 .resultsgridvalue {
 	font-family: tahoma,arial,verdana,sans-serif;
 }

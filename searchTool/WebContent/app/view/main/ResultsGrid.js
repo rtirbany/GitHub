@@ -16,34 +16,111 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
     alias: 'widget.resultsgrid',
     cls: 'gridResults',
     requires: ['SearchTool.config.Config', 'SearchTool.view.main.component.WinSave', 'SearchTool.util.TplFilter'],
-    title: 'Results',
-    tools: [{
-            xtype: 'tbspacer',
-            width: '2%'
-        }, 
+//    tools: [  
 //        {
-//            xtype: 'displayfield',
-//            value: 'Display style:',
-//            width: '10%',
-//            cls: 'resultsgridtitle'
+//          xtype:'combo',
+//          cls:'hdrCombo',
+//          maxWidth:120,
+//          minWidth:120,
+//          fieldLabel:'Style',
+//          labelWidth:40,
+//          labelAlign:'right',
+//          disabled:true,
+//          store: SearchTool.config.Config.ResultsDisplayOptions,
+//          value: SearchTool.config.Config.defaultResultsDisplayUser,
+//          editable: false,
+//          autoSelect: true,
+//          forceSelection: true
 //        }, {
-//            xtype: 'radiogroup',
-//            width: '11%',
-//            columns: [.47, .52],
-//            cls: 'rdo_displaystype',
-//            items: [{
-//                    boxLabel: 'Grid', 
-//                    checked: true,
-//                    cls: 'resultsgridvalue'
-//                }, {
-//                    boxLabel: 'Search', 
+//            xtype: 'tbspacer',
+//            width: '2%',
+//            maxWidth: 6,
+//            minWidth: 4
+//        }, {
+//            xtype: 'dataview',
+//            itemId: 'dvResultsParams',
+//            cls: 'dvParams',
+//            store: 'QueryFilters',
+//            tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
+//            height: 34,
+//            flex: 1,
+//            overflowY: 'hidden',
+//            overflowX: 'hidden',
+//            itemSelector: 'input.btn_searchitem_remove13'
+//            //overItemCls: 'facetitem-over',
+//            //iconCls: 'icon-btnClear',
+//        },  
+//         {xtype:'tbfill'},
+//        {
+//            xtype: 'tbspacer',
+//            width: '2%',
+//            maxWidth: 6,
+//            minWidth: 4
+//
+//        },
+//         {
+//                    xtype: 'button',
+//                    itemId: 'btnSaveQuery',
+//                    cls: 'chkSaveQuery',
+//                    text: 'Save Query',
 //                    disabled: true,
-//                    cls: 'resultsgridvalue'
-//                }
-//            ]
+//                    width: '9%',
+//                    maxWidth: 70,
+//                    minWidth: 55,
+//                    tip: SearchTool.config.Config.searchSaveChkCaptionLabel
+//         },
+//         {
+//            xtype: 'tbspacer',
+//            width: '2%',
+//            maxWidth:10,
+//            minWidth:6
+//         }, {
+//                    xtype: 'button',
+//                    name: 'btnVisualize',
+//                    itemId: 'btnVisualize',
+//                    cls: 'chkSaveQuery',
+//                    text: 'Visualize',
+//                    width:'7%',
+//                    maxWidth: 55,
+//                    minWidth: 45,
+//                    tip: SearchTool.config.Config.searchSaveChkCaptionLabel
+//         }, {
+//            xtype: 'tbspacer',
+//            width: '2%',
+//            maxWidth:6,
+//            minWidth:4
+//           
+//         }
+//
+//        , {
+//            type: 'help',
+//            tooltip: 'Help page for Results area',
+//            width:'3%',
+//            maxWidth:13,
+//            minWidth:10,
+//            handler: function (ev, el, p) {}
 //        }
+//    ],
+    header:{
+    xtype : 'container',
+    layout:'hbox',
+    items:[
+         {
+            xtype: 'tbspacer',
+            width: '2%',
+            maxWidth: 6,
+            minWidth: 4
+        },
+        
+        {
+             xtype: 'displayfield',
+             value: 'Results:',
+             width: '7%',
+             cls: 'resultsgridtitle'
+        },
         {
           xtype:'combo',
+          cls: 'resultsgridcombo',
           maxWidth:120,
           minWidth:120,
           fieldLabel:'Style',
@@ -66,15 +143,16 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
             cls: 'dvParams',
             store: 'QueryFilters',
             tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
-            height: 40,
+            height: 34,
             flex: 1,
             overflowY: 'hidden',
             overflowX: 'hidden',
-            itemSelector: 'input.btn_searchitem_remove13',
+            itemSelector: 'input.btn_searchitem_remove13'
             //overItemCls: 'facetitem-over',
             //iconCls: 'icon-btnClear',
-            emptyText: '(no search params entered)'
-        }, {
+        },
+        //27% below this
+        {
             xtype: 'tbspacer',
             width: '2%',
             maxWidth: 6,
@@ -84,7 +162,8 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
          {
                     xtype: 'button',
                     itemId: 'btnSaveQuery',
-                    cls: 'chkSaveQuery',
+                    //cls: 'chkSaveQuery',
+                    cls: 'resultsgridbtn',
                     text: 'Save Query',
                     disabled: true,
                     width: '9%',
@@ -101,7 +180,7 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                     xtype: 'button',
                     name: 'btnVisualize',
                     itemId: 'btnVisualize',
-                    cls: 'chkSaveQuery',
+                    cls: 'resultsgridbtn',
                     text: 'Visualize',
                     width:'7%',
                     maxWidth: 55,
@@ -116,14 +195,24 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
          }
 
         , {
-            type: 'help',
+            xtype: 'button',
+            text: 'Help',
+            cls: 'resultsgridbtn',
             tooltip: 'Help page for Results area',
-            width:'3%',
-            maxWidth:13,
-            minWidth:10,
+            width:'5%',
+            maxWidth:36,
+            minWidth:30,
             handler: function (ev, el, p) {}
-        }
-    ],
+        } ,
+        {
+            xtype: 'tbspacer',
+            width: '2%',
+            maxWidth:6,
+            minWidth:4
+           
+         }
+        ]
+    },
     store: 'Results',
     loadMask: true,
     viewConfig: {
@@ -157,7 +246,7 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                 }, {
                     xtype: 'button',
                     itemId: 'btnAddToCart',
-                    iconCls: 'icon-btnCartAdd',
+//                    iconCls: 'icon-btnCartAdd',
                     //                  type : 'submit',
                     //                  url : '/addtocart',
                     text: 'Save (-)',
@@ -226,7 +315,7 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                 },
                 {
                     xtype: 'combo',
-                    width: 45,
+                    width: 50,
                     itemId: 'cbPageSize',
                     fields: ['pagesize','pagesizeval'],
                     store: SearchTool.config.Config.PageSizeOptions,
@@ -242,26 +331,18 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                     selectOnFocus: false,
                     listeners: {
                          'change' : function(){
-                              this.up('pagingtoolbar').store.load({
-                                   start:0,limit:this.value
-                              });
-                              
+                              this.up('pagingtoolbar').store.pageSize = this.value;
+                              this.up('pagingtoolbar').store.loadPage(1);
+                              }
                          }
-                         
-                    }
                 },
                 {
-                    xtype:'displayfield',
-                    value:'Per Page'
+                    xtype:'tbtext',
+                    text:'Per Page'
                 }        
                 ,
                 {
                     xtype: 'tbfill'
-                },
-               
-                {
-                    xtype: 'tbspacer',
-                    width: 2
                 }
                 //          {
                 //            xtype: 'tbfill'
@@ -304,12 +385,43 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
     listeners: {
         itemdblclick: function (dv, rec, item, idx, e) {
             Ext.create('Ext.panel.Panel', {
+                tbar: {
+                    items:[
+                    {xtype:'tbspacer',width:5},
+                    {xtype:'tbtext',text:'View As'},
+                    {xtype:'tbspacer',width:2},
+                    {
+                         xtype:'radiogroup',
+                         itemId:'rdView',
+                         items:[
+                         {
+                              fieldLabel:'HTML',
+                              labelWidth:25,
+                              width:50,
+                              name:'viewType',
+                              inputvalue:'HTML',
+                              checked:true
+                         },
+                         {
+                              fieldLabel:'Xml',
+                              labelWidth:20,
+                              width:45,
+                              name:'viewType',
+                              inputvalue:'xml',//SearchTool.config.Config.urlTokenXml,
+                              disabled:SearchTool.config.Config.disableXml 
+                         }
+                         ]
+                         
+                    }
+                    ]
+                },
                 title: '[Document Viewer: ' + rec.data.source + ' ' + rec.data.serial + ']',
                 width: 600,
                 height: 600,
                 closable: true,
                 animCollapse: true,
                 titleCollapse: true,
+                autoScroll:true,
                 collapsible: true,
                 resizable: {
                     handles: 's se e',
@@ -317,15 +429,10 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                 },
                 draggable: true,
                 floating: true,
-                items: [{
-                        xtype: 'component',
-                        autoEl: {
-                            tag: 'iframe',
-                            style: 'height:100%; width:100%; border:none;',
-                            src: 'data/acro.html'
-                        }
-                    }
-                ]
+                loader:{
+                    autoLoad: true,
+                    url: 'data/acro.html'//SearchTool.config.Config.urlDocviewerPrefix + '/html/'+rec.data.repository+'/'+rec.data.type+'/'+rec.data.id
+                }
             }).show();
         }
     },
@@ -382,20 +489,8 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                     return v;
              }
          }
-        ],
-
-        //  this.control({
-        //      'combo[itemId=cbPageSize]' : {
-        //          select : this.rsPageSizeSet
-        //      }
-        //  });
-
+        ],  
         this.callParent(arguments);
-    },
-
-    rsPageSizeSet: function () {
-        //      var ps = parseInt(record.get(''))
-        this.down('pagingtoolbar').store.reload();
-    }
+    }  
 
 });
