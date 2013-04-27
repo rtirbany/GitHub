@@ -1,12 +1,12 @@
 Ext.define('SearchTool.controller.QueryFilters', {
     extend: 'Ext.app.Controller',
-    models: ['FacetGroup','QueryFilter'],
     views: ['Viewport','SearchTool.view.main.component.FilterMgmt','SearchTool.view.main.ResultsGrid'],
+    models: ['FacetGroup','QueryFilter'],
     stores: ['Facets','Sources','Keywords','Results','QueryFilters'], 
     requires: ['SearchTool.util.dom'],
     refs: [{
-               ref: 'pnlSources',
-               selector: 'checkboxgroup[itemId=chkgrpProducts]'
+               ref: 'pnlDataSources',
+               selector: 'panel[itemId=pnlSources]'
           },{
                ref: 'gridResults',
                selector: 'resultsgrid'
@@ -50,10 +50,10 @@ Ext.define('SearchTool.controller.QueryFilters', {
             'button[itemId=btnSaveQuery]': {
                 click: me.querySaveHandler
             },
-            'panel > checkboxgroup[itemId=chkgrpProducts] > checkbox': {
+            'panel[itemId=pnlSources] > checkboxgroup > checkbox': {
                 change: me.filterToggleProducts
             },
-            'dataview[itemId=dvFacets]': {
+            'panel[itemId=pnlFacets] panel > dataview': {
                 itemclick: me.facetSelect
             },
             'dataview[itemId=dvFacetSelections]': {
@@ -72,69 +72,67 @@ Ext.define('SearchTool.controller.QueryFilters', {
     }, 
     
     getSourcesData: function (store,records, opts){
-          var  tmp = store.proxy.reader.jsonData, 
-          storeSources = Ext.StoreManager.lookup('Sources');
-          storeSources.clearData();
+          var  tmp = store.proxy.reader.jsonData,
+               storeSources = Ext.StoreManager.lookup('Sources');
+          storeSources.clearData(true);
           if (tmp && tmp.repoDefinitions && tmp.repoDefinitions.length > 0){
              storeSources.loadRawData(tmp.repoDefinitions);
-              var //chkProducts = {xtype: 'checkbox', name: 'Products'},
-                  t,i,j, chkboxes = [];
+              var t,i,j, chkgroup, chkboxes = [];
               for (i=0;i<storeSources.data.items.length;i++){
                  t = storeSources.data.items[i];
+                 chkgroup = Ext.create('Ext.form.CheckboxGroup',{fieldLabel:t.raw.repositoryId, itemId:'chkgroup'+t.raw.repositoryId, layout:'vbox', labelWidth:75, columns:[.8]});
                  for (j=0;j<t.data.productDefinitions.length;j++){
-                    var prodBox = {xtype: 'checkbox', name: 'prod',
-                                 boxLabel: j.productName //, inputValue: record.get('id')
-                                 };
+                    var c = t.data.productDefinitions[j],
+                        prodBox = {xtype: 'checkbox', name: t.raw.repositoryId+'.'+c.productName, 
+                                 boxLabel: c.productName};
                      chkboxes.push(prodBox)
-                 } 
-              }
-              Ext.ComponentQuery.query('chkgrpProducts')[0].add(chkgrpProducts);
-                  //prodBox.checked = true;
-              
-          } 
-
-          
+                 }
+                 chkgroup.add(chkboxes);
+                 chkboxes.length = 0;
+                 Ext.ComponentQuery.query('#pnlSources')[0].add(chkgroup);
+              }  
+          }
     },
     getAllResultsData: function(store, records, opts){
-          Ext.ComponentQuery.query('#btnVisualize')[0].setDisabled(store.data.items.length == 0); 
+          Ext.ComponentQuery.query('#btnVisualize')[0].setDisabled(store.data.items.length == 0);
+          Ext.ComponentQuery.query('#cbPageSize')[0].setDisabled(store.data.items.length == 0);
           var  tmp = store.proxy.reader.jsonData, 
                pnl = Ext.ComponentQuery.query('#pnlFacets')[0],
                storeFacets = Ext.StoreManager.lookup('Facets'),
-               t,i,j; 
-          storeFacets.clearData();
+               newPnl, t,i=0,j;
+          pnl.items.items.length = 1;
+          pnl.update();
+          if (tmp.searchId && searchId.length > 0)
+               Ext.ComponentQuery.query('#btnVisualize')[0].id = tmp.searchId
           if (tmp && tmp.coreFacets && tmp.coreFacets.length > 0){
+               storeFacets.removeAll(true);
                storeFacets.loadRawData(tmp.coreFacets);
-               for (i=0;i<storeFacets.data.items.length;i++){
+               for (;i<storeFacets.data.items.length;i++){
                    t = storeFacets.data.items[i];
-                   var newPnl = Ext.create('Ext.Panel',{width:'100%',title:t.data.facetName});
-                   /*
-                    * xtype: 'dataview',
-//                    itemId: 'dvFacets',
-//                    store: 'Facets',
-//                    tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer, 
-//                    itemSelector: 'div.facet', //'div.facet_item', //tr
-//                    emptyText: '(no filters available)'  
- * 
-                    * */
-                   for (j=0;j<t.data.facetEntries.length;j++){
-                         var fvalue = t.data.facetEntries[j];
-                         newPnl.add({xtype:'displayfield',value:fvalue.value+' ('+fvalue.count+')'}); 
-//                   var newItems = Ext.create('Ext.dataview',{
-//                              store:t.data.facetEntries,
-//                              itemSelector: 'div.facet',
-//                              tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer
-//                   });
-//                   debugger;
-//                   newPnl.add(newItems);
-//                         newPnl.add({
-//                              xtype:'dataview',
-//                              store:t.data.facetEntries,
-//                              itemSelector: 'div.facet',
-//                              tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer}
-//                         );
-                   } 
-                   pnl.add(newPnl);
+                   storeFacets.filter([{property:'facetName',value:t.data.facetName}]);
+                   var newStore = Ext.create('Ext.data.Store',{
+                         model: storeFacets.model,
+                         data: storeFacets.data.items
+                   });
+                   storeFacets.clearFilter(true);
+                   newPnl = Ext.create('Ext.panel.Panel',{
+                    width:'100%',
+                    title:t.data.facetName,
+                    items:[
+                         {    
+                              xtype:'dataview',
+                              tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
+                              trackOver: true,
+                              overItemCls: 'facetitem-over',
+                              store: 'newStore',
+                              itemSelector: 'div.facet'
+                         } 
+                    ] 
+                   }
+                   );
+                pnl.add(newPnl);
                }
+               
           }
           if (tmp && tmp.cols && tmp.cols.length > 0){
           	   //new - cols come back in resultset
@@ -159,15 +157,13 @@ Ext.define('SearchTool.controller.QueryFilters', {
         //debugger;
         if (form.getForm().isValid()) {
                 form.up('tabpanel').el.mask(SearchTool.config.Config.msgQuery, 'x-mask-loading'); 
-                var params = form.getValues(),
-                k = '',// + valKeyword + ';bool=' + valBool + ';'; 
-                t = null,
-                idx = -1,  
-                filtersStore = this.getQueryFiltersStore(),i=0,
-                    arrFilters = [],
+                var params = form.getValues(), t = null,
+                    filtersStore = this.getQueryFiltersStore(),i = 0,
+                    arrFilters,
                     arrParams = [
                          {type:'searchkeyword',key:'keywordString',value:params.keywordString.trim()},
                          {type:'searchboolean',key:'booleanString',value:params.txtSearchBoolean.trim()},
+                         //{type:'datefield',key:'datefield',value:params.datefield},
                          {type:'startdate',key:'startdate',value:params.startDate},
                          {type:'enddate',key:'enddate',value:params.endDate}
                     ];
@@ -175,8 +171,9 @@ Ext.define('SearchTool.controller.QueryFilters', {
                   //if the param entry exists (value.trim().length > 0), create model object
                   //if idx found, replace exixting filter obj, else push
                   //if no param entry (value.trim().length == 0), remove filter obj from array
-                arrFilters = filtersStore.query('type','source').items.concat(filtersStore.query('type','facet').items);
-                for (i=0;i<arrParams.length;i++){
+                arrFilters = filtersStore.query('type','source').items.concat(filtersStore.query('type','facet').items); //need to preserve these
+           
+                for (;i<arrParams.length;i++){
                     t = arrParams[i];
                     //idx = Ext.Array.indexOf(Ext.Array.pluck(Ext.Array.pluck(filtersStore.data.items,'data'),'type'),t.type);
                     //filtersStore.removeAt(idx);  //if it exists remove it, else nothing; preserves others
@@ -186,107 +183,49 @@ Ext.define('SearchTool.controller.QueryFilters', {
                 }
                 filtersStore.removeAll(true);
                 filtersStore.add(arrFilters);
-                 //*********** BAD ***********
-                //remove all filters - DO NOT WANT ALL TO BE WIPED OURT - Facets + sources lost
-//                filtersStore.clearFilter(true);
-//                
-//                for (i=0;i<arrParams.length;i++){
-//                    t = arrParams[i];
-//                    if (t.value.length >0) {
-//                        //create model object
-//                        m = Ext.create('SearchTool.model.QueryFilter',{type:t.type,key:t.key,operator:'=',tip:t.value,value:t.value}); 
-//                        //if idx was found, replace existing filter object w/ new model; else append (re-fires store load each time)
-//                        arrFilters.push(m);//replace if it exists, otherwise add 
-//                    } 
-//                }
-//                debugger;
-//                //filters.filter(arrFilters);
-//                filtersStore.filters.add(arrFilters);
-                
-                
                 Ext.ComponentQuery.query('#dvResultsParams')[0].refresh();
                 form.up('tabpanel').el.unmask();
-                //                              form.getForm().submit({
-                //                                   method: 'POST',
-                //                                   url: 'someurl',
-                //                                   success: onQuerySuccess,
-                //                                   failure: onQueryFailure
-                //                              });
-
-                //                              Ext.Ajax.request({
-                //                                   url:SearchTool.config.Config.sources,
-                //                                   jsonData : Ext.JSON.encode(params),
-                //                                   success: function(resp,opts){  
-                //                                        
-                //                                   },
-                //                                   failure: function(resp,opts){//: 'Communication error (Query Service)', 
-                //                                        Ext.Msg.alert(SearchTool.config.Config.msgErrorQueryTitle,SearchTool.config.Config.msgErrorQueryText+'\r\n'+
-                //                                        resp.statusText);
-                //                                   },
-                //                                   callback: function(o,s,r){
-                //                                        form.up('viewport').el.unmask();
-                //                                        Ext.Msg.alert('Title',r.responseText);
-                //                                   }
-                //                               });
         } //if
     },
     
-    facetSelect: function(t, r, item, index, e){
-        var pnl = Ext.ComponentQuery.query('pnlFilters')[0];
-        if (e.target.getAttribute("name") == "facetitem") { 
-               pnl.el.mask('Updating filters...','x-mask-loading');
-               var key= e.target.parentElement.getAttribute("name"),
-                   val = e.target.innerHTML.substring(0,e.target.innerHTML.indexOf('&nbsp;&nbsp;')),
-                   f = Ext.create('SearchTool.model.QueryFilter',{type:'facet',key:key, operator: 'eq', value:val,tip:val});
-               this.getQueryFiltersStore().insert(0,f);
+    facetSelect: function() { //t, r, item, index, e){ 
+          var  pnl = Ext.ComponentQuery.query('pnlFilters')[0],
+               key= e.target.parentElement.getAttribute("id"),
+               val = e.target.getAttribute("id"),
+               f = Ext.create('SearchTool.model.QueryFilter',{
+                    type:'facet',key:key, operator: 'eq', value:val,tip:val
+               });
+          pnl.el.mask('Updating filters...','x-mask-loading');
+               
+          this.getQueryFiltersStore().insert(0,f);
                this.getDvParams().refresh();
-               this.getDvFilters().refresh();
-        }
-        pnl.el.unmask();
+               this.getDvFilters().refresh(); 
+          pnl.el.unmask();
     },
     
     updateResultsGrid: function(store, eOpts){ 
           Ext.ComponentQuery.query('#btnSaveQuery')[0].setDisabled(store.data.items.length == 0);
-          var  arr = [], xtraParams = {}, i,iLen=store.data.items.length,t=null,
+          var  arr = [], i = 0, iLen=store.data.items.length,t=null,
                pnl = Ext.ComponentQuery.query('pnlFilters')[0],
                storeResults = Ext.ComponentQuery.query('resultsgrid')[0].store;
           pnl.el.mask('Updating filters...','x-mask-loading');
           storeResults.clearFilter(true);
-          for (i=0; i<iLen; i++){
+          
+          for (; i<iLen; i++){
              t = store.data.items[i];
              t = {filter:t.data.key,operator:t.data.operator,value:t.data.value};
              arr.push(t);
           }
           storeResults.filter(Ext.JSON.encode(arr));
-//               extraParams.facets = Ext.JSON.encode(['hi','there']);
-//          or do  extraParams = { keywordString:kw,
-//                         booleanString:bool};
-//          storeResults.load({
-//               params: extraParams});
-          //storeResults.filters.add("filters",Ext.JSON.encode(arr)); 
-         
-//               switch (keyval.data.type) {
-//                    case 'facet' :      arrFilters.push({filter:keyval.data.key,operator:keyval.data.operator, value:keyval.data.value}); break;
-////                    case 'searchkeyword' : kw =  Ext.JSON.encode({filter:keyval.data.key,value:keyval.data.value}); break;
-//                    case 'searchkeyword' :  kw =  {filter:keyval.data.key,value:keyval.data.value}; break;
-//                   
-//                   
-//                    case 'searchboolean' : bool = {filter:keyval.data.key,value:keyval.data.value};
-//               }
-//          });
-//          storeResults.filter(Ext.JSON.encode(arrFilters));
-          //method1
-//          storeResults.addFilter(new Ext.util.Filter({property:"facets",value:Ext.JSON.encode(['hi','there'])}))
-//          storeResults.load();
-          //method2
-          //TODO: bad..check for nulls/DNE 
-           
           pnl.el.unmask();
     },
     
     filterToggleProducts: function (c,e) {
-        var key='Use product', //reqd for insert and removal b/c removal requires search on very same key
-            m = Ext.create('SearchTool.model.QueryFilter',{type:'source',key:key,operator:'eq',value:c.itemId,tip:c.itemId}),
+        var //key='Use product', //reqd for insert and removal b/c removal requires search on very same key
+            m = Ext.create('SearchTool.model.QueryFilter',{
+               type:'source',id:c.id, key:"Repo", operator:'eq', value:c.name,
+               tip:c.name.substring(c.name.indexOf('.')+1)
+            }),
             pnl = Ext.ComponentQuery.query('pnlFilters')[0],
             arr = [];
         pnl.el.mask('Updating filters....','x-mask-loading');
@@ -319,26 +258,26 @@ Ext.define('SearchTool.controller.QueryFilters', {
         t.store.removeAt(index); 
         //unchecks checkbox in pnlSources
         if (r.data.type == 'source') {
-           var idx = this.getPnlSources().items.indexOfKey(r.data.value);
-              this.getPnlSources().items.get(idx).setValue(false);
+           var z = '[name='+ r.data.value + ']';
+              this.getPnlDataSources().down(z).setValue(false);
         }
         this.getDvParams().refresh();
         this.getDvFilters().refresh();
         pnl.el.unmask();
     },
-     filterRemoveSearchParam: function (t, r, item, index, e) { 
-        //fires datachange event 
-        
+    
+    filterRemoveSearchParam: function (t, r, item, index, e) { 
+        //fires datachange event
         var idx = Ext.Array.pluck(Ext.Array.pluck(this.getQueryFiltersStore().data.items,'data'),'type').indexOf(item.name),
             pnl = Ext.ComponentQuery.query('pnlFilters')[0];
         pnl.el.mask('Updating filters....','x-mask-loading');
         t.store.removeAt(idx);
         if (item.nextElementSibling && item.nextElementSibling.innerText) {
-        var z = item.nextElementSibling.innerText;
-        switch (item.name){
-            case 'searchkeyword': if (item.nextElementSibling != null && this.getTxtKeyword().rawValue.trim() == z.slice(z.indexOf('=')+2)) this.getTxtKeyword().reset();break;
-            case 'searchboolean': if (item.nextElementSibling != null && this.getTxtBoolean().rawValue.trim() == z.slice(z.indexOf('=')+2)) this.getTxtBoolean().reset();break;
-        } 
+            var z = item.nextElementSibling.innerText;
+            switch (item.name){
+                case 'searchkeyword': if ( this.getTxtKeyword().rawValue.trim() == z.slice(z.indexOf('=')+2)) this.getTxtKeyword().reset();break;
+                case 'searchboolean': if ( this.getTxtBoolean().rawValue.trim() == z.slice(z.indexOf('=')+2)) this.getTxtBoolean().reset();break;
+            } 
         }
         
         this.getDvFilters().refresh();
@@ -352,14 +291,21 @@ Ext.define('SearchTool.controller.QueryFilters', {
     filterRemoveAll: function (b, e) { 
         Ext.Msg.confirm('Confirm - Remove all filters','Are you sure you want to remove all filters?', function(btn){
            var arr = Ext.StoreManager.lookup('QueryFilters'),
-               arrNew, i, pnl = Ext.ComponentQuery.query('pnlFilters')[0];
+               arrNew, i =0 , pnl = Ext.ComponentQuery.query('pnlFilters')[0];
            if (btn == 'yes') {
                pnl.el.mask('Updating filters...','x-mask-loading');
                arrNew = Ext.Array.difference(arr.data.items,arr.query('type','source').items.concat(arr.query('type','facet').items));
                arr.removeAll();
                arr.add(arrNew);               
            }
-           this.getQueryFiltersStore().removeAll();   
+           arr = Ext.ComponentQuery.query('#pnlSources')[0].items.items;
+           for (;i< arr.length; i++){
+               arr[i].suspendEvents(false);
+               arr[i].setValue(false);
+               arr[i].resumeEvents();
+           }
+           Ext.ComponentQuery.query('#dvFacetSelections')[0].refresh();
+           pnl.el.unmask();
         }); 
     },
     
