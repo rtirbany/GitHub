@@ -1,31 +1,40 @@
 Ext.define('SearchTool.config.Config', { 
   statics: {
     ajaxTimout: 10000,
-    urlSearch: '/services/search',
-    urlKeyword: 'data/keywords.json',
     
+    urlMethodCreate: 'POST',
+    urlMethodRead: 'GET',
+    urlMethodUpdate: 'PUT',
+    urlMethodDelete: 'DELETE',
+    
+    urlSearch: 'data/results.json',
+    urlReferences : '',
+    urlKeyword: 'data/keywords.json',
+    urlSources:  'data/sources.json',
+    fields:  'data/searchfields.json',
     defaultSortDir: 'asc',
     defaultSortProperty: 'summary',
     
+    //gui labels 
+    sourceTabTitle: 'Data Sources',
+    filterTabTitle: 'Filters',
+    
     //Results grid
-    defaultColMultiplier: 16,
+    defaultColMultiplier: 16, 
     
     //Visualization Widget Name
     vizWidgetName: 'Centrifuge',
     vizWidgetSingleton: true,
-    vizWidgetUseEventingAPI: true,
-    vizWidgetEventChannelName: 'coredisco',
+    vizWidgetUseEventingAPI: false,
+    vizWidgetEventChannelName: 'cd.viz',
     
     msgWaitQuery: 'Querying data.  Please wait...',
     msgErrorQuery: 'Error communicating with ',
     msgErrorQueryTitle: 'Communication error ',
     msgErrorTryAgain: 'We apologize for the inconvenience, please try again shortly',
     msgErrorContactAdmin: 'We apologize for the inconvenience, please contact an Admin',
-    loadMsg: 'Loading Application raj.  Please wait...', 
-  	keywords: 'data/keywords.json',
-    products: 'data/products.json',
-    sources:  'data/sources.json',
-    fields:  'data/searchfields.json',
+    loadMsg: 'Loading Application raj.  Please wait...',  
+    
     dbEscapeChar : '\\',  //for mysql
     //searchUrl : 'http://localhost:80/r',
     //captions & labels
@@ -44,6 +53,10 @@ Ext.define('SearchTool.config.Config', {
     //themes
     themes: [['ext/resources/css/ext-all.css','Default'],['extjs/resources/ext-theme-access/ext-theme-access-all.css','hi contrast']],
     defaultThemeUser: 'ext/resources/css/ext-all.css',
+    
+    //calendar fields
+    calendarDateOptions: [2,'Publish Date'],
+    calendarDateOptionUser: 2,
     //results
     ResultsDisplayOptions: [['g','Grid'],['s','Search']],
     defaultResultsDisplayUser: 'g',
@@ -58,16 +71,29 @@ Ext.define('SearchTool.config.Config', {
     numMaxFavorites: 25,
     
     rsDateColFormat : 'm-d-Y',//y=2 dig yr
+    customCalendarStyle : 'cal',
     customCalendarWeekstart : 0, //0 = Sunday, 6 = Saturday
     customCalendarSixMonthstart : 1, //1 = January, 12 = December
     customCalendarSixMonthFromCurrent : 0, //0 = no; 1 = yes
     customCalendarFiscalMonthDay: '09/30/',
+    
+    //docviewer settings
+    docViewerTitle: 'Document Viewer: ',
+    docViewerUrlRoot: '/data/docs/',
+    urlTokenXml: 'xml',
+    urlTokenText: 'raw',
+    disableXml: false,
+    disableText: true,
+    disableSave: true,
     //tooltips
     searchBtnClearTtip:'Clears keyword search criteria',
     searchBtnSearchTtip:'Runs Search',
     //settings page
-    dfAdminSettings: 'These defaults/settings are managed by the Admin',
+    dfAdminSettings: 'These are the system settings which were set by an Admin',
     //not working yet
-    searchCBoxTooltip: 'Enter search terms here; Use * for all wildcards, ? for single character wildcards'
+    searchCBoxTooltip: 'Enter search terms here; Use * for all wildcards, ? for single character wildcards',
+    
+    numMaxQuerySave: 25,
+    numMaxFavorites: 50
   }
 });
