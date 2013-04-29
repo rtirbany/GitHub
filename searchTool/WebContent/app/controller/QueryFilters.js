@@ -109,7 +109,7 @@ Ext.define('SearchTool.controller.QueryFilters', {
                storeFacets.loadRawData(tmp.coreFacets);
                for (;i<storeFacets.data.items.length;i++){
                    t = storeFacets.data.items[i];
-                   storeFacets.filter([{property:'facetName',value:t.data.facetName}]);
+                   storeFacets.filter({property:'facetName',value:t.data.facetName});
                    var newStore = Ext.create('Ext.data.Store',{
                          model: storeFacets.model,
                          data: storeFacets.data.items
@@ -124,7 +124,7 @@ Ext.define('SearchTool.controller.QueryFilters', {
                               tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
                               trackOver: true,
                               overItemCls: 'facetitem-over',
-                              store: 'newStore',
+                              store: newStore,
                               itemSelector: 'div.facet'
                          } 
                     ] 
@@ -190,8 +190,8 @@ Ext.define('SearchTool.controller.QueryFilters', {
     
     facetSelect: function() { //t, r, item, index, e){ 
           var  pnl = Ext.ComponentQuery.query('pnlFilters')[0],
-               key= e.target.parentElement.getAttribute("id"),
-               val = e.target.getAttribute("id"),
+               key= e.target.parentElement.getAttribute('id'),
+               val = e.target.getAttribute('id'),
                f = Ext.create('SearchTool.model.QueryFilter',{
                     type:'facet',key:key, operator: 'eq', value:val,tip:val
                });
@@ -223,7 +223,7 @@ Ext.define('SearchTool.controller.QueryFilters', {
     filterToggleProducts: function (c,e) {
         var //key='Use product', //reqd for insert and removal b/c removal requires search on very same key
             m = Ext.create('SearchTool.model.QueryFilter',{
-               type:'source',id:c.id, key:"Repo", operator:'eq', value:c.name,
+               type:'source',id:c.id, key:'Repo', operator:'eq', value:c.name,
                tip:c.name.substring(c.name.indexOf('.')+1)
             }),
             pnl = Ext.ComponentQuery.query('pnlFilters')[0],
@@ -268,20 +268,20 @@ Ext.define('SearchTool.controller.QueryFilters', {
     
     filterRemoveSearchParam: function (t, r, item, index, e) { 
         //fires datachange event
-        var idx = Ext.Array.pluck(Ext.Array.pluck(this.getQueryFiltersStore().data.items,'data'),'type').indexOf(item.name),
+        var idx = Ext.Array.pluck(Ext.Array.pluck(this.getQueryFiltersStore().data.items,'data'),'type').indexOf(item.id),
             pnl = Ext.ComponentQuery.query('pnlFilters')[0];
-        pnl.el.mask('Updating filters....','x-mask-loading');
+        pnl.el.mask('Updating filters....','x-mask-loading'); 
+        switch (item.id){
+                case 'searchkeyword': //if ( this.getTxtKeyword().rawValue.trim() == z.slice(z.indexOf('=')+2)) 
+                         this.getTxtKeyword().reset();break;
+                case 'searchboolean': //if ( this.getTxtBoolean().rawValue.trim() == z.slice(z.indexOf('=')+2)) 
+                         this.getTxtBoolean().reset();break;
+        }  
         t.store.removeAt(idx);
-        if (item.nextElementSibling && item.nextElementSibling.innerText) {
-            var z = item.nextElementSibling.innerText;
-            switch (item.name){
-                case 'searchkeyword': if ( this.getTxtKeyword().rawValue.trim() == z.slice(z.indexOf('=')+2)) this.getTxtKeyword().reset();break;
-                case 'searchboolean': if ( this.getTxtBoolean().rawValue.trim() == z.slice(z.indexOf('=')+2)) this.getTxtBoolean().reset();break;
-            } 
-        }
         
         this.getDvFilters().refresh();
         this.getDvParams().refresh();
+        this.getDvParams().update();
         pnl.el.unmask();
 //        fires too many events
 //        t.store.filter('type',item.name);

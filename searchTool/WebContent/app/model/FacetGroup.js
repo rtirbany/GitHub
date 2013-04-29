@@ -1,6 +1,6 @@
 Ext.define('SearchTool.model.FacetGroup',{
      extend:'Ext.data.Model',
-     idProperty : 'facetName',
+//     idProperty: 'facetName',
      fields:[
               {name:'facetName'},
               {name:'facetEntries', type:'auto'}

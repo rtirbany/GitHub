@@ -68,7 +68,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
     processForm: function (b, e) {
         var me = this,
         //get values from CDR 
-            calType = me.getCdr_rdCalType().getValue().calType, //cal, fisc
+            calType = me.getCdr_rdCalType().calType, //cal, fisc
             w = me.getCdr_chkWhole().value,
             c = me.getCdr_txtCount().value,
             u = me.getCdr_rdUnit().getValue().customdate,
