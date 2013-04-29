@@ -15,12 +15,12 @@ var tplSrc = new Ext.XTemplate(
           '</div></td></tr>',
           '</tpl>' //use array index to autonumber (starts at 1)
 );
-//
+
 //var tplDate = new Ext.XTemplate(
 //      '<tpl for=".">',
 //          '<tr><td><div class="facetitem">{key}&nbsp;=&nbsp;{term}</div></td></tr>'
 //);
-//
+
 var mainTpl = new Ext.XTemplate(
     '<table class="facetgroup">',
     '<tpl for=".">',
@@ -43,6 +43,7 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
     alias: 'widget.filtermgmt',
     border: false,
     layout: 'vbox',
+    requires: ['SearchTool.util.TplFilter'],
     items: [{
             xtype: 'container',
             layout: 'hbox',
@@ -54,43 +55,46 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
                 }, {
                     xtype: 'button',
                     itemId: 'btnRemoveAll', 
-                    width: 80,
+                    width: 70,
                     margin: 5,
                     text: 'Remove All'
-                }, {
-                    xtype: 'button',
-                    itemId: 'btnRelaxAll', 
-                    width: 65,
-                    margin: 5,
-                    enableToggle: true,
-                    text: 'Relax All',
-                    handler: function(){
-                         this.setText(this.pressed ? 'Enforce All' : 'Relax All');
-                    }
                 }
+//                , 
+//                    {
+//                    xtype: 'button',
+//                    itemId: 'btnRelaxAll', 
+//                    width: 65,
+//                    margin: 5,
+//                    enableToggle: true,
+//                    text: 'Relax All',
+//                    handler: function(){
+//                         this.setText(this.pressed ? 'Enforce All' : 'Relax All');
+//                    }
+//                }
             ] //container hbox
-        }, {
+        }, { 
             xtype: 'dataview',
             itemId: 'dvFacetSelections',
+            store:  'QueryFilters' ,
 //            store: Ext.StoreManager.lookup('QueryFilters').filter(new Ext.util.Filter({
 //               filterFn:function(item){
 //                    return item.data.type == 'source' ? true : false;
 //               }
 //            })),
             tpl: mainTpl,
+            autoSync: true,
             overflowY: 'auto',
             overflowX: 'hidden',
-            width: '100%',
+            width:'100%',
             itemSelector: 'input.btn_facetitemremove',
-            //overItemCls: 'facetitem-over',
+//            overItemCls: 'facetitem-over',
             //iconCls: 'icon-btnClear',
             emptyText: '(no filters selected)'
              
-        } //dataview 
-
-    ] //container vbox
+        }] //dataview  
+      //container vbox
 
 });
 
 // stackoverflow.com/questions/9141918
-13342593
+//13342593
