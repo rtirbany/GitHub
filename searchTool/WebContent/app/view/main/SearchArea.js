@@ -23,7 +23,7 @@
                              layout: 'hbox',
                              margins: '8 8 8 5',
                              defaults: {
-                                 width: '75%',
+                                 width: '70%',
                                  border: false
                              },
                              items: [{
@@ -43,13 +43,17 @@
                                              //,
                                              //value: SearchTool.config.Config.searchCboxCaptionValue
                                          }, 
+                                         {xtype:'container',
+                                          layout:'hbox',
+                                          width: '100%',
+                                          items:[
                                          {
                                              xtype: 'combo',
                                              margins: '0 15 0 15',
                                              itemId: 'cboxSearch',
                                              name: 'keywordString',
                                              store: 'Keywords',
-                                             width: '100%',
+                                             width: '80%',
                                              valueField: 'id',
                                              displayField: 'keyword',
                                              hideTrigger: true,
@@ -72,20 +76,24 @@
                                              listeners: {
                                                  afterrender: function (field) {
                                                      field.focus();
-                                                 } //afterrender
-                                                 //                                        ,
-                                                 //                                        change : function(field){
-                                                 //                                             field.setValue(field.getValue().trim());
-                                                 //                                        }
+                                                 }
                                                  ,
                                                  specialkey: function (field, event) {
                                                      if (event.getKey() == event.ENTER) {
-                                                         field.up('form').getForm().submit();
+                                                         Ext.ComponentQuery.query('#btnSearch')[0].fireEvent('click',this);
                                                      } //if
                                                  } //specialkey
-                                             } //listeners
-
+                                             } //listeners 
                                              //cboxsearch
+                                         },
+                                         {
+                                             xtype: 'checkbox',
+                                             name: 'chkFuzzy',
+                                             cls: 'chkFuzzy',                
+                                             boxLabel: SearchTool.config.Config.fuzzyChkCaptionValue,
+                                             tooltip: 'This will enable Fuzzy Search capabilities for the keyword(s) entered.'
+                                         }
+                                         ]
                                          },
                                           {
                                              xtype: 'displayfield',
@@ -152,13 +160,32 @@
          } //tabpanel 
          , { //FROM, TO dates
                xtype: 'container',
-               width: '18%',
+               width: '10%',
+               margins: '25px 0 2px 15px',
+               items: [
+               {
+                    xtype:'combo',
+                    name: 'datefield',
+                    fieldLabel:'',
+                    width:100,
+                    store:SearchTool.config.Config.calendarDateOptions,
+                    value:SearchTool.config.Config.calendarDateOptionsUser,
+                    editable: false,
+                    allowBlank: false,
+                    autoSelect: true,
+                    forceSelection: true                    
+                    }
+                ]
+           },
+           {
+               xtype:'container',
+               width: '15%',
                                      layout: {
                                          type: 'vbox',
-                                         defaultMargins: '25px 1px 2px 10px',
-                                          pack: 'right',
-                                          align:'right',
-                                         padding: '0 10 0 2',
+                                         defaultMargins: '25px 0 2px 10px',
+                                          pack: 'center',
+                                          align:'center',
+                                         padding: '0 5 0 2',
                                          cellPadding: 4
 
                                      },
@@ -176,23 +203,22 @@
                                      },
                                      items: [{
                                              name: 'startDate',
+                                             fieldLabel: 'From',
+                                             labelCls: 'lblDate',
+                                             labelWidth: 30,
                                              deferredRender: false,
-                                             margins: '25px 1px 2px 10px',
                                              itemId: 'dtUserSearchFrom',
                                              emptyText: 'mm/dd/yyyy',
                                              altFormats: 'mdY',
                                              maxValue: new Date(),
-                                             labelWidth: 30,
-                                             width: 132,
-                                             fieldLabel: 'From',
+                                             width: 130,
                                              vfield: 'searchFromDate',
                                              endDateField: 'dtUserSearchTo',
                                              vtype: 'DateRange',
                                              //value: Ext.Date.format(Ext.Date.add(new Date(), Ext.Date.MONTH, SearchTool.config.Config.defaultDateAmt),'m-d-Y'),
                                              listeners: {
                                                  scope: this,
-                                                 change: function (field, newValue,
-                                                     oldValue) {
+                                                 change: function (field, newValue, oldValue) {
                                                      if (newValue === null) {
                                                          Ext.form.field.VTypes.DateRange(newValue, field);
                                                      }
@@ -200,14 +226,15 @@
                                              }
                                          }, {
                                              name: 'endDate',
-                                             itemId: 'dtUserSearchTo',
+                                             fieldLabel: 'To',
+                                             labelCls: 'lblDate',
                                              labelWidth: 18,
+                                             itemId: 'dtUserSearchTo',
                                              width: 120,
                                              margins: '10px 1px 2px 10px',
                                              emptyText: 'mm/dd/yyyy',
                                              altFormats: 'mdY',
                                              maxValue: new Date(),
-                                             fieldLabel: 'To',
                                              vfield: 'searchToDate',
                                              vtype: 'DateRange',
                                              startDateField: 'dtUserSearchFrom',

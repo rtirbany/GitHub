@@ -42,7 +42,7 @@ Ext.define('SearchTool.config.Config', {
     //captions & labels
     searchCboxCaptionLabel:'Enter search term(s):',
     searchCboxCaptionValue:'(* = wildcard; ? = single char wildcard)',
-    fuzzyChkCaptionLabel: 'Use Fuzzy Search',
+    fuzzyChkCaptionValue: 'Use Fuzzy Search',
     searchSaveChkCaptionLabel : 'Save this Search',
     qryBuilderCaptionLabel:'Advanced (Boolean)',
     titlePnlFilters:    'Narrow Results',
