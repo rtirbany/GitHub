@@ -1,5 +1,6 @@
 Ext.define('SearchTool.config.Config', { 
   statics: {
+    cookieNameSSO: 'CHROME_SSO_NAME',
     ajaxTimout: 10000,
     
     urlMethodCreate: 'POST',
@@ -11,6 +12,7 @@ Ext.define('SearchTool.config.Config', {
     urlReferences : '',
     urlKeyword: 'data/keywords.json',
     urlSources:  'data/sources.json',
+    urlSearchSave: '/ccd-central/search/save',
     fields:  'data/searchfields.json',
     defaultSortDir: 'asc',
     defaultSortProperty: 'summary',
@@ -35,12 +37,12 @@ Ext.define('SearchTool.config.Config', {
     msgErrorContactAdmin: 'We apologize for the inconvenience, please contact an Admin',
     loadMsg: 'Loading Application raj.  Please wait...',  
     
-    dbEscapeChar : '\\',  //for mysql
+    dbEscapeChar : '',  //for mysql
     //searchUrl : 'http://localhost:80/r',
     //captions & labels
     searchCboxCaptionLabel:'Enter search term(s):',
     searchCboxCaptionValue:'(* = wildcard; ? = single char wildcard)',
-    searchChkCaptionLabel: 'Summary Field Only',
+    fuzzyChkCaptionLabel: 'Use Fuzzy Search',
     searchSaveChkCaptionLabel : 'Save this Search',
     qryBuilderCaptionLabel:'Advanced (Boolean)',
     titlePnlFilters:    'Narrow Results',
@@ -66,10 +68,7 @@ Ext.define('SearchTool.config.Config', {
     defaultPageSizeAdmin: 25,
     warningExport : 50, //number of results to exceed for export warning to appear
     maxResults : 5000, //maximum number of results to display
-    
-    numMaxQuerySave: 25,
-    numMaxFavorites: 25,
-    
+      
     rsDateColFormat : 'm-d-Y',//y=2 dig yr
     customCalendarStyle : 'cal',
     customCalendarWeekstart : 0, //0 = Sunday, 6 = Saturday
@@ -80,6 +79,7 @@ Ext.define('SearchTool.config.Config', {
     //docviewer settings
     docViewerTitle: 'Document Viewer: ',
     docViewerUrlRoot: '/data/docs/',
+    docViewerFormatDefault: 'html',
     urlTokenXml: 'xml',
     urlTokenText: 'raw',
     disableXml: false,
@@ -90,10 +90,10 @@ Ext.define('SearchTool.config.Config', {
     searchBtnSearchTtip:'Runs Search',
     //settings page
     dfAdminSettings: 'These are the system settings which were set by an Admin',
-    //not working yet
-    searchCBoxTooltip: 'Enter search terms here; Use * for all wildcards, ? for single character wildcards',
-    
     numMaxQuerySave: 25,
-    numMaxFavorites: 50
+    numMaxFavorites: 50,
+    //not working yet
+    searchCBoxTooltip: 'Enter search terms here; Use * for all wildcards, ? for single character wildcards'
+    
   }
 });
