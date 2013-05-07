@@ -14,93 +14,11 @@ var sm = Ext.create('Ext.selection.CheckboxModel', {
 Ext.define('SearchTool.view.main.ResultsGrid', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.resultsgrid',
+    overflowX: 'hidden',
+    overflowY: 'hidden',
     cls: 'gridResults',
     requires: ['SearchTool.config.Config', 'SearchTool.view.main.component.WinSave', 'SearchTool.util.TplFilter'],
-//    tools: [  
-//        {
-//          xtype:'combo',
-//          cls:'hdrCombo',
-//          maxWidth:120,
-//          minWidth:120,
-//          fieldLabel:'Style',
-//          labelWidth:40,
-//          labelAlign:'right',
-//          disabled:true,
-//          store: SearchTool.config.Config.ResultsDisplayOptions,
-//          value: SearchTool.config.Config.defaultResultsDisplayUser,
-//          editable: false,
-//          autoSelect: true,
-//          forceSelection: true
-//        }, {
-//            xtype: 'tbspacer',
-//            width: '2%',
-//            maxWidth: 6,
-//            minWidth: 4
-//        }, {
-//            xtype: 'dataview',
-//            itemId: 'dvResultsParams',
-//            cls: 'dvParams',
-//            store: 'QueryFilters',
-//            tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
-//            height: 34,
-//            flex: 1,
-//            overflowY: 'hidden',
-//            overflowX: 'hidden',
-//            itemSelector: 'input.btn_searchitem_remove13'
-//            //overItemCls: 'facetitem-over',
-//            //iconCls: 'icon-btnClear',
-//        },  
-//         {xtype:'tbfill'},
-//        {
-//            xtype: 'tbspacer',
-//            width: '2%',
-//            maxWidth: 6,
-//            minWidth: 4
-//
-//        },
-//         {
-//                    xtype: 'button',
-//                    itemId: 'btnSaveQuery',
-//                    cls: 'chkSaveQuery',
-//                    text: 'Save Query',
-//                    disabled: true,
-//                    width: '9%',
-//                    maxWidth: 70,
-//                    minWidth: 55,
-//                    tip: SearchTool.config.Config.searchSaveChkCaptionLabel
-//         },
-//         {
-//            xtype: 'tbspacer',
-//            width: '2%',
-//            maxWidth:10,
-//            minWidth:6
-//         }, {
-//                    xtype: 'button',
-//                    name: 'btnVisualize',
-//                    itemId: 'btnVisualize',
-//                    cls: 'chkSaveQuery',
-//                    text: 'Visualize',
-//                    width:'7%',
-//                    maxWidth: 55,
-//                    minWidth: 45,
-//                    tip: SearchTool.config.Config.searchSaveChkCaptionLabel
-//         }, {
-//            xtype: 'tbspacer',
-//            width: '2%',
-//            maxWidth:6,
-//            minWidth:4
-//           
-//         }
-//
-//        , {
-//            type: 'help',
-//            tooltip: 'Help page for Results area',
-//            width:'3%',
-//            maxWidth:13,
-//            minWidth:10,
-//            handler: function (ev, el, p) {}
-//        }
-//    ],
+    title:'Results',
     header:{
     xtype : 'container',
     layout:'hbox',
@@ -137,28 +55,54 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
             width: '2%',
             maxWidth: 6,
             minWidth: 4
-        }, {
+        }, 
+        {
+           
             xtype: 'dataview',
             itemId: 'dvResultsParams',
             cls: 'dvParams',
             store: 'QueryFilters',
             tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
             height: 34,
-            flex: 1,
+            maxWidth:350,
             overflowY: 'hidden',
             overflowX: 'hidden',
             itemSelector: 'input.btn_searchitem_remove13'
             //overItemCls: 'facetitem-over',
             //iconCls: 'icon-btnClear',
-        },
+         },
         //27% below this
         {
+            xtype: 'tbfill'
+        },
+        { 
+                            xtype:'button',
+                            text: 'Export',
+                            iconCls: 'icon-btnExport',
+                            cls: 'resultsgridbtn',
+                            menu: {
+                                plain: true,
+                                showSeparator: true,
+                                items: [{
+                                    text: 'Export as Excel',
+                                    iconCls: 'icon-mnuExcel',
+                                    tooltip: 'Export Results as Excel (.xlsx) file'
+                                }, {
+                                    text: 'Export as PDF',
+                                    iconCls: 'icon-mnuPdf',
+                                    tooltip: 'Export Results as PDF (.pdf) file'
+                                }]
+                            }
+                        
+          
+          
+        }
+        , {
             xtype: 'tbspacer',
             width: '2%',
-            maxWidth: 6,
-            minWidth: 4
-
-        },
+            maxWidth:10,
+            minWidth:6
+         },
          {
                     xtype: 'button',
                     itemId: 'btnSaveQuery',
@@ -169,7 +113,7 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                     width: '9%',
                     maxWidth: 70,
                     minWidth: 55,
-                    tip: SearchTool.config.Config.searchSaveChkCaptionLabel
+                    tooltip: SearchTool.config.Config.searchSaveChkCaptionLabel
          },
          {
             xtype: 'tbspacer',
@@ -185,16 +129,14 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                     width:'7%',
                     maxWidth: 55,
                     minWidth: 45,
-                    tip: SearchTool.config.Config.searchSaveChkCaptionLabel
+                    tooltip: SearchTool.config.Config.searchSaveChkCaptionLabel
          }, {
             xtype: 'tbspacer',
             width: '2%',
             maxWidth:6,
             minWidth:4
            
-         }
-
-        , {
+         }, {
             xtype: 'button',
             text: 'Help',
             cls: 'resultsgridbtn',
@@ -210,6 +152,12 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
             maxWidth:6,
             minWidth:4
            
+         },
+         {
+               xtype: 'hidden',
+               itemId: 'hdnSearchId',
+               value: ''
+         
          }
         ]
     },
@@ -407,14 +355,42 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                               labelWidth:20,
                               width:45,
                               name:'viewType',
-                              inputvalue:'xml',//SearchTool.config.Config.urlTokenXml,
+                              inputvalue: SearchTool.config.Config.urlTokenXml,
                               disabled:SearchTool.config.Config.disableXml 
+                         },
+                          {
+                              fieldLabel:'Text',
+                              labelWidth:20,
+                              width:35,
+                              name:'viewType',
+                              inputvalue: SearchTool.config.Config.urlTokenText,
+                              disabled:SearchTool.config.Config.disableText 
                          }
-                         ]
+                         ],
+                         listeners:{
+                              change: function(cb,ov,nv) {
+                                   var viewerData = tihs.up('panel');
+                                   viewerData.update('');
+                                   viewerData.el.mask('Retrieving document...','x-mask-loading');
+                                   var url= SearchTool.config.Config.urlDocviewerPrefix +'/'+nv.viewType+'/'+rec.data.repository +'/'+rec.data.type+'/'+rec.data.id;
+                                   
+                              }
                          
-                    }
+                         }
+                    },
+                    {
+                         xtype:'tbfill'
+                    },
+                    {
+                         text:'Save',
+                         iconCls:'icon=btnSave',
+                         disabled:SearchTool.config.Config.disableSave,
+                         handler: function (b,e){
+                         }
+                    }  
                     ]
                 },
+                
                 title: '[Document Viewer: ' + rec.data.source + ' ' + rec.data.serial + ']',
                 width: 600,
                 height: 600,
@@ -431,7 +407,7 @@ Ext.define('SearchTool.view.main.ResultsGrid', {
                 floating: true,
                 loader:{
                     autoLoad: true,
-                    url: 'data/acro.html'//SearchTool.config.Config.urlDocviewerPrefix + '/html/'+rec.data.repository+'/'+rec.data.type+'/'+rec.data.id
+                    url: 'data/acro.html'//SearchTool.config.Config.urlDocviewerPrefix + '/' + SearchTool.config.Config.docViewerFormatDefault+ '/'+rec.data.repository+'/'+rec.data.type+'/'+rec.data.id
                 }
             }).show();
         }
