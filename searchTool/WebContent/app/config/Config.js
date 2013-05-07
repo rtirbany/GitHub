@@ -57,7 +57,7 @@ Ext.define('SearchTool.config.Config', {
     defaultThemeUser: 'ext/resources/css/ext-all.css',
     
     //calendar fields
-    calendarDateOptions: [2,'Publish Date'],
+    calendarDateOptions: [[1,'Create Date'],[2,'Publish Date'],[3,'Report Date']],
     calendarDateOptionUser: 2,
     //results
     ResultsDisplayOptions: [['g','Grid'],['s','Search']],
