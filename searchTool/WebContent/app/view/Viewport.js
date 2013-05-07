@@ -9,7 +9,8 @@ Ext.define('SearchTool.view.Viewport', {
 		region : 'north',
 		border : false,
 		width : '100%',
-		height : 60,
+		height : 70,
+        bodyStyle: 'background-repeat:no-repeat; background-image:url(extjs/resources/images/magellan_logo.png);background-size: auto 100%;',
 		layout : {
 			type : 'hbox',
 			defaultMargins : '2px 5px 5px 5px',
@@ -18,13 +19,8 @@ Ext.define('SearchTool.view.Viewport', {
 		defaults : {
 			xtype : 'button'
 		},
-		items : [{
-					// TODO: use 'component' for logo
-					// width:, style:(bordering,padding,etc), html:(img
-					// src,style='w:X;h:Y')
-					xtype : 'tbtext',
-					text : 'Classic Auto Parts Search Tool'
-				}, {
+		items : [
+                {
 					xtype : 'tbfill'
 				}, {
 					itemId : 'btnHome',

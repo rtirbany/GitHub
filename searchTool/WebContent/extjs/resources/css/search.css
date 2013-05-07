@@ -55,6 +55,10 @@
 	font-size: 10px;
 }
 
+.chkFuzzy{
+	font-size:9px;
+}
+
 .chkTitles{
 	font-size: 10px;
 }
@@ -85,15 +89,36 @@
 	margin: 2px 5px 1px 5px;
 	padding: 2px 9px 2px 9px;
 }
- 
- .facet {
-	width:100%;
-	background: #A4D2AA;
-} 
-.facet_field {
-	background: #A4D2AA;
+
+.pnlFilterMgmt {
+	/* background-color: #7BA9C7; */
+}
+
+.qryLinkButton {
+	background: #D4D4ee;
+	text-decoration: none;
+	width: 55px;
+	margin: 2px 5px 1px 5px;
+	border: 1px solid #888888;
+	padding: 2px 9px 2px 9px;
+	font-size: 11px;
+	font-weight: bold;
+	color: #333333;
+}
+
+.facetitem-over {
+	border: 1px solid #FF0000; 
+	font-color: #333333;
+	text-decoration:underline;
+	font-size: 13px;
 	font-weight: bold;
 }
+
+ .facet {
+	background: #A4D2AA; /* #82BBBB */
+	cursor: pointer;
+} 
+ 
 .facet_item {
 	background: #D4D2AA;
 	/* width:100%; turned this off*/  
@@ -116,45 +141,10 @@
 	background: #FFFFFF;
 	width: 21px;
 	height: 21px; 
+	cursor: pointer;
 	background-image: url(../images/filter_erase.png) !important;
 	background-repeat:no-repeat;
 	background-position:center; 
-}
-
-/* facet src label+button, facet src */
-.facetselection_product {
-	background: #D4FFFF;
-	text-decoration: none;
-	margin: 2px 0px 1px 0px;
-	padding: 3px 20px 3px 8px;
-	height: 21px; 
-	font-size: 11px;
-	font-weight: bold;
-	border-top: 1px;
-	border-bottom: 0px;
-	border-color: #D4FFFF;
-	border-style: solid;
-	font-color: #333333; 
-}
-
-.facetsrc_remove {
-	background-color: #D4FFFF;
-	border-style: solid;
-	border-width:0px;  
-	margin-left:1px; 
-}
-
-/* facet item label+button, facet item */
-.facetitem_remove { 
-	background-color: #D4D4EE;
-	border-style: solid;
-	border-width:0px;  
-	margin-left:1px;
-} 
-
-.facetselection_item{
-	margin-left:5px;
-	margin-right:5px;
 }
 
 /* btn for removing keyword n boolean */
@@ -167,19 +157,68 @@
 	background-position:center; 
 	background-size:100%;
 	vertical-align: text-top;
+	cursor: pointer;
 }
+
+/* facet src label+button, facet src */
+.filter_product {
+	background: #D4FFFF;
+	text-decoration: none;
+	margin: 2px 0 1px 0;
+	padding: 3px 20px 3px 8px;
+	height: 21px; 
+	font-size: .9em;
+	font-weight: normal;
+	border-top: 1px;
+	border-bottom: 0;
+	border-color: #D4FFFF;
+	border-style: solid;
+	font-color: #333333;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.facetsrc_remove {
+	background-color: #D4FFFF;
+	border-style: solid;
+	border-width:0;  
+	margin-left:1px; 
+}
+
+/* facet item label+button, facet item */
+.facetitem_remove { 
+	background-color: #D4D4EE;
+	border-style: solid;
+	border-width:0;  
+	margin-left:1px;
+} 
+
+.filter_item{
+	margin-left:5px;
+	margin-right:5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 /* div area containing btn + keyword */
 .searchitem_remove {
 	background: #FF0000;
 	border-style: solid;
 	border-width:1px;  
 	margin-left:1px;
+	height: 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 } 
 
 .keyword_item {
 	margin-left:5px;
 	margin-right:5px; 
 	font-size: 10px;
+	height: 10px;
 	vertical-align: text-top;
 }
 
@@ -189,25 +228,27 @@
 	border-style: solid;
 	border-width:1px;  
 	margin-left:1px;
+	height:16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .bool_item {
 	margin-left:5px;
 	margin-right:5px; 
 	font-size: 10px;
 	vertical-align: text-top;
+	height: 10px;
 }
  
 .mygrid .x-panel-header {
     height: 30px;
 } 
  
-.facetitem-over {
-	border: 2px solid #FF0000; 
-	font-color: #333333;
-	text-decoration:underline;
-	font-size: 13px;
-	font-weight: bold;
+.x-btn-icon-el x-tbar-loading {
+	display: none !important;
 }
+
 .overQryLinkbutton {
 	border: 2px solid #FF0000; 
 	font-color: #333333;
@@ -218,7 +259,7 @@
 
 /* boolean search area */
 .searchBooleanTextArea {
-	border: 0px !important;
+	border: 0 !important;
 	border: none !important;
 	background: #DFE8F5; 
 }
@@ -236,10 +277,15 @@
 	font-weight: bold;
 }
 
+.btnSearchBoolean {
+	background-color: #F7F7F7;
+	border-color:  #F7F7F7;
+	color: black !important;
+}
+
 .btnPagingToolbar .x-btn-inner{
-	white-space:normal;
-	line-height:normal;
-	height:auto;	
+	border-color: #F7F7F7; 
+	text-align: center;	
 }
 
 .btnDateRanges .x-btn-inner{
@@ -276,10 +322,21 @@
     border-top-color: #999; 
     border-top-style: solid; 
 }
+
+.x-form-display-field{
+	font-weight: bold;
+	line-height: 12px;
+	width: 40;
+}
+
+.logoChrome {
+	background-image: url(../images/magellan_logo.png) !important;
+}
+
 /* resultsgrid title */
 .resultsgridtitle {
 	margin-top:8px;
-	color: #04408c !important; 
+	color: #04408C !important; 
 	font-weight: bold;
 	font-family: tahoma,arial,verdana,sans-serif;
 }
@@ -292,17 +349,15 @@
 	margin-top:4px;
 }
 
-.x-form-display-field{
-	font-weight: bold;
-	line-height: 12px;
-	width: 40;
-}
 
 /* Display style */
 .resultsgridvalue {
 	font-family: tahoma,arial,verdana,sans-serif;
 }
 
+.lblDate {
+	text-align: left;
+}
 /* icons */
 .icon-contact { 
 	background-image: url(../images/book_open.png) !important;
