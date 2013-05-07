@@ -72,15 +72,14 @@ Ext.define('SearchTool.controller.QueryFilters', {
     }, 
     
     getSourcesData: function (store,records, opts){
-          var  tmp = store.proxy.reader.jsonData,
-               storeSources = Ext.StoreManager.lookup('Sources');
-          storeSources.clearData(true);
+          var  tmp = store.proxy.reader.jsonData;
+          this.clearData(true);
           if (tmp && tmp.repoDefinitions && tmp.repoDefinitions.length > 0){
-             storeSources.loadRawData(tmp.repoDefinitions);
+             this.loadRawData(tmp.repoDefinitions);
               var t,i,j, chkgroup, chkboxes = [];
-              for (i=0;i<storeSources.data.items.length;i++){
-                 t = storeSources.data.items[i];
-                 chkgroup = Ext.create('Ext.form.CheckboxGroup',{fieldLabel:t.raw.repositoryId, itemId:'chkgroup'+t.raw.repositoryId, layout:'vbox', labelWidth:75, columns:[.8]});
+              for (i=0;i<this.data.items.length;i++){
+                 t = this.data.items[i];
+                 chkgroup = Ext.create('Ext.form.CheckboxGroup',{fieldLabel:t.raw.repositoryId, itemId:'chkgrp'+t.raw.repositoryId, layout:'vbox', labelWidth:75, columns:[.8]});
                  for (j=0;j<t.data.productDefinitions.length;j++){
                     var c = t.data.productDefinitions[j],
                         prodBox = {xtype: 'checkbox', name: t.raw.repositoryId+'.'+c.productName, 
@@ -102,8 +101,8 @@ Ext.define('SearchTool.controller.QueryFilters', {
                newPnl, t,i=0,j;
           pnl.items.items.length = 1;
           pnl.update();
-          if (tmp.searchId && searchId.length > 0)
-               Ext.ComponentQuery.query('#btnVisualize')[0].id = tmp.searchId
+          if (tmp && tmp.searchId && tmp.searchId.length > 0)
+               Ext.ComponentQuery.query('#hdnSearchId')[0].id = tmp.searchId
           if (tmp && tmp.coreFacets && tmp.coreFacets.length > 0){
                storeFacets.removeAll(true);
                storeFacets.loadRawData(tmp.coreFacets);
@@ -132,7 +131,6 @@ Ext.define('SearchTool.controller.QueryFilters', {
                    );
                 pnl.add(newPnl);
                }
-               
           }
           if (tmp && tmp.cols && tmp.cols.length > 0){
           	   //new - cols come back in resultset
@@ -149,7 +147,7 @@ Ext.define('SearchTool.controller.QueryFilters', {
     },
     
     querySaveHandler: function(btn, e){
-          debugger;
+          Ext.create('SearchTool.view.main.component.WinSave',{title:'Save Query'}).show();
     },
     
     searchHandler: function (btn, e) {
@@ -163,7 +161,8 @@ Ext.define('SearchTool.controller.QueryFilters', {
                     arrParams = [
                          {type:'searchkeyword',key:'keywordString',value:params.keywordString.trim()},
                          {type:'searchboolean',key:'booleanString',value:params.txtSearchBoolean.trim()},
-                         //{type:'datefield',key:'datefield',value:params.datefield},
+                         {type:'datefield',key:'datefield',value:params.datefield},
+                         {type:'fuzzy',key:'fuzzy',value:params.chkFuzzy == 'on'},
                          {type:'startdate',key:'startdate',value:params.startDate},
                          {type:'enddate',key:'enddate',value:params.endDate}
                     ];
@@ -177,7 +176,7 @@ Ext.define('SearchTool.controller.QueryFilters', {
                     t = arrParams[i];
                     //idx = Ext.Array.indexOf(Ext.Array.pluck(Ext.Array.pluck(filtersStore.data.items,'data'),'type'),t.type);
                     //filtersStore.removeAt(idx);  //if it exists remove it, else nothing; preserves others
-                    if (t.value.length >0) {  //if value
+                    if (t.value && t.value != "") {  //if value
                         arrFilters.push(Ext.create('SearchTool.model.QueryFilter',{type:t.type,key:t.key,operator:'eq',tip:t.value,value:t.value}));  
                     } 
                 }
@@ -190,7 +189,7 @@ Ext.define('SearchTool.controller.QueryFilters', {
     
     facetSelect: function() { //t, r, item, index, e){ 
           var  pnl = Ext.ComponentQuery.query('pnlFilters')[0],
-               key= e.target.parentElement.getAttribute('id'),
+               key = e.target.parentElement.getAttribute('id'),
                val = e.target.getAttribute('id'),
                f = Ext.create('SearchTool.model.QueryFilter',{
                     type:'facet',key:key, operator: 'eq', value:val,tip:val
