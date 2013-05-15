@@ -51,6 +51,16 @@ Ext.define('SearchTool.config.Config', {
     defaultDateAmt : -1,
     qryBuilderTextFieldRegex : /^[$]{0,1}[0-9]*[0-9a-zA-Z\-\,\.\'\"\%\ \?\*]*$/, //$# (only 1 '$',0-1 w/many#, '.' w/ 0-2 #), %#(only 1'.' w/ many #), a-zA-Z0-9 punctuation, large comma-delim numbers, wildcards
     qryBuilderErrText : 'Invalid field entry',
+    qryBuilderOpers: [
+                          ['=', '='], ['>', '>'],
+                          ['<', '<'], ['>=', '>='],
+                          ['<=', '<='], ['!=', '!='],
+                          //['NOT EQUAL TO', 'NOT EQUAL TO'],
+                          //['BETWEEN', 'BETWEEN'], ['CONTAINS', 'CONTAINS'],
+                          //['DOES NOT CONTAIN', 'DOES NOT CONTAIN'], 
+                          ['IS NOT NULL', 'IS NOT NULL'],
+                          ['IS NULL', 'IS NULL']
+    ],
     
     //themes
     themes: [['ext/resources/css/ext-all.css','Default'],['extjs/resources/ext-theme-access/ext-theme-access-all.css','hi contrast']],
