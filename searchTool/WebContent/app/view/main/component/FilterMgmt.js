@@ -1,4 +1,4 @@
-var tplData = new Ext.XTemplate(
+var tplDataOrig = new Ext.XTemplate(
     '<tpl for=".">',
           '<tr><td class="facetitem_remove"><div style="width:100%;">',
           '<input type="button" title="remove this filter" class="btn_facetitemremove"/>',
@@ -6,14 +6,34 @@ var tplData = new Ext.XTemplate(
           '</div></td></tr></tpl>' //use array index to autonumber (starts at 1)
 );
 
-var tplSrc = new Ext.XTemplate(
+var tplSrcOrig = new Ext.XTemplate(
     '<tpl for=".">',
-    '<tr><td class="facetsrc_remove">',
+    '<tr><td class="facet_remove">',
           '<div style="width:100%;">',
           '<input type="button" title="remove this product" class="btn_facetitemremove"/>',
           '<label class="facetselection_product" title="{tip}">{key}&nbsp;=&nbsp;{value}</label>',
           '</div></td></tr>',
           '</tpl>' //use array index to autonumber (starts at 1)
+);
+
+var tplData = new Ext.XTemplate(
+    '<tpl for=".">',
+          '<li class="filter_remove">',
+          //'<a title="Remove&nbsp;{key}&nbsp;=&nbsp;{value}" class="facetitem_remove">',
+//            '<img src="extjs/resources/images/delete_blue_x.png" title="{key}&nbsp;=&nbsp;{value}"></img>',
+            '<label class="facetsrc_remove" style="width:100%;"><img src="extjs/resources/images/delete_blue_x.png" title="{key}&nbsp;=&nbsp;{value}"></img>&nbsp;{key}&nbsp;=&nbsp;{value}<label>',
+          //  '</a>',
+           '</li></tpl>' //use array index to autonumber (starts at 1)
+);          
+var tplSrc = new Ext.XTemplate(
+    '<tpl for=".">',
+     '<li class="filter_remove">', 
+            //'<a title="Remove&nbsp;{key}&nbsp;=&nbsp;{value}" class="facetsrc_remove">',
+//            '<img src="extjs/resources/images/delete_blue_x.png" title="{key}&nbsp;=&nbsp;{value}"></img>',
+            '<label class="facetsrc_remove" style="width:100%;"><img src="extjs/resources/images/delete_blue_x.png" title="{key}&nbsp;=&nbsp;{value}"></img>&nbsp;{key}&nbsp;=&nbsp;{value}</label>',
+            //'</a>',
+     '</li></tpl>' //use array index to autonumber (starts at 1)
+
 );
 
 //var tplDate = new Ext.XTemplate(
@@ -22,10 +42,10 @@ var tplSrc = new Ext.XTemplate(
 //);
 
 var mainTpl = new Ext.XTemplate(
-    '<table class="facetgroup">',
+    '<ul class="facetgroup">',
     '<tpl for=".">',
     '{[this.renderItem(values)]}',
-    '</tpl></table>', {
+    '</tpl></ul>', {
     renderItem: function (val) {
         switch (val.type) {
           case 'source' : x = tplSrc.apply(val); break;
@@ -41,9 +61,9 @@ var mainTpl = new Ext.XTemplate(
 Ext.define('SearchTool.view.main.component.FilterMgmt', {
     extend: 'Ext.container.Container',
     alias: 'widget.filtermgmt',
+    cls: 'pnlFilterMgmt',
     border: false,
     layout: 'vbox',
-    requires: ['SearchTool.util.TplFilter'],
     items: [{
             xtype: 'container',
             layout: 'hbox',
@@ -86,7 +106,7 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
             overflowY: 'auto',
             overflowX: 'hidden',
             width:'100%',
-            itemSelector: 'input.btn_facetitemremove',
+            itemSelector: 'li.filter_remove',
 //            overItemCls: 'facetitem-over',
             //iconCls: 'icon-btnClear',
             emptyText: '(no filters selected)'
