@@ -2,8 +2,8 @@ Ext.define('SearchTool.controller.QueryFilters', {
     extend: 'Ext.app.Controller',
     views: ['Viewport','SearchTool.view.main.component.FilterMgmt','SearchTool.view.main.ResultsGrid'],
     models: ['FacetGroup','QueryFilter'],
-    stores: ['Facets','Sources','Keywords','Results','QueryFilters'], 
-    requires: ['SearchTool.util.dom'],
+    stores: ['Facets','Sources','Keywords','Results','QueryFilters','UniversalSearchFields'], 
+    requires: ['SearchTool.util.dom','SearchTool.view.main.component.PnlGroup'],
     refs: [{
                ref: 'pnlDataSources',
                selector: 'panel[itemId=pnlSources]'
@@ -67,70 +67,121 @@ Ext.define('SearchTool.controller.QueryFilters', {
             },
             'button[itemId=btnRelaxAll]': {
                click: me.filterRelaxAll
+            },
+            'container[itemId=tbSaved] button': {
+               click: me.queryRunHandler
             }
         }); //control function
     }, 
     
+    //TODO: check this..new source model
+    //this.data.items[x].data to gete to (1) repo;
+    //this.getAt(0).products().getAt(0).get('productName')
     getSourcesData: function (store,records, opts){
-          var  tmp = store.proxy.reader.jsonData;
+          var  tmp = store.proxy.reader.jsonData,
+               pnl = Ext.ComponentQuery.query('#pnlSources')[0];
           this.clearData(true);
           if (tmp && tmp.repoDefinitions && tmp.repoDefinitions.length > 0){
              this.loadRawData(tmp.repoDefinitions);
               var t,i,j, chkgroup, chkboxes = [];
               for (i=0;i<this.data.items.length;i++){
                  t = this.data.items[i];
-                 chkgroup = Ext.create('Ext.form.CheckboxGroup',{fieldLabel:t.raw.repositoryId, itemId:'chkgrp'+t.raw.repositoryId, layout:'vbox', labelWidth:75, columns:[.8]});
-                 for (j=0;j<t.data.productDefinitions.length;j++){
-                    var c = t.data.productDefinitions[j],
-                        prodBox = {xtype: 'checkbox', name: t.raw.repositoryId+'.'+c.productName, 
-                                 boxLabel: c.productName};
+                 chkgroup = Ext.create('Ext.form.CheckboxGroup',{fieldLabel:t.data.repositoryId, itemId:'chkgrp'+t.data.repositoryId, layout:'vbox', labelWidth:75, columns:[.8]});
+                 for (j = 0;j < this.getAt(0).products().data.items.length; j++){
+                    var c = this.getAt(0).products().getAt(j).get('productName'),
+                        prodBox = {xtype: 'checkbox', name: t.data.repositoryId+'.'+c, boxLabel: c};
                      chkboxes.push(prodBox)
                  }
                  chkgroup.add(chkboxes);
                  chkboxes.length = 0;
-                 Ext.ComponentQuery.query('#pnlSources')[0].add(chkgroup);
+                 pnl.add(chkgroup);
               }  
+          }
+          else {
+               pnl.removeAll();
+               pnl.add({xtype:'component',html:'No Sources available at this time'});
           }
     },
     getAllResultsData: function(store, records, opts){
           Ext.ComponentQuery.query('#btnVisualize')[0].setDisabled(store.data.items.length == 0);
           Ext.ComponentQuery.query('#cbPageSize')[0].setDisabled(store.data.items.length == 0);
-          var  tmp = store.proxy.reader.jsonData, 
+          var  btnExport = Ext.ComponentQuery.query('#btnExport')[0],
+               btnCsv = Ext.ComponentQuery.query('#btnExportCsv')[0],
+               btnExcel = Ext.ComponentQuery.query('#btnExportExcel')[0],
+               btnExcel2007 = Ext.ComponentQuery.query('#btnExportExcel2007')[0],
+               btnPdf = Ext.ComponentQuery.query('#btnExportPdf')[0],
+               
+               tmp = store.proxy.reader.jsonData, 
                pnl = Ext.ComponentQuery.query('#pnlFacets')[0],
                storeFacets = Ext.StoreManager.lookup('Facets'),
                newPnl, t,i=0,j;
           pnl.items.items.length = 1;
+          pnl.border = false;
           pnl.update();
-          if (tmp && tmp.searchId && tmp.searchId.length > 0)
-               Ext.ComponentQuery.query('#hdnSearchId')[0].id = tmp.searchId
+          if (tmp && tmp.searchId && tmp.searchId.length > 0) {
+               btnExport.enable();
+               Ext.ComponentQuery.query('#btnSearchId')[0].id = tmp.searchId;
+               //TODO: change hrefs of each button to add tmpsearchID 
+               //btnCsv.href = (urlExportRoot + urlExportTokenCsv + tmp.searchID; //only works on first and prior to render or ? so below ifs are needed
+               //if (btnCsv.el)
+               //     btnCsv.el.dom.children[0].href ...
+          }
+          if (tmp && tmp.searchFilters) {
+               var storeFilters = Ext.StoreManager.lookup('QueryFilters'),
+                    arrFilters = [];
+               storeFilters.removeAll(true);
+               for (;i<searchFilters.length;i++) {
+                    t = tmp.searchFilters[i];
+                    j = Ext.create('SearchTool.model.QueryFilter',{type:'',key: t.filter, operator: 'eq', tip: t.value, value: t.value});
+                    switch (t.filter) {
+                         case 'repo' : j.data.type= 'source'; j.data.key = 'Repo'; break;
+                         case 'keywordString' : j.data.type= 'searchkeyword'; Ext.ComponentQuery.query('#cboxSearch')[0].setValue(t.value); break;
+                         case 'booleanString' : j.data.type= 'searchboolean'; Ext.ComponentQuery.query('#txtSearchBoolean')[0].setValue(t.value); break;
+                         case 'startdate':      j.data.type = 'startdate'; Ext.ComponentQuery.query('#dtUserSearchFrom').setValue(t.value); break;
+                         case 'enddate':        j.data.type = 'enddate'; Ext.ComponentQuery.query('#dtUserSearchTo').setValue(t.value); break;
+                         default:               j.data.type = 'facet';
+                    } 
+               arrFilters.push(j);
+               }//for
+               storeFilters.add(arrFilters);
+               i=0;t=null;j=null;
+          }
           if (tmp && tmp.coreFacets && tmp.coreFacets.length > 0){
-               storeFacets.removeAll(true);
+               storeFacets.removeAll(true); 
                storeFacets.loadRawData(tmp.coreFacets);
-               for (;i<storeFacets.data.items.length;i++){
-                   t = storeFacets.data.items[i];
-                   storeFacets.filter({property:'facetName',value:t.data.facetName});
-                   var newStore = Ext.create('Ext.data.Store',{
-                         model: storeFacets.model,
-                         data: storeFacets.data.items
-                   });
-                   storeFacets.clearFilter(true);
-                   newPnl = Ext.create('Ext.panel.Panel',{
-                    width:'100%',
-                    title:t.data.facetName,
-                    items:[
-                         {    
-                              xtype:'dataview',
-                              tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
-                              trackOver: true,
-                              overItemCls: 'facetitem-over',
-                              store: newStore,
-                              itemSelector: 'div.facet'
-                         } 
-                    ] 
-                   }
-                   );
-                pnl.add(newPnl);
-               }
+//               for (;i<storeFacets.data.items.length;i++){
+//                   t = storeFacets.data.items[i];
+//                   storeFacets.filter({property:'facetName',value:t.data.facetName});
+//                   var newStore = Ext.create('Ext.data.Store',{
+//                         model: storeFacets.model,
+//                         data: storeFacets.data.items
+//                   });
+//                   storeFacets.clearFilter(true);
+//                   newPnl = Ext.create('Ext.panel.Panel',{
+//                    width:'100%',
+//                    title:t.data.facetName,
+//                    items:[
+//                         {    
+//                              xtype:'dataview',
+//                              tpl: SearchTool.util.TplFilter.loaderXTemplateRenderer,
+//                              trackOver: true,
+//                              overItemCls: 'facetitem-over',
+//                              store: newStore,
+//                              itemSelector: 'div.facet'
+//                         } 
+//                    ] 
+//                   }
+//                   );
+//                pnl.add(newPnl);
+//               }
+               var pnlGroup = Ext.create('SearchTool.view.main.component.PnlGroup'); 
+               pnl.add(pnlGroup);
+               
+          }
+          else {
+               pnl.add(Ext.create('Ext.panel.Panel',{width:'100%',border: false, title: 'No Filters Available', items: [
+                    {xtype:'component', html:'Filters are not available at this time'}]}));
+               
           }
           if (tmp && tmp.cols && tmp.cols.length > 0){
           	   //new - cols come back in resultset
@@ -140,16 +191,47 @@ Ext.define('SearchTool.controller.QueryFilters', {
           	   Ext.ComponentQuery.query('resultsgrid')[0].reconfigure(null,tmp.cols);
           	   	
                //old way - Ext.StoreManager.lookup('resultsgrid').loadRawData(tmp.cols);
-          }
+          } 
           Ext.ComponentQuery.query('#dvResultsParams')[0].refresh();
           Ext.ComponentQuery.query('#dvFacetSelections')[0].refresh();
-//          Ext.ComponentQuery.query('#dvFacets')[0].refresh();
     },
     
     querySaveHandler: function(btn, e){
           Ext.create('SearchTool.view.main.component.WinSave',{title:'Save Query'}).show();
     },
-    
+    queryRunHandler: function (btn, e){
+          var i= 0, arrSaved = btn.up('container').items.items;
+          this.getQueryFiltersStore().removeAll(true);
+          this.getDvParams().refresh();
+          this.getDvFilters().refresh();
+          
+          for (;i< arrSaved.length; i++){
+               arrSaved[i].toggle(false);
+          }
+          arrSaved = null;
+          btn.toggle(true);
+          Ext.ComponentQuery.query('searchArea')[0].getForm().reset();
+          
+          var arrFilters = [],
+              arr = Ext.ComponentQuery.query('#pnlSources')[0].items.items;
+          
+          for (; i< arr.length; i++) {
+               arr[i].suspendEvents(false);
+               arr[i].setValue(false);
+               arr[i].resumeEvents();
+          }
+          
+          arrFilters.push(Ext.create('SearchTool.model.QueryFilter',{type: 'savedSearch', key: 'savedSearchId', operator: 'eq', value: btn.id}));
+          this.getQueryFiltersStore().add(arrfilters);
+          
+          i = Ext.ComponentQuery.query('#btnCustomDate')[0];
+          i.toggle(true);
+          i.fireEvent('click',i);
+          debugger;
+          
+          arr = null;
+          arrFilters = null;
+    },
     searchHandler: function (btn, e) {
         var form = btn.up('form');
         //debugger;
@@ -165,24 +247,32 @@ Ext.define('SearchTool.controller.QueryFilters', {
                          {type:'fuzzy',key:'fuzzy',value:params.chkFuzzy == 'on'},
                          {type:'startdate',key:'startdate',value:params.startDate},
                          {type:'enddate',key:'enddate',value:params.endDate}
-                    ];
+                    ],
+                  bbarFilters;
                   //find if there's an existing filter of this type; if so, get the index location (even if empty param still need idx to remove)
                   //if the param entry exists (value.trim().length > 0), create model object
                   //if idx found, replace exixting filter obj, else push
                   //if no param entry (value.trim().length == 0), remove filter obj from array
                 arrFilters = filtersStore.query('type','source').items.concat(filtersStore.query('type','facet').items); //need to preserve these
-           
+                bbarFilters = Ext.ComponentQuery.query('#bbarFilters')[0];
+                bbarFilters.items.items.length=1;
+                bbarFilters.update();
                 for (;i<arrParams.length;i++){
                     t = arrParams[i];
                     //idx = Ext.Array.indexOf(Ext.Array.pluck(Ext.Array.pluck(filtersStore.data.items,'data'),'type'),t.type);
                     //filtersStore.removeAt(idx);  //if it exists remove it, else nothing; preserves others
                     if (t.value && t.value != "") {  //if value
-                        arrFilters.push(Ext.create('SearchTool.model.QueryFilter',{type:t.type,key:t.key,operator:'eq',tip:t.value,value:t.value}));  
-                    } 
+                        t = Ext.create('SearchTool.model.QueryFilter',{type:t.type,key:t.key,operator:'eq',tip:t.value,value:t.value});
+                        arrFilters.push(t);
+                        if (t.data.type == 'searchkeyword' || t.data.type == 'searchboolean')
+                           bbarFilters.add({text:t.data.value, tooltip:t.data.key+'='+t.data.value, cls:'resultsgridbtn'});
+                    }
                 }
+                t = null;
                 filtersStore.removeAll(true);
                 filtersStore.add(arrFilters);
-                Ext.ComponentQuery.query('#dvResultsParams')[0].refresh();
+//                Ext.ComponentQuery.query('#dvResultsParams')[0].refresh();
+                
                 form.up('tabpanel').el.unmask();
         } //if
     },
@@ -219,10 +309,10 @@ Ext.define('SearchTool.controller.QueryFilters', {
           pnl.el.unmask();
     },
     
-    filterToggleProducts: function (c,e) {
+    filterToggleProducts: function (c,e,o) {
         var //key='Use product', //reqd for insert and removal b/c removal requires search on very same key
             m = Ext.create('SearchTool.model.QueryFilter',{
-               type:'source',id:c.id, key:'Repo', operator:'eq', value:c.name,
+               type:'source', id: c.id, key:'Repo', operator:'eq', value:c.name,
                tip:c.name.substring(c.name.indexOf('.')+1)
             }),
             pnl = Ext.ComponentQuery.query('pnlFilters')[0],
@@ -238,11 +328,8 @@ Ext.define('SearchTool.controller.QueryFilters', {
           //this.getQueryFiltersStore().sort({property:'type',direction:'DESC'});
           this.getQueryFiltersStore().insert(0,arr);
         }
-        else {
-          var idx = this.getQueryFiltersStore().indexOf(m);
-          if (idx > -1) {
-             this.getQueryFiltersStore().removeAt(idx);
-             }
+        else { 
+          this.getQueryFiltersStore().removeAt(this.getQueryFiltersStore().find('value',c.name));
         }
         this.getDvParams().refresh();
         this.getDvFilters().refresh();
@@ -251,7 +338,7 @@ Ext.define('SearchTool.controller.QueryFilters', {
     
     
     filterRemoveSingle: function (t, r, item, index, e) { 
-        //fires datachange event 
+        //fires datachange event
         var pnl = Ext.ComponentQuery.query('pnlFilters')[0];
         pnl.el.mask('Updating filters....','x-mask-loading');
         t.store.removeAt(index); 
@@ -269,7 +356,10 @@ Ext.define('SearchTool.controller.QueryFilters', {
         //fires datachange event
         var idx = Ext.Array.pluck(Ext.Array.pluck(this.getQueryFiltersStore().data.items,'data'),'type').indexOf(item.id),
             pnl = Ext.ComponentQuery.query('pnlFilters')[0];
-        pnl.el.mask('Updating filters....','x-mask-loading'); 
+        pnl.el.mask('Updating filters...', 'x-mask-loading');
+        if (item.nextElementSibling && item.nextElementSibling.innerText) {
+          var z = item.nextElementSibling.innerText;
+        }
         switch (item.id){
                 case 'searchkeyword': //if ( this.getTxtKeyword().rawValue.trim() == z.slice(z.indexOf('=')+2)) 
                          this.getTxtKeyword().reset();break;
@@ -278,9 +368,8 @@ Ext.define('SearchTool.controller.QueryFilters', {
         }  
         t.store.removeAt(idx);
         
-        this.getDvFilters().refresh();
         this.getDvParams().refresh();
-        this.getDvParams().update();
+        this.getDvFilters().refresh();
         pnl.el.unmask();
 //        fires too many events
 //        t.store.filter('type',item.name);

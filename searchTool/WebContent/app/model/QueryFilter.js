@@ -8,5 +8,21 @@ Ext.define('SearchTool.model.QueryFilter',{
               {name:'operator'},
               {name:'value'},
               {name:'tip'}
-            ]
+            ],
+     proxy:{
+          type:'rest',
+          url:'data/facetselections.json',
+          filterParam:'Filters',
+//        afterRequest:function(req,res){ 
+//        },
+          reader:{ 
+               type:'json',
+               root:'rows',
+               totalProperty:'results',
+               successProperty:'success'
+          },
+          actionMethods:{
+               read:'POST', create:'POST', update:'POST', destroy:'POST'
+          }
+     }
 });

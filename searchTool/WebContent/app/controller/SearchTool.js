@@ -8,12 +8,14 @@ Ext.define('SearchTool.controller.SearchTool', {
     extend: 'Ext.app.Controller',
     views: ['Viewport', 'SearchTool.view.help.Reference'],
     models: ['Product'],
-    stores: [ 'Acros'],
+    stores: [ 'Acros','QueriesSaved'],
     requires: ['SearchTool.util.dom'],
-    refs: [{
-        ref: 'history',
-        selector: 'container[itemId=tbHistory]'
-    }],
+    refs: [
+               {
+                ref: 'history',
+                selector: 'container[itemId=tbHistory]'
+               }
+          ],
     init: function () {
         var me = this;
         Ext.apply(Ext.form.field.VTypes, {
@@ -22,7 +24,7 @@ Ext.define('SearchTool.controller.SearchTool', {
                     return true;
                 }
             },
-            searchKeyword: 'Keywords may only contain letters and numbers.'
+            searchKeywordText: 'Keywords may only contain letters and numbers.'
         }); 
        
        me.control({ 

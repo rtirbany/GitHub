@@ -8,6 +8,18 @@ Ext.define('SearchTool.model.Keyword',{
 //		associationKey:'products'
 //	}
 //	],
-	fields:[{name:'id',type:'int'},
-		    {name:'keyword',type:'string'}]
+	fields:[{name:'id',type:'int', convert:null},
+		    {name:'keyword'}],
+    proxy:{
+          type: 'ajax',
+          url: SearchTool.config.Config.urlKeyword,
+//        afterRequest:function(req,res){ 
+//        },
+          reader:{ 
+               type:'json',
+               root:'rows',
+               totalProperty:'results',
+               successProperty:'success'
+          }
+     }
 });

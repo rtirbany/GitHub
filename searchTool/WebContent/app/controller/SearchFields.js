@@ -1,3 +1,6 @@
+//TODO: [reponame]prodname:field="val" AND [reponame]prodname.:field="val2"
+//TODO: valid opers: =, >=, <=, !=, <, >
+
 var errWin = Ext.create('Ext.window.Window', {
     title: 'Errors found',
     height: 250,
@@ -7,13 +10,16 @@ var errWin = Ext.create('Ext.window.Window', {
     items: [{
         xtype: 'grid',
         border: false,
-        columns: [{
+        columns: [
+          {
             header: 'Line #',
             dataIndex: 'line'
-        }, {
+          }, 
+          {
             header: 'Error',
             dataIndex: 'mssg'
-        }]
+          }
+       ]
     }],
     buttons: Ext.Msg.OKCANCEL
 })

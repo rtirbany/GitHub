@@ -1,5 +1,7 @@
 Ext.define('SearchTool.config.Config', { 
   statics: {
+    sessionTimeout: 99,     //in minutes
+    sessionGracePeriod: 20, //in seconds
     cookieNameSSO: 'CHROME_SSO_NAME',
     ajaxTimout: 10000,
     
@@ -8,11 +10,19 @@ Ext.define('SearchTool.config.Config', {
     urlMethodUpdate: 'PUT',
     urlMethodDelete: 'DELETE',
     
-    urlSearch: 'data/results.json',
-    urlReferences : '',
-    urlKeyword: 'data/keywords.json',
-    urlSources:  'data/sources.json',
-    urlSearchSave: '/ccd-central/search/save',
+    urlSearch: 'data/results.json',  
+    urlReferences : '',   
+    urlKeyword: 'data/keywords.json',  
+    urlSources:  'data/sources.json',  
+    urlSearchSave: 'data/saved.json', 
+    urlSearchSaveRetrieveAll: 'data/savedlist.json',
+    urlExportMethod: 'GET',
+    urlExportRoot: '/searchexport',
+    urlExportTokenCsv: '/csv/',
+    urlExportTokenExcel: '/xls/',
+    urlExportTokenExcel2007: '/xlsx/',
+    urlExportTokenPdf: '/pdf/',
+    
     fields:  'data/searchfields.json',
     defaultSortDir: 'asc',
     defaultSortProperty: 'summary',
@@ -31,30 +41,45 @@ Ext.define('SearchTool.config.Config', {
     vizWidgetEventChannelName: 'cd.viz',
     
     msgWaitQuery: 'Querying data.  Please wait...',
-    msgErrorQuery: 'Error communicating with ',
-    msgErrorQueryTitle: 'Communication error ',
+    msgErrorComm: 'Error communicating with ',
+    msgErrorCommTitle: 'Communication error ',
     msgErrorTryAgain: 'We apologize for the inconvenience, please try again shortly',
-    msgErrorContactAdmin: 'We apologize for the inconvenience, please contact an Admin',
+    msgErrorContactAdmin: 'We apologize for the inconvenience, please contact an Administrator',
     loadMsg: 'Loading Application raj.  Please wait...',  
     
     dbEscapeChar : '',  //for mysql
-    //searchUrl : 'http://localhost:80/r',
+    charWildcard: '*',
+    charSingleCharWildcard: '?',
+    qbuilderSetStart: '[',
+    qbuilderSetEnd: ']',
+    
+    //banner
+    msgBanner: 'TV',
+    bgcolorBanner: 'red',
+    bgcolorBannerBorder: 'red',
+    heightBanner: 20,
+     
     //captions & labels
+    searchCboxTooltip:'Enter search terms here; Use * for wildcards and ? for single character wildcards',
     searchCboxCaptionLabel:'Enter search term(s):',
-    searchCboxCaptionValue:'(* = wildcard; ? = single char wildcard)',
-    fuzzyChkCaptionValue: 'Use Fuzzy Search',
+    searchCboxCaptionValue: '(Use * for wildcards and ? for single char wildcards)',
+    searchCboxCaptionValueFuzzy: '(Wildcards not allowed when using Fuzzy Search)',
+    fuzzyChkCaptionValue: 'Fuzzy Search',
+    fuzzyToolTip: 'Allow slight misspelling for keywords entered (wildcards are not allowed)',
     searchSaveChkCaptionLabel : 'Save this Search',
+    searchVizToolTip: 'Run visualization',
     qryBuilderCaptionLabel:'Advanced (Boolean)',
     titlePnlFilters:    'Narrow Results',
     SmthgCaptionLabel:'(Smthg - User Tools or ?)',
     defaultDatePeriod : 'Ext.Date.MONTH',
     defaultDateAmt : -1,
-    qryBuilderTextFieldRegex : /^[$]{0,1}[0-9]*[0-9a-zA-Z\-\,\.\'\"\%\ \?\*]*$/, //$# (only 1 '$',0-1 w/many#, '.' w/ 0-2 #), %#(only 1'.' w/ many #), a-zA-Z0-9 punctuation, large comma-delim numbers, wildcards
+    qryBuilderTextFieldRegex : /^[$]{0,1}[0-9]*[0-9a-zA-Z\-\,\.\'\"\%\ \/\?\*]*$/, //$# (only 1 '$',0-1 w/many#, '.' w/ 0-2 #), %#(only 1'.' w/ many #), a-zA-Z0-9 punctuation, large comma-delim numbers, wildcards
     qryBuilderErrText : 'Invalid field entry',
     qryBuilderOpers: [
                           ['=', '='], ['>', '>'],
                           ['<', '<'], ['>=', '>='],
                           ['<=', '<='], ['!=', '!='],
+                          ['IN', 'IN'], ['NOT IN','NOT IN'],
                           //['NOT EQUAL TO', 'NOT EQUAL TO'],
                           //['BETWEEN', 'BETWEEN'], ['CONTAINS', 'CONTAINS'],
                           //['DOES NOT CONTAIN', 'DOES NOT CONTAIN'], 
@@ -88,19 +113,27 @@ Ext.define('SearchTool.config.Config', {
     
     //docviewer settings
     docViewerTitle: 'Document Viewer: ',
-    docViewerUrlRoot: '/data/docs/',
+    docViewerUrlRoot: '/services/search/html',
     docViewerFormatDefault: 'html',
+    docViewerLabelFormatHtml: 'HTML',
+    docViewerLabelFormatXml: 'XML',
+    docViewerLabelFormatText: 'Text',
+    urlTokenHtml: 'html',
     urlTokenXml: 'xml',
-    urlTokenText: 'raw',
+    urlTokenText: 'text',
     disableXml: false,
-    disableText: true,
-    disableSave: true,
+    disableText: false,
+    disableSave: false,
     //tooltips
     searchBtnClearTtip:'Clears keyword search criteria',
     searchBtnSearchTtip:'Runs Search',
     //settings page
     dfAdminSettings: 'These are the system settings which were set by an Admin',
-    numMaxQuerySave: 25,
+    
+    //user
+    numMaxQuerySave: 4,
+    numMaxQuerySaveEnforceLIFO: true,
+    numMaxQuerySaveEnforceFIFO: false,
     numMaxFavorites: 50,
     //not working yet
     searchCBoxTooltip: 'Enter search terms here; Use * for all wildcards, ? for single character wildcards'

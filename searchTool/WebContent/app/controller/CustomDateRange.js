@@ -38,7 +38,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
             'button[itemId=btnCustomDateRange]': {
                 click: me.processForm
             },
-            'button[itemId=btnCustomDate]': {
+            'button[itemId=btnDateAdvanced]': {
                 click: me.showComponentWithinTab
             },
             'datefield[itemId^=dtUser]': {
@@ -66,8 +66,10 @@ Ext.define('SearchTool.controller.CustomDateRange', {
         }
     },
     processForm: function (b, e) {
+        Ext.ComponentQuery.query('#rdoDateOptions')[0].reset();
         var me = this,
         //get values from CDR 
+        
             calType = me.getCdr_rdCalType().calType, //cal, fisc
             w = me.getCdr_chkWhole().value,
             c = me.getCdr_txtCount().value,
