@@ -70,7 +70,7 @@ Ext.define('SearchTool.config.Config', {
     searchVizToolTip: 'Run visualization',
     qryBuilderCaptionLabel:'Advanced (Boolean)',
     titlePnlFilters:    'Narrow Results',
-    SmthgCaptionLabel:'(Smthg - User Tools or ?)',
+    msgNoSavedQueries: '&nbsp;No saved queries were found',
     defaultDatePeriod : 'Ext.Date.MONTH',
     defaultDateAmt : -1,
     qryBuilderTextFieldRegex : /^[$]{0,1}[0-9]*[0-9a-zA-Z\-\,\.\'\"\%\ \/\?\*]*$/, //$# (only 1 '$',0-1 w/many#, '.' w/ 0-2 #), %#(only 1'.' w/ many #), a-zA-Z0-9 punctuation, large comma-delim numbers, wildcards
