@@ -24,6 +24,14 @@ var tplFacet = new Ext.XTemplate(
           '</tpl>' //use array index to autonumber (starts at 1)
 );
 
+var userSavedQuery = new Ext.XTemplate(
+     '<tpl for=".">',
+          '<img src="extjs/resources/images/delete_blue.png"',
+          '<label><img src="extjs/resources/images/table_go.png"></label>',
+     '</tpl>'
+
+);
+
 //var tplFilterData = new Ext.XTemplate(
 //    '<tpl for=".">',
 //          '<tr><td class="facetitem_remove"><div style="width:100%;">',
@@ -44,6 +52,16 @@ var tplFacet = new Ext.XTemplate(
  
 Ext.define('SearchTool.util.TplFilter',{
      singleton: true,
+     queryRenderer: new Ext.XTemplate(
+          '<tpl for=".">', 
+                '{[this.renderQuery(values)]}',
+          '</tpl>',
+          {
+               renderQuery: function(val){
+                    return '';
+               }
+          }
+     ),
      loaderXTemplateRenderer: new Ext.XTemplate(
                '<tpl for=".">',
                '{[this.renderItem(values)]}',

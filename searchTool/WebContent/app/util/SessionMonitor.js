@@ -1,10 +1,10 @@
 Ext.define('SearchTool.util.SessionMonitor', {
   requires:['SearchTool.config.Config'],
   singleton: true,
-  interval: 1000 * 10,  // run every 10 seconds.
-  lastActive: null,
   remaining: 0,
-  ui: Ext.getBody(), 
+  lastActive: null,
+  interval: 1000 * 10,  // run every 10 seconds.
+  ui: Ext.getBody(),
   window: Ext.create('Ext.window.Window', {
     title: 'Session Timeout',
     closable: false,
@@ -13,14 +13,16 @@ Ext.define('SearchTool.util.SessionMonitor', {
     closeAction: 'hide',
     resizable: false,
     width: 325,
-    items: [{
-      xtype: 'container',
-      frame: true,
-      html: "Your session is about to timeout due to inactivity. Any unsaved data will be lost and you will be automatically logged out if this occurs. </br></br>If you wish to extend your session and continue working, click the 'Continue' button below.</br></br>"    
-    },{
-      xtype: 'label',
-      text: ''
-    }],
+    items: [
+        {
+            xtype: 'container',
+            frame: true,
+            html: "Your session is about to timeout due to inactivity. Any unsaved data will be lost and you will be automatically logged out if this occurs. </br></br>If you wish to extend your session and continue working, click the 'Continue' button below.</br></br>"
+        },{
+            xtype: 'label',
+            text: ''
+        }
+    ],
     buttons: [{
       text: 'Continue',
       handler: function() {
@@ -29,7 +31,7 @@ Ext.define('SearchTool.util.SessionMonitor', {
         SearchTool.util.SessionMonitor.start();
         // 'poke' the server-side to update your session.
         Ext.Ajax.request({
-          url: 'user/poke.action'
+          url: 'data/keywords.json' //7/30 'user/poke.action'
         });
       }
     },{
@@ -38,9 +40,10 @@ Ext.define('SearchTool.util.SessionMonitor', {
       handler: function() {
         Ext.TaskManager.stop(SearchTool.util.SessionMonitor.countDownTask);
         SearchTool.util.SessionMonitor.window.hide();
-        
+        Ext.ComponentQuery.query('#main')[0].items.items.length = 0;
+        Ext.ComponentQuery.query('#main')[0].update();
         // find and invoke your app's "Logout" button.
-        Ext.ComponentQuery.query('#btnLogout')[0].handler();
+        //7/30 Ext.ComponentQuery.query('#btnLogout')[0].handler();
       }
     }]
   }),
@@ -61,49 +64,49 @@ Ext.define('SearchTool.util.SessionMonitor', {
       interval: 1000,
       scope: me
     };
-  }, 
+  },
   captureActivity : function(eventObj, el, eventOptions) {
     this.lastActive = new Date();
-  }, 
+  },
   monitorUI : function() {
-    var now = new Date();
-    var inactive = (now - this.lastActive);
-        
+    var now = new Date(),
+        inactive = (now - this.lastActive);
+
     if (inactive >= this.maxInactive) {
       this.stop();
 
       this.window.show();
-      this.remaining = SearchTool.config.Config.sessoinGracePeriod;  // seconds remaining.
+      this.remaining = SearchTool.config.Config.sessionGracePeriod;  // seconds remaining.
       Ext.TaskManager.start(this.countDownTask);
     }
   },
-  start : function() { 
+  start : function() {
     this.lastActive = new Date();
 
     this.ui.on('mousemove', this.captureActivity, this);
     this.ui.on('keydown', this.captureActivity, this);
     this.ui.on('mousedown', this.captureActivity, this);
-        
+
     Ext.TaskManager.start(this.sessionTask);
-  }, 
+  },
   stop: function() {
     Ext.TaskManager.stop(this.sessionTask);
     this.ui.un('mousemove', this.captureActivity, this);  //  always wipe-up after yourself...
     this.ui.un('keydown', this.captureActivity, this);
     this.ui.un('mousedown', this.captureActivity, this);
-  }, 
+  },
   countDown: function() {
     this.window.down('label').update('Your session will expire in ' +  this.remaining + ' second' + ((this.remaining == 1) ? '.' : 's.') );
-    
+
     --this.remaining;
 
-    if (this.remaining < 0) { 
+    if (this.remaining < 0) {
       var m = Ext.ComponentQuery.query('#main')[0];
       this.stop();
-      this.window.hide(); //TODO: get the Ext Window Manager and removeAll()
+      Ext.WindowManager.hideAll();
+      //this.window.hide(); //TODO: get the Ext Window Manager and removeAll()
       m.removeAll(false);
-      
     }
   }
- 
+
 });

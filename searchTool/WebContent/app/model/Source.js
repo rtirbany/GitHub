@@ -2,26 +2,35 @@
 
 Ext.define('SearchTool.model.Source',{
 	extend:'Ext.data.Model',
+    requires:['SearchTool.model.Product'],
 	fields:[
             //{name:'id',type:'int',convert:null},
 		    //{name:'label'},
-			{name:'repoName'},
+			{name:'repositoryId'}
 	        //{name:'tooltip'},
 	        //{name:'itemId'},
-            {name:'productDefinitions',type:'auto'} 
+//            {name:'productDefinitions',type:'auto'}
            ],
-    hasMany: [{model: 'SearchTool.model.Product',name:'productDefinitions',associationKey:'productDefinitions'}],
-    //TODO: convert to REST 
+    associations:[
+          {
+               type:'hasMany',
+               model: 'SearchTool.model.Product',
+               name:'products',
+               associationKey:'productDefinitions'
+          }
+    ],
+
+    //TODO: convert to REST
     proxy:{
           type:'ajax',
-          url:'data/sources.json', 
+          url: SearchTool.config.Config.urlSources,
           reader:{
                type:'json',
-               root:'repoDefinitions',
-               totalProperty:'results',
-               successProperty:'success' 
+               root:'repositoryDefinitions',  //7/30 repoDefinitions
+               totalProperrty: 'numResults',
+               successProperty:'success'
           }
-     } 
+     }
 });
 
 //        {

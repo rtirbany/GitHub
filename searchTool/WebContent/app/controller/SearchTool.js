@@ -1,21 +1,25 @@
 //TODO: ensure widget sizing meets scotts needs...
 //TODO: move cbox, btns down and have banner area ..logout and help btn
 //TODO: populate history w/  mouseover gives more details (time stamp, num results)
-//TODO: render toolbar to panel or viewport..topmost position.  definied in searchMain.js view..using it's itemId 
+//TODO: render toolbar to panel or viewport..topmost position.  definied in searchMain.js view..using it's itemId
 //TODO: align:'stretch' on search mgmt tabs..ellipsis (no horiz scrollbar) w/ tooltip
 //TODO: center/shrink to fit west side panel history and saved containers --too wide
 Ext.define('SearchTool.controller.SearchTool', {
     extend: 'Ext.app.Controller',
-    views: ['Viewport', 'SearchTool.view.help.Reference','SearchTool.view.main.ResultsGrid'],
+    views: ['Viewport', 'SearchTool.view.help.Reference'],
     models: ['Product'],
-    stores: [ 'Acros','QueriesSaved'],
+    stores: [ 'Acros'],
     requires: ['SearchTool.util.dom'],
     refs: [
-               {
-                ref: 'history',
-                selector: 'container[itemId=tbHistory]'
-               }
-          ],
+        {
+            ref: 'history',
+            selector: 'container[itemId=tbHistory]'
+        },
+        {
+            ref: 'viewport',
+            selector: 'main'
+        }
+    ],
     init: function () {
         var me = this;
         Ext.apply(Ext.form.field.VTypes, {
@@ -24,10 +28,10 @@ Ext.define('SearchTool.controller.SearchTool', {
                     return true;
                 }
             },
-            searchKeywordText: 'Keywords may only contain letters and numbers.'
-        }); 
-       
-       me.control({ 
+            searchKeyword: 'Keywords may only contain letters and numbers.'
+        });
+
+       me.control({
             'button[itemId=btnHelp]': {
                 click: me.btnHelpHandler
             },
@@ -36,13 +40,17 @@ Ext.define('SearchTool.controller.SearchTool', {
             },
             'button[itemId=btnVisualize]':{
                 click: LaunchViz
+            },
+            'container[itemId=userPrefs] toolbar > button': {
+                click: me.updatePrefs
             }
         }); //control function
-        //TODO 6/10 work this..!! app-wide event handling
-        this.application.on({
-          filtersupdate: this.updateResultsGrid
-        });
-    }, 
+    },
+    updatePrefs: function (b,e) {
+        if (b.text === 'Save') {
+            Ext.Msg.alert('saving');
+        }
+    },
     btnHelpHandler: function (b, e, o) {
         var ref = Ext.ComponentQuery.query('#help_ref');
         if (ref.length == 0) {
@@ -53,9 +61,6 @@ Ext.define('SearchTool.controller.SearchTool', {
     },
     btnLogoutHandler: function (b, e) {
         Ext.Msg.confirm('Confirm Logout', 'Do you wish to log out of the system?');
-    },
-    updateResultsGrid: function(store, eOpts){
-        debugger;
     }
 
 });

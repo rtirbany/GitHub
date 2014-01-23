@@ -1,28 +1,30 @@
 <html>
-<p><a href="http://en.wikipedia.org/wiki/Lorem_ipsum" target="_blank">Lorem ipsum</a> et vim scripta periculis, vis veritus
-pertinax ex, eum eripuit omittantur ut. Nibh nonumy et his, recteque democritum
-cu has. Constituto dissentiet consequuntur vis ex, te utinam offendit adipisci
-nec. Est natum idque explicari eu. Ne fierent eligendi vel, his id dolores
-percipit.
+<body>
+<h3>Boolean Logic</h3>
+<p>You can use Boolean logic to more effectively and precisely communicate what you are looking for with the system's data.  Since data 
+can being sourced from a variety of inputs, there will be many ways to express information describing the same subjects and events.  Boolean
+operations can provide a simple, systematic, yet flexible way to retrieve the information you seek more efficiently.  The system supports
+the Boolean operators <b>AND</b> and <b>OR</b>.  
 </p>
  
-<p> <b>AND</b><br>
+<p> <b>AND</b><br/>
    &quot;AND&quot; narrows your search results.     
    If searching for AIDS AND disease you are 
    searching for the word AIDS in the same document as the word disease.  The search 
    engine discards all documents except those that have all of the search terms.  If just one of these words are missing, the document will not 
 be included in the results.
 </p>
-<p><b>OR</b><br>
+<p><b>OR</b><br/>
    &quot;OR&quot; broadens your search results.  A search for canine OR dog requires that a document have either, one, or both of these terms.  
    This is useful where two different words have similar meanings and are used interchangeably (known as synonyms) as well as broadening the search to include
    pluralization or addressing various spellings of a word.  If just one (at a minumum) of these words appears
    in a document, the document will be listed in the results.
 </p>
-<p><b>( ) Parentheses</b><br>
-   &quot;( )&quot; are used to group boolean statements, affecting the order of query processing.  The statement within a set of parenthesis are treated as a single unit and get processed before any statements outside the parenthesis get processed.<br>
-<br> 
-<p>
+<p><b>( ) Parentheses</b><br/>
+   &quot;( )&quot; are used to group boolean statements, affecting the order of query processing.  The statements/arguments within a pair of parenthesis are treated as 
+   a singular unit (or set) and will be processed prior to those statements external to the parenthesis.
+<br/>
+<br/> 
 <h4>Example 1</h4> 
 <p> </p> 
 <p>Field1 contains 'AIDS' AND 'disease'</p> 
@@ -50,6 +52,5 @@ contain both <i>tennis</i> <b>AND</b> either<i> racquet </i><b>OR</b><i>
 <p>Field1 contains 'television' OR (Field1 contains 'cathode' AND 'tube') </p>
 <p>This query would return documents containing either the word <i>television</i>
 <b>OR</b> both the words <i>cathode</i> <b>AND</b> <i>tube</i>. </p>
-
-</p>
+</body>
 </html>

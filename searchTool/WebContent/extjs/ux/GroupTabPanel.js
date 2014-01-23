@@ -189,17 +189,20 @@ Ext.define('Ext.ux.GroupTabPanel', {
         var me = this,
             newTab = cmp,
             oldTab;
+        debugger;
 
         if(Ext.isString(cmp)) {
-            newTab = Ext.getCmp(newTab);
-        } 
+            newTab = Ext.getCmp(cmp);
+        }
+
         if (newTab === me.activeTab) {
             return false;
         }
+
         oldTab = me.activeTab;
         if (me.fireEvent('beforetabchange', me, newTab, oldTab) !== false) {
              me.activeTab = newTab;
-             if (me.rendered) { 
+             if (me.rendered) {
                  me.down('container[baseCls=' + Ext.baseCSSPrefix + 'grouptabcontainer' + ']').getLayout().setActiveItem(newTab);
              }
              me.fireEvent('tabchange', me, newTab, oldTab);
@@ -268,6 +271,7 @@ Ext.define('Ext.ux.GroupTabPanel', {
             if (root.activeTab) {
                 me.activeTab = root.id;
             }
+
             if (root.activeGroup) {
                 me.mainItem = item.mainItem || 0;
                 me.activeGroup = root.id;

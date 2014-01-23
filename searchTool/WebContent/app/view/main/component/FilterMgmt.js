@@ -1,39 +1,19 @@
-var tplDataOrig = new Ext.XTemplate(
-    '<tpl for=".">',
-          '<tr><td class="facetitem_remove"><div style="width:100%;">',
-          '<input type="button" title="remove this filter" class="btn_facetitemremove"/>',
-          '<label class="facetselection_item" title="{tip}">{key}&nbsp;=&nbsp;{value}</label>',
-          '</div></td></tr></tpl>' //use array index to autonumber (starts at 1)
-);
-
-var tplSrcOrig = new Ext.XTemplate(
-    '<tpl for=".">',
-    '<tr><td class="facet_remove">',
-          '<div style="width:100%;">',
-          '<input type="button" title="remove this product" class="btn_facetitemremove"/>',
-          '<label class="facetselection_product" title="{tip}">{key}&nbsp;=&nbsp;{value}</label>',
-          '</div></td></tr>',
-          '</tpl>' //use array index to autonumber (starts at 1)
-);
-
 var tplData = new Ext.XTemplate(
     '<tpl for=".">',
           '<li class="filter_remove">',
-          //'<a title="Remove&nbsp;{key}&nbsp;=&nbsp;{value}" class="facetitem_remove">',
-//            '<img src="extjs/resources/images/delete_blue_x.png" title="{key}&nbsp;=&nbsp;{value}"></img>',
-            '<label class="facetsrc_remove" style="width:100%;"><img src="extjs/resources/images/delete_blue_x.png" title="{key}&nbsp;=&nbsp;{value}"></img>&nbsp;{key}&nbsp;=&nbsp;{value}<label>',
-          //  '</a>',
-           '</li></tpl>' //use array index to autonumber (starts at 1)
-);          
+          '<a title="Remove {key}&nbsp;=&nbsp;{value}" class="facetitem_remove">',
+          '<img src="/extjs/resources/images/delete.png" title="Remove&nbsp;=&nbsp;{value}" border="0"/>',
+          '&nbsp;{key}&nbsp;=&nbsp;{value}</a></li></tpl>'
+          //use array index to autonumber (starts at 1)
+);
+
 var tplSrc = new Ext.XTemplate(
     '<tpl for=".">',
-     '<li class="filter_remove">', 
-            //'<a title="Remove&nbsp;{key}&nbsp;=&nbsp;{value}" class="facetsrc_remove">',
-//            '<img src="extjs/resources/images/delete_blue_x.png" title="{key}&nbsp;=&nbsp;{value}"></img>',
-            '<label class="facetsrc_remove" style="width:100%;"><img src="extjs/resources/images/delete_blue_x.png" title="{key}&nbsp;=&nbsp;{value}"></img>&nbsp;{key}&nbsp;=&nbsp;{value}</label>',
-            //'</a>',
-     '</li></tpl>' //use array index to autonumber (starts at 1)
-
+    '<li class="filter_remove">',
+    '<a title="Remove {key}&nbsp;=&nbsp;{value}" class="facetsrc_remove">',
+    '<img src="/extjs/resources/images/delete.png" title="Remove&nbsp;=&nbsp;{value}" border="0"/>',
+    '&nbsp;{key}&nbsp;=&nbsp;{value}</a></li></tpl>'
+    //use array index to autonumber (starts at 1)
 );
 
 //var tplDate = new Ext.XTemplate(
@@ -48,9 +28,15 @@ var mainTpl = new Ext.XTemplate(
     '</tpl></ul>', {
     renderItem: function (val) {
         switch (val.type) {
-          case 'source' : x = tplSrc.apply(val); break;
-          case 'facet' :  x = tplData.apply(val); break;
-          default : x = '';
+          case 'source' :
+              x = tplSrc.apply(val);
+              break;
+          case 'facet' :
+              x = tplData.apply(val);
+              break;
+          default :
+              x = '';
+              break;
         }
         return x;
     }
@@ -59,30 +45,37 @@ var mainTpl = new Ext.XTemplate(
 // tplData.overwrite(filtermgmt.body, dataObjJSON); //pass in root node of data object
 
 Ext.define('SearchTool.view.main.component.FilterMgmt', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.panel.Panel',
     alias: 'widget.filtermgmt',
     cls: 'pnlFilterMgmt',
-    border: false,
+    titleCollapse: true,
+    collapsible: true,
+    animCollapse: true,
+    collapseDirection: 'top',
+    title: 'Filter Options',
+    border: 0,
+    height: '100%',
+    closeable: false,
     layout: 'vbox',
     items: [{
             xtype: 'container',
+            frame: false,
+            width: '100%',
             layout: 'hbox',
-            items: [{
-                    xtype: 'displayfield',
-                    value: 'Filter Options:',
-                    margin: 5,
-                    width: 95
-                }, {
+            items: [
+                {
                     xtype: 'button',
-                    itemId: 'btnRemoveAll', 
+                    itemId: 'btnRemoveAll',
                     width: 70,
                     margin: 5,
-                    text: 'Remove All'
+                    text: 'Remove All',
+                    tooltip: SearchTool.config.Config.removeAllToolTip,
+                    disabled: true
                 }
-//                , 
+//                ,
 //                    {
 //                    xtype: 'button',
-//                    itemId: 'btnRelaxAll', 
+//                    itemId: 'btnRelaxAll',
 //                    width: 65,
 //                    margin: 5,
 //                    enableToggle: true,
@@ -92,7 +85,7 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
 //                    }
 //                }
             ] //container hbox
-        }, { 
+        }, {
             xtype: 'dataview',
             itemId: 'dvFacetSelections',
             store:  'QueryFilters' ,
@@ -103,15 +96,15 @@ Ext.define('SearchTool.view.main.component.FilterMgmt', {
 //            })),
             tpl: mainTpl,
             autoSync: true,
-            overflowY: 'auto',
+            overflowY: 'hidden',
             overflowX: 'hidden',
-            width:'100%',
+            flex: 1,
             itemSelector: 'li.filter_remove',
 //            overItemCls: 'facetitem-over',
             //iconCls: 'icon-btnClear',
             emptyText: '(no filters selected)'
-             
-        }] //dataview  
+
+        }] //dataview
       //container vbox
 
 });

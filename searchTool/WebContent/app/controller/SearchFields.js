@@ -10,19 +10,16 @@ var errWin = Ext.create('Ext.window.Window', {
     items: [{
         xtype: 'grid',
         border: false,
-        columns: [
-          {
+        columns: [{
             header: 'Line #',
             dataIndex: 'line'
-          }, 
-          {
+        }, {
             header: 'Error',
             dataIndex: 'mssg'
-          }
-       ]
+        }]
     }],
     buttons: Ext.Msg.OKCANCEL
-})
+});
 
 Ext.define('SearchTool.controller.SearchFields', {
     extend: 'Ext.app.Controller',
@@ -63,13 +60,28 @@ Ext.define('SearchTool.controller.SearchFields', {
         //                    errEl = tmpRow.substring(15);
         //                    ln = errEl.substring(0,errEl.indexOf(':'));
         //                    msg = errEl.substring(errEl.indexOf(':')+1);
-        //                    var x = new Object({'line':ln,'mssg':msg}); 
+        //                    var x = new Object({'line':ln,'mssg':msg});
         //                    errArr.push(x);
         ////                  errArr += tmpRow + '\r\n';
         //               }
-        ////             else  
+        ////             else
         s += (last == '' ? last.length : 0);
         dest.setValue(newval.slice(0, -(s))); //always remove last 2 chars
+        if (newval.indexOf('-- ERROR') === -1) {
+            last = 'Build Successful!';
+            s = 'Query Builder was successful';
+            Ext.Msg.alert(last,s,function(btn,e){
+                if (btn === 'ok'){
+                    Ext.ComponentQuery.query('qbuilder')[0].hide();
+                }
+            });
+        }
+        else {
+            last = 'Build Unsuccessful';
+            s = 'Query Builder was unsuccessful.  Please review results';
+            Ext.Msg.alert(last,s);
+        }
+        s = null; last = null; newval = null; tmpRow = null;
 
         //TODO: Error msg popup? 2 of 2
         //          if (errArr != '') {

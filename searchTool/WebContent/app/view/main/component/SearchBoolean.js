@@ -7,35 +7,40 @@ Ext.define('SearchTool.view.main.component.SearchBoolean', {
     url: SearchTool.config.Config.searchUrl,
     requires: ['SearchTool.view.main.component.QueryBuilder', 'SearchTool.config.Config','SearchTool.view.help.Boolean'],
     height: 115,
-    dockedItems: [{
-        dock: 'top',
-        xtype: 'toolbar',
-        frame: false,
-        border: 1,
-        items: [{
-            xtype: 'tbspacer',
-            width: 3
-        }, {
-            text: 'Query Builder',
-            cls: 'btnSearchBoolean',
-            iconCls: 'icon-qbuilder',
-            tooltip: 'Launch Query Builder',
-            handler: function (b) {
-                var pqb = Ext.ComponentQuery.query('#pnlQbuilder');
-                if (pqb.length == 0) {
-                    var activeTab = this.up('tabpanel').getActiveTab();
-                    activeTab.add({
-                        xtype: 'qbuilder',
-                        width: Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getWidth() * 1.2,
-                        height: Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getHeight() * 2,
-                        itemId: 'pnlQbuilder'
-                    }).show();
-                } else {
-                    pqb[0].center();
-                    if (pqb[0].collapsed) pqb[0].expand();
-                    pqb[0].show();
-                }
-
+    dockedItems: [
+        {
+            dock: 'top',
+            xtype: 'toolbar',
+            frame: false,
+            border: 1,
+            items: [
+                {
+                    xtype: 'tbspacer',
+                    width: 3
+                },
+                {
+                    text: 'Query Builder',
+                    cls: 'btnSearchBoolean',
+                    iconCls: 'icon-qbuilder',
+                    tooltip: 'Launch Query Builder',
+                    handler: function (b) {
+                        var pqb = Ext.ComponentQuery.query('#pnlQbuilder'),
+                            activeTab = this.up('tabpanel').getActiveTab();
+                        if (pqb.length === 0) {
+                            activeTab.add({
+                                xtype: 'qbuilder',
+                                width: Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getWidth() * 1.2,
+                                height: Ext.ComponentQuery.query('#pnlSearchBoolean')[0].getHeight() * 2,
+                                itemId: 'pnlQbuilder'
+                            }).center().show();
+                        } else {
+                                pqb[0].center();
+                                if (pqb[0].collapsed)
+                                    pqb[0].expand();
+                                pqb[0].center().show();
+                        }
+                        pqb = null;
+                        activeTab = null;
             }
         }, {
             xtype: 'tbspacer',
@@ -51,14 +56,14 @@ Ext.define('SearchTool.view.main.component.SearchBoolean', {
             tooltip: 'Some boolean help page',
             handler: function () {
                 var ref = Ext.ComponentQuery.query('#help_bool');
-                if (ref.length == 0) {
+                if (ref.length === 0) {
                     Ext.create('SearchTool.view.help.Boolean').show();
                }
                else {
                      ref[0].center();
                      ref[0].show();
                }
-            } 
+            }
         }, {
             xtype: 'tbspacer',
             width: 2
@@ -67,6 +72,7 @@ Ext.define('SearchTool.view.main.component.SearchBoolean', {
         }, {
             text: 'Clear',
             cls: 'btnSearchBoolean',
+            tooltip: 'Clear all advanced query data',
             iconCls: 'icon-btnClearBlue',
             handler: function () {
                 Ext.ComponentQuery.query('#txtSearchBoolean')[0].reset();
@@ -74,12 +80,14 @@ Ext.define('SearchTool.view.main.component.SearchBoolean', {
         },  {
             xtype: 'tbspacer',
             width: 3
-        } 
+        }
         ]
     }],
 
     items: [{
         xtype: 'textarea',
+        enforceMaxLength: true,
+        maxLength: SearchTool.config.Config.advancedMaxLength,
         itemId: 'txtSearchBoolean',
         name: 'txtSearchBoolean',
         cls: 'searchBooleanTextArea',
@@ -90,12 +98,6 @@ Ext.define('SearchTool.view.main.component.SearchBoolean', {
         hideBorders: true,
         width: '100%',
         height: '90%'
-//        ,listeners : {
-//          change : function(field) {
-//                field.setValue(field.getValue().trim());
-//          }
-//        }
-    }]
-}
-
-);
+    }
+    ]
+});

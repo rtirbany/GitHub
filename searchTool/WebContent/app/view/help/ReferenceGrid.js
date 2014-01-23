@@ -1,6 +1,6 @@
 Ext.define('SearchTool.view.help.ReferenceGrid',{
      extend: 'Ext.grid.Panel',
-     alias: 'widget.refgrid',
+     alias: 'widget.refgrid', 
      store: 'Acros',
      stripeRows: true,
      columnLines: true,

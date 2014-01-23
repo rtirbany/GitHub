@@ -1,15 +1,15 @@
 Ext.define('SearchTool.model.Result',{
 	extend:'Ext.data.Model',
-	idProperty : 'id',
+	idProperty : 'documentNumber',
 	fields:[
-			{name:'id',type:'int',convert:null},
-			{name:'dt',type:'date'}, //dateFormat: 'm-d-Y g:i A'
-		    {name:'source'},
-		    {name:'product'},
-		    {name:'summary'},
-		    {name:'serial'},
-		    {name:'subject'}
+        {name:'classification'},
+        {name:'date', dateFormat: 'Y-m-d'},//m-d-Y g:i A'
+        {name:'title'},
+        {name:'id'},
+        {name:'documentNumber'},
+        {name:'repository'},
+        {name:'source'},
+        {name:'summary'},
+        {name:'type'}
 	]
 });
-	     
-	     

@@ -1,7 +1,7 @@
 Ext.define('SearchTool.model.Product',{
 	extend:'Ext.data.Model',
     requires: ['SearchTool.model.SearchField'],
-	belongsTo: 'Source',
+	//belongsTo: 'SearchTool.model.Source',
 	fields:[
            // {name:'id',type:'int',convert:null},
 	       // {name:'label'},
@@ -19,10 +19,26 @@ Ext.define('SearchTool.model.Product',{
     {
           type:'hasMany',
           model:'SearchTool.model.SearchField',
-          name:'searchfields',
+          name:'fields',
           associationKey:'customColumns'
     }
-    
+
     ]
 });
- 
+
+//repodefs : [
+//  {
+//        proddefs: [
+//            {
+//                prodname: 'channel5',
+//                customColumns: [
+//                    {
+//                        text: 'newcol1',
+//                        dataIndex: 'somecol1',
+//                        width: 5
+//                    }
+//                ]
+//            }
+//        ]
+//  }
+// ]

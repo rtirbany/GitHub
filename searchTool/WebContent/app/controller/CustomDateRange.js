@@ -2,7 +2,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
     extend: 'Ext.app.Controller',
     views: ['main.component.PnlCustomDateRange', 'main.SearchArea', 'SearchTool.config.Config'],
     refs: [{
-        ref: 'cdr_rdCalType',
+        ref: 'cdr_calType',
         selector: '#rdCalendar'
     }, {
         ref: 'cdr_numFiscal',
@@ -68,44 +68,48 @@ Ext.define('SearchTool.controller.CustomDateRange', {
     processForm: function (b, e) {
         Ext.ComponentQuery.query('#rdoDateOptions')[0].reset();
         var me = this,
-        //get values from CDR 
-        
-            calType = me.getCdr_rdCalType().calType, //cal, fisc
+        //get values from CDR
+
+            calType = me.getCdr_calType().getValue(), //cal, fisc
             w = me.getCdr_chkWhole().value,
             c = me.getCdr_txtCount().value,
             u = me.getCdr_rdUnit().getValue().customdate,
             date1, date2;
         switch(calType){
-          case 'cal' :   date2 = me.getCdr_dtRangeEnd().value;
+          case 'cal' :
+                         date2 = me.getCdr_dtRangeEnd().value;
                          date1 = me.getCdr_dtRangeStart().value;
                          break;
           //fisc is only other value
-          default :      date2 = parseInt(me.getCdr_numFiscal().value);
-                         var m = SearchTool.config.Config.customCalendarFiscalMonthDay+(date2-1); 
-                         date2 = Ext.Date.parseDate(m,'m/d/Y'); 
+          default :
+                         date2 = parseInt(me.getCdr_numFiscal().value);
+                         var m = SearchTool.config.Config.customCalendarFiscalMonthDay+(date2-1);
+                         date2 = Ext.Date.parseDate(m,'m/d/Y');
                          date1 = date2;
-        } 
+        }
         //TODO: refactor all of this
         if (u == 'd' || u == 'w') {
             switch(u){
-               case 'd' : if (w && calType == 'cal')
+               case 'd' :
+                          if (w && calType == 'cal')
                               date2 = Ext.Date.add(date2, Ext.Date.DAY, -1); //go back 1 day if 'whole'
                           break;
-               case 'w' : var offset = SearchTool.config.Config.customCalendarWeekstart; //0
+               case 'w' :
+                          var offset = SearchTool.config.Config.customCalendarWeekstart; //0
                           if (w)
                               date2 = Ext.Date.add(date2,Ext.Date.DAY,-1*(parseInt(Ext.Date.format(date2,'w'))+1)); //end of prev week
                               //Ext.Date.add(date2, Ext.Date.DAY, -(Ext.Date.format(date2, 'w'))); //go to week start
                           c = c * 7;
-                          if (offset > 0) 
+                          if (offset > 0)
                              date2 = Ext.Date.add(date2, Ext.Date.DAY, -(7 - offset));
                           break;
             }//switch
-            date1 = Ext.Date.add(date2, Ext.Date.DAY, -c+1); 
+            date1 = Ext.Date.add(date2, Ext.Date.DAY, -c+1);
 //            c = (u == 'w' ? c * 7 : c);
 //            if (w) {
 //                if (u == 'd') {
 //                    date2 = Ext.Date.add(date2, Ext.Date.DAY, -1);
-//                } else { //should get most recent Sunday, then back up 7 days - 
+//                } else { //should get most recent Sunday, then back up 7 days -
 //                    var offset = SearchTool.config.Config.customCalendarWeekstart;
 //                    date2 = Ext.Date.add(date2, Ext.Date.DAY, -(Ext.Date.format(date2, 'w')));
 //                    if (offset > 0) date2 = Ext.Date.add(date2, Ext.Date.DAY, -(7 - offset));
@@ -115,7 +119,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
         }
         //m works!!
         //6m?
-        else if (u == 'm' || u == 'sm') {  
+        else if (u == 'm' || u == 'sm') {
             //customCalendarSixMonthstart = 1 (January), customCalendarSixMonthFromCurrent = 0,1
             var fromCurrent = SearchTool.config.Config.customCalendarSixMonthFromCurrent;
             c = (u == 'sm' ? c * 6 : c);
@@ -181,7 +185,7 @@ Ext.define('SearchTool.controller.CustomDateRange', {
                     date2 = Ext.Date.add(date2, Ext.Date.YEAR, -1); //get the previous year
                     date2 = Ext.Date.add(date2, Ext.Date.MONTH, adjustMonth);
                     date2 = Ext.Date.getLastDateOfMonth(date2);
-                 
+
                     date1 = Ext.Date.add(date2, Ext.Date.MONTH, -(parseInt(Ext.Date.format(date2, 'n') - 1)));
                     date1 = Ext.Date.getFirstDateOfMonth(date1);
                     date1 = Ext.Date.add(date1, Ext.Date.YEAR, -(c - 1));
@@ -201,12 +205,12 @@ Ext.define('SearchTool.controller.CustomDateRange', {
         Ext.form.field.VTypes.DateRange(field.value, field);
         me.getCdr_dtRangeStart().setValue(date1);
     },
-    updateCDR: function (c, e, o) { 
+    updateCDR: function (c, e, o) {
     },
-    
+
     fillCDRForm: function () {
         var me = this, elapsed;
-            //retrieve values from calendar widget 
+            //retrieve values from calendar widget
             dtUserStart = Ext.Date.format(Ext.ComponentQuery.query('#dtUserSearchFrom')[0].value, 'm-d-Y'),
             dtUserEnd = Ext.Date.format(Ext.ComponentQuery.query('#dtUserSearchTo')[0].value, 'm-d-Y'),
             //custom date range fields, get the values here and convert for comparing w/ above
@@ -220,11 +224,11 @@ Ext.define('SearchTool.controller.CustomDateRange', {
 //            dtUserStart = dtUserStart ? Ext.Date.parseDate(dtUserStart,'m-d-Y') : '';
 //            dtUserEnd =  Ext.Date.parseDate((dtUserEnd ? dtUserEnd : Ext.Date.format(new Date(),'m-d-Y')),'m-d-Y');
 //            me.getCdr_dtRangeEnd().setValue(dtUserEnd);
-//              
+//
 //            if (dtUserStart != dtCdrStart) { //start passed in, and it is a new value
 //               if (dtUserStart != '') {
 //                    me.getCdr_dtRangeStart().setValue(dtUserStart);
-//                    me.getCdr_dtRangeEnd().setValue(dtUserEnd); 
+//                    me.getCdr_dtRangeEnd().setValue(dtUserEnd);
 //                    elapsed = parseInt(Ext.Date.getElapsed(dtUserEnd,dtUserStart) / (1000 * 60 * 60 * 24)); //ms converted to days
 //                    if (me.getCdr_chkWhole().getValue())
 //                         elapsed += 1;

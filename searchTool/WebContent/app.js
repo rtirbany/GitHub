@@ -6,13 +6,13 @@ function CheckOWF(){
      return false; //Ozone.util.isRunningInOWF();
 }
 
-function LaunchViz(){
-     if (CheckOWF()){
+function LaunchViz(btn, e){
+     if (CheckOWF()) {
           Ozone.pref.PrefServer.findWidgets(
           {searchParams:{widgetName: SearchTool.config.Config.vizWidgetName},
                onSuccess:function(w){
                     if (w.length > 0){
-                         var vizParams = {searchId: btn.id};
+                         var vizParams = {searchId: Ext.ComponentQuery.query('#btnSearch')[0].id};
                          OWF.Launcher.launch({
                               guid: w[0].id,
                               launchOnlyIfClosed: SearchTool.config.Config.vizWidgetSingleton,
@@ -27,13 +27,13 @@ function LaunchViz(){
                     Ext.Msg.alert('Error communicating with OWF Server',SearchTool.config.Config.msgErrorTryAgain);
                }
           }
-          ); 
-     } 
+          );
+     }
      // if Ozone.util.isRunningInOWF(){}...
 }
 
 
-Ext.onReady(function() { 
+Ext.onReady(function() {
 	Ext.getBody().mask('Loading Application.  Please wait...');
 	// Start the mask on the body and get a reference to the mask
     // add class to mask for it to look different than default.
@@ -43,7 +43,7 @@ Ext.onReady(function() {
     // Insert a new div before the loading icon where we can place our logo.
 //    Ext.DomHelper.insertFirst(Ext.query('.x-mask-msg')[0], {
 //        cls: 'x-splash-icon'
-//    }); 
+//    });
 });
 
 Ext.application({
@@ -53,28 +53,31 @@ Ext.application({
 	controllers:['SearchTool','SearchFields','CustomDateRange','QueryFilters'],
 	requires:['SearchTool.config.Config','SearchTool.util.TplFilter','SearchTool.util.SessionMonitor'],
 	autoCreateViewport: true,
-     namnam: function(){
-          Ext.Msg.alert('hi');
+    init: function(application){
+          var me= this;
+        me.control({
+
+        });
      },
-	launch : function() {  
+	launch : function() {
     	Ext.tip.QuickTipManager.init();
-        //Ext.EventManager.on(window,'beforeunload',function(){ 
+        //Ext.EventManager.on(window,'beforeunload',function(){
         //})
-        
-        //Ext.Ajax.timeout= SearchTool.config.Config.ajaxTimout; 
+
+        //Ext.Ajax.timeout= SearchTool.config.Config.ajaxTimout;
         //Ext.override(Ext.form.Basic, {timeout:Ext.Ajax.timeout/1000});
         //Ext.override(Ext.data.proxy.Server,{timeout:Ext.Ajax.timeout});
         //Ext.override(Ext.data.Connection,{timeout:Ext.Ajax.timeout});
     	if (typeof String.prototype.trim !== 'function') {
   					String.prototype.trim = function() {
-    					return this.replace(/^\s+|\s+$/g, ''); 
+    					return this.replace(/^\s+|\s+$/g, '');
   					}
 	    }
         /*
-         * if ( !Array.prototype.forEach ) 
-         * { Array.prototype.forEach = function(fn, scope) 
+         * if ( !Array.prototype.forEach )
+         * { Array.prototype.forEach = function(fn, scope)
          * { for(var i = 0, len = this.length; i < len; ++i) { fn.call(scope, this[i], i, this); } } }
-         * 
+         *
          * */
         if (CheckOWF())
              Ext.ComponentQuery.query('#btnVisualize')[0].hide();
@@ -100,15 +103,15 @@ Ext.application({
             });
         });
         // Run the fade 500 milliseconds after launch.
-        task.delay(500); 
+        task.delay(500);
 	}*/
      }
 });
- 
 
- 
+
+
 //TODO: filters - need to remove all, remove by click
-//TODO: requery if click for remove/removeAll children 
-//TODO: descriptions for tool tips 
-//TODO: highlight row based on product type setting - icon and/or row coloring and/or bg color based on 
+//TODO: requery if click for remove/removeAll children
+//TODO: descriptions for tool tips
+//TODO: highlight row based on product type setting - icon and/or row coloring and/or bg color based on
 		//prod type in result set

@@ -1,41 +1,104 @@
 {
-	'success' : true,
-	'results' : 3,
-	'rows' : [{
-				'id' : 1,
-				'boxLabel' : 'Src1_fromfile',
-				'xtype' : 'checkbox',
-				'itemId' : 'chkSrc1',
-				'checked' : true,
-				'tooltip' : 'Src1 tooltip',
-				'products' : [
-					{'id' : 1 , 'boxLabel': 'Src1Prod1', 'name' : 'prod1', 'tooltip' : 'Src1 - Prod1'},
-					{'id' : 2 , 'boxLabel': 'Src1Prod2', 'name' : 'prod2', 'tooltip' : 'Src1 - Prod2'},
-					{'id' : 3 , 'boxLabel': 'Src1Prod3', 'name' : 'prod3', 'tooltip' : 'Src1 - Prod3'}
-				]
-			}, {
-				'id' : 2,
-				'boxLabel' : 'Src2_fromfile',
-				'xtype' : 'checkbox',
-				'itemId' : 'chkSrc2',
-				'checked' : true,
-				'tooltip' : 'Src2 tooltip',
-				'products' : [
-					{'id' : 1 , 'boxLabel': 'Src2Prod1', 'name' : 'prod1', 'tooltip' : 'Src2 - Prod1'},
-					{'id' : 2 , 'boxLabel': 'Src2Prod2', 'name' : 'prod2', 'tooltip' : 'Src2 - Prod2'},
-					{'id' : 3 , 'boxLabel': 'Src2Prod3', 'name' : 'prod3', 'tooltip' : 'Src2 - Prod3'}
-				]
-			}, {
-				'id' : 3,
-				'boxLabel' : 'Src3_fromfile',
-				'xtype' : 'checkbox',
-				'itemId' : 'chkSrc3',
-				'checked' : true,
-				'tooltip' : 'Src3 tooltip',
-				'products' : [
-					{'id' : 1 , 'boxLabel': 'Src3Prod1', 'name' : 'prod1', 'tooltip' : 'Src3 - Prod1'},
-					{'id' : 2 , 'boxLabel': 'Src3Prod2', 'name' : 'prod2', 'tooltip' : 'Src3 - Prod2'},
-					{'id' : 3 , 'boxLabel': 'Src3Prod3', 'name' : 'prod3', 'tooltip' : 'Src3 - Prod3'}
-				]
-			}]
+    "success": true,
+    "results": 3,
+    "repositoryDefinitions": [
+    {     "repositoryId":"irs",
+          "productDefinitions": [
+               {
+                    "productName":"Product1",
+                    "customColumns" : [
+                         {
+                              "text":"Pub Date",
+                              "dataIndex":"from",
+                              "type":"string",
+                              "sortable":true
+                         }
+                         ,
+                         {
+                              "text":"Dissem Date",
+                              "dataIndex":"dissem",
+                              "type":"string",
+                              "sortable":true
+                         }
+                     ]
+
+               }
+               ,
+               {
+                    "productName":"prod 2",
+                    "customColumns": [
+                         {
+                              "text":"serial",
+                              "dataIndex":"serial",
+                              "type":"string",
+                              "sortable":true
+                         },
+                         {
+                              "text":"title",
+                              "dataIndex":"title",
+                              "type":"string",
+                              "sortable":true
+                         }
+                     ]
+               }
+          ]
+    },
+    {     "repositoryId":"irs2",
+          "productDefinitions": [
+               {
+                    "productName":"Cheaper Prod1",
+                    "customColumns" :  [
+                         {
+                              "text":"from",
+                              "dataIndex":"from",
+                              "width":0,
+                              "hidden":true,
+                              "sortable":true
+                         }
+                         ,
+                         {
+                              "text":"title",
+                              "dataIndex":"title",
+                              "width":0,
+                              "hidden":true,
+                              "sortable":true
+                         }
+                         ]
+
+               }
+               ,
+               {
+                    "productName":"More Exp Prod2",
+                    "customColumns": [
+                         {
+                              "text":"serial",
+                              "dataIndex":"serial",
+                              "width":0,
+                              "hidden":true,
+                              "sortable":true
+                         }
+                     ]
+               }
+          ]
+    }
+  ],
+  "commonColumns" : [
+     {
+                              "text":"ID",
+                              "type": "string",
+                              "dataIndex":"id",
+                              "width":10,
+                              "hidden":false,
+                              "sortable":true,
+                              "tooltip": "some id"
+    },{
+                              "text":"Title",
+                              "type": "string",
+                              "dataIndex":"title",
+                              "width":20,
+                              "hidden":false,
+                              "sortable":true,
+                              "tooltip": "some title"
+    }
+  ]
 }

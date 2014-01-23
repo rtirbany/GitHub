@@ -13,27 +13,28 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
           handles: 's se e',
           preserveRatio: true
     },
-    constrain: true,
     centered: true,
     hidden: true,
     requires: ['SearchTool.view.main.component.QueryBuilderRow'],
     border: true,
     overflowX: 'hidden',
     overflowY: 'auto',
-    tools: [{
+    tools: [
+    {
         type: 'help',
         tooltip: 'Help page for Query Builder area',
         handler: function (ev, el, p) {
             Ext.Msg.alert('some querybuilder help page');
         }
-    }, {
+    },
+    {
         xtype: 'tool',
         type: 'close',
         handler: function (e, target, p, tool) {
             this.up('panel').hide();
-        }
-
-    }],
+    }
+    }
+    ],
     dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',
@@ -53,6 +54,7 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
         }, {
             text: 'Clear All',
             iconCls: 'icon-btnClearBlue',
+	        tooltip: SearchTool.config.Config.queryBuilderClearToolTip,
             handler: function () {
                 var p = this.up('panel');
                 p.removeAll();
@@ -71,14 +73,14 @@ Ext.define('SearchTool.view.main.component.QueryBuilder', {
         }, {
             text: 'Build Query',
             iconCls: 'icon-qbuilder',
+            tooltip: SearchTool.config.Config.queryBuilderToolTip,
             itemId: 'btnBuildQuery'
         }, {
             xtype: 'tbspacer',
             width: 3
         }] // toolbar items
     } // toolbar
-    ] //dockedItems
-    ,
+    ], //dockedItems
     items: [{
         xtype: 'builderRow'
     }]

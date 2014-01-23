@@ -1,9 +1,10 @@
+//TODO: move to facet or facetgroup?
 Ext.define('SearchTool.store.Facets',{
      storeId:'Facets',
      extend:'Ext.data.Store', 
      model:'SearchTool.model.FacetGroup',
      autoLoad:false,
-     proxy:{
+     proxy:{ 
           type:'ajax',
           reader:{ 
                type:'json',

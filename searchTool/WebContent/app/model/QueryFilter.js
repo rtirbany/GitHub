@@ -1,7 +1,9 @@
+//TODO: 8/10 proxy is not here in prod
+
 Ext.define('SearchTool.model.QueryFilter',{
      extend:'Ext.data.Model',
      idProperty: 'id',
-     fields:[ 
+     fields:[
               {name:'type'},
               {name:'key'},
               {name:'id'},
@@ -13,9 +15,9 @@ Ext.define('SearchTool.model.QueryFilter',{
           type:'rest',
           url:'data/facetselections.json',
           filterParam:'Filters',
-//        afterRequest:function(req,res){ 
+//        afterRequest:function(req,res){
 //        },
-          reader:{ 
+          reader:{
                type:'json',
                root:'rows',
                totalProperty:'results',
