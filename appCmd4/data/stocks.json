@@ -1,0 +1,16 @@
+{
+    "success": true,
+    "total" : 8,
+    "data":
+        [
+            {"company":"3m Co",     "change": 71.72,    "pctChange":0.02,  "other":0.03,  "dt":"9/1 12:00am"},
+            {"company":"Alcoa Inc",     "change": 29.01,    "pctChange":0.42,  "other":1.47,  "dt":"9/1 12:00am"},
+            {"company":"Altria Group Inc",     "change": 83.81,    "pctChange":0.28,  "other":0.34,  "dt":"9/1 12:00am"},
+            {"company":"American Express Company",     "change": 52.55,    "pctChange":0.01,  "other":0.02,  "dt":"9/1 12:00am"},
+            {"company":"American International Group, Inc.",     "change": 64.13,    "pctChange":0.31,  "other":0.49,  "dt":"9/1 12:00am"},
+            {"company":"AT&T Inc.",     "change": 31.61,    "pctChange":-0.48,  "other":-1.54,  "dt":"9/1 12:00am"},
+            {"company":"Boeing Co.",     "change": 75.43,    "pctChange":0.53,  "other":0.71,  "dt":"9/1 12:00am"},
+            {"company":"Caterpillar Inc.",     "change": 67.27,    "pctChange":0.92,  "other":1.39,  "dt":"9/1 12:00am"}
+
+        ]
+}
